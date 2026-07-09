@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VolleyDesk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="screen">
+    <section class="product-shell">
+      <header class="top-nav">
+        <a class="brand" href="#overview" aria-label="VolleyDesk">VolleyDesk</a>
+        <nav class="pill-nav" aria-label="Sezioni rapide">
+          <button class="nav-item active" type="button" data-view="overview">Home</button>
+          <button class="nav-item" type="button" data-view="athletes">Atleti</button>
+          <button class="nav-item" type="button" data-view="certificates">Certificati</button>
+          <button class="nav-item" type="button" data-view="accounting">Contabilità</button>
+          <button class="nav-item" type="button" data-view="documents">Documenti</button>
+          <button class="nav-item" type="button" data-view="storage">Dati</button>
+        </nav>
+      </header>
+
+      <section class="showcase view active" id="overview">
+        <div class="headline">
+          <span class="micro">ATHLETE DATA</span>
+          <h1>Gestione<br>atleti</h1>
+          <p>Roster, certificati, quote e documenti in un unico spazio.</p>
+        </div>
+
+        <div class="athlete-visual" aria-hidden="true">
+          <article class="profile-card">
+            <div class="profile-top">
+              <span class="avatar" aria-hidden="true">
+                <span class="ball-icon"></span>
+              </span>
+              <div>
+                <strong>Sara Conti</strong>
+                <span>U18 · Libero</span>
+              </div>
+            </div>
+            <div class="progress-ring">
+              <span>94%</span>
+            </div>
+            <div class="profile-stats">
+              <span>Certificato</span>
+              <strong>OK</strong>
+            </div>
+          </article>
+          <article class="mini-card mini-doc">
+            <span>Docs</span>
+            <strong>24</strong>
+          </article>
+          <article class="mini-card mini-fee">
+            <span>Quote</span>
+            <strong>€0</strong>
+          </article>
+          <span class="soft-shadow"></span>
+        </div>
+
+        <div class="side-stack">
+          <article class="glass-card">
+            <span>Atleti</span>
+            <strong id="athleteCount">0</strong>
+          </article>
+          <article class="glass-card">
+            <span>Certificati</span>
+            <strong id="certificateCount">0</strong>
+          </article>
+          <article class="glass-card">
+            <span>Quote aperte</span>
+            <strong id="debtCount">0</strong>
+          </article>
+        </div>
+      </section>
+
+      <section class="data-panel view" id="athletes">
+        <div class="panel-title">
+          <span>Roster</span>
+          <h2>Elenco atleti</h2>
+          <div class="panel-actions">
+            <input id="athleteSearch" type="search" placeholder="Cerca">
+            <button class="soft-button" id="selectAthletesButton" type="button">Seleziona</button>
+            <button class="danger-button" id="deleteSelectedButton" type="button" hidden>Elimina 0</button>
+            <button class="primary-action inline" id="addAthleteButton" type="button">Nuovo atleta</button>
+          </div>
+        </div>
+        <div class="data-list" id="athleteTable"></div>
+      </section>
+
+      <section class="data-panel view" id="certificates">
+        <div class="panel-title">
+          <span>Salute</span>
+          <h2>Certificati</h2>
+          <button class="soft-button" type="button">Carica PDF</button>
+        </div>
+        <div class="tile-grid" id="certificateGrid"></div>
+      </section>
+
+      <section class="data-panel view" id="accounting">
+        <div class="panel-title">
+          <span>Quote</span>
+          <h2>Contabilità</h2>
+          <div class="panel-actions accounting-actions">
+            <input id="accountingSearch" type="search" placeholder="Cerca">
+            <select class="toolbar-select" id="accountingFilter">
+              <option value="all">Tutti</option>
+              <option value="paid">Pagati</option>
+              <option value="partial">Parziali</option>
+              <option value="unpaid">Scoperti</option>
+            </select>
+            <input id="accountingStartDate" type="date" value="2026-09-01" aria-label="Data inizio">
+            <input id="accountingEndDate" type="date" value="2027-08-31" aria-label="Data fine">
+            <button class="soft-button" id="editAccountingButton" type="button">Modifica</button>
+            <button class="soft-button" id="selectAccountingButton" type="button">Seleziona</button>
+            <button class="danger-button" id="deleteAccountingButton" type="button" hidden>Elimina 0</button>
+          </div>
+        </div>
+        <div class="accounting-board" id="accountingBoard"></div>
+      </section>
+
+      <section class="data-panel view" id="documents">
+        <div class="panel-title">
+          <span>Archivio</span>
+          <h2>Documenti</h2>
+          <strong id="documentCount">0</strong>
+        </div>
+        <div class="data-list" id="documentList"></div>
+      </section>
+
+      <section class="data-panel view" id="storage">
+        <div class="panel-title">
+          <span>Deposito</span>
+          <h2>Dati</h2>
+          <button class="soft-button" id="exportButton" type="button">Esporta</button>
+        </div>
+        <div class="storage-box">
+          <strong id="storageSize">0 KB</strong>
+          <div class="storage-bar"><span id="storageFill"></span></div>
+          <pre id="dataPreview"></pre>
+        </div>
+      </section>
+
+      <a class="creator-tag" href="#" aria-label="Instagram Rosario Trupo">
+        <span>Creator</span>
+        @rosario trupo
+      </a>
+    </section>
+  </main>
+
+  <dialog class="athlete-modal" id="athleteModal">
+    <form class="modal-card" id="athleteForm" method="dialog">
+      <header class="modal-head">
+        <div>
+          <span class="micro">Scheda atleta</span>
+          <h2 id="modalTitle">Atleta</h2>
+        </div>
+        <button class="modal-close" id="closeModalButton" type="button" aria-label="Chiudi">x</button>
+      </header>
+
+      <div class="form-grid">
+        <label>Nome <input name="firstName" type="text" required></label>
+        <label>Cognome <input name="lastName" type="text" required></label>
+        <label>Email <input name="email" type="email"></label>
+        <label>Cellulare <input name="phone" type="tel"></label>
+        <label>
+          Sesso
+          <select name="gender">
+            <option value="">Seleziona</option>
+            <option value="F">Femminile</option>
+            <option value="M">Maschile</option>
+            <option value="Altro">Altro</option>
+          </select>
+        </label>
+        <label>Categoria <input name="category" type="text"></label>
+      </div>
+
+      <section class="form-section">
+        <h3>Genitore 1</h3>
+        <div class="form-grid">
+          <label>Nome <input name="parentOneFirstName" type="text"></label>
+          <label>Cognome <input name="parentOneLastName" type="text"></label>
+          <label>Email <input name="parentOneEmail" type="email"></label>
+          <label>Cellulare <input name="parentOnePhone" type="tel"></label>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h3>Genitore 2</h3>
+        <div class="form-grid">
+          <label>Nome <input name="parentTwoFirstName" type="text"></label>
+          <label>Cognome <input name="parentTwoLastName" type="text"></label>
+          <label>Email <input name="parentTwoEmail" type="email"></label>
+          <label>Cellulare <input name="parentTwoPhone" type="tel"></label>
+        </div>
+      </section>
+
+      <section class="drop-grid">
+        <div class="drop-zone" data-file-type="certificate">
+          <strong>Certificato medico</strong>
+          <span>Trascina qui il file o clicca</span>
+          <input type="file" accept=".pdf,.jpg,.jpeg,.png">
+          <ul id="certificateFiles"></ul>
+        </div>
+        <div class="drop-zone" data-file-type="documents">
+          <strong>Documenti iscrizione</strong>
+          <span>Trascina qui uno o piu file</span>
+          <input type="file" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" multiple>
+          <ul id="registrationFiles"></ul>
+        </div>
+      </section>
+
+      <footer class="modal-actions">
+        <button class="soft-button" id="cancelModalButton" type="button">Annulla</button>
+        <button class="primary-action inline" type="submit">Salva modifiche</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <dialog class="payment-modal" id="paymentModal">
+    <form class="modal-card payment-card" id="paymentForm" method="dialog">
+      <header class="modal-head">
+        <div>
+          <span class="micro">Pagamento</span>
+          <h2 id="paymentModalTitle">Quota mensile</h2>
+        </div>
+        <button class="modal-close" id="closePaymentButton" type="button" aria-label="Chiudi">x</button>
+      </header>
+
+      <div class="form-grid">
+        <label>
+          Da mese
+          <select name="startMonth" id="paymentStartMonth"></select>
+        </label>
+        <label>
+          A mese
+          <select name="endMonth" id="paymentEndMonth"></select>
+        </label>
+        <label>
+          Mese
+          <select name="month" id="paymentMonth"></select>
+        </label>
+        <label>
+          Quota prevista
+          <input name="expected" type="number" min="0" step="5">
+        </label>
+        <label>
+          Pagato
+          <input name="paid" type="number" min="0" step="5">
+        </label>
+        <label>
+          Giorni a settimana
+          <input name="days" type="number" min="0" max="7" step="1">
+        </label>
+      </div>
+
+      <footer class="modal-actions">
+        <button class="soft-button" id="cancelPaymentButton" type="button">Annulla</button>
+        <button class="primary-action inline" type="submit">Salva pagamento</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
