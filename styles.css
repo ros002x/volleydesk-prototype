@@ -1793,3 +1793,105 @@ pre {
     width: 100%;
   }
 }
+
+/* Accounting adaptive views */
+.accounting-mobile-list {
+  display: none;
+}
+
+.accounting-desktop-grid {
+  display: grid;
+}
+
+@media (max-width: 900px) {
+  .accounting-board {
+    overflow: visible;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  .accounting-desktop-grid {
+    display: none;
+  }
+
+  .accounting-mobile-list {
+    display: grid;
+    gap: 12px;
+  }
+
+  .accounting-mobile-card {
+    border: 1px solid rgba(17, 17, 20, 0.08);
+    border-radius: 22px;
+    padding: 14px;
+    background: rgba(255, 255, 255, 0.78);
+    box-shadow: 0 16px 34px rgba(17, 17, 20, 0.07);
+    backdrop-filter: blur(22px);
+  }
+
+  .accounting-mobile-card header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .accounting-mobile-card header strong,
+  .accounting-mobile-card header span {
+    display: block;
+  }
+
+  .accounting-mobile-card header span {
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+
+  .accounting-mobile-card .soft-button {
+    min-height: 36px;
+    padding: 0 12px;
+    font-size: 0.82rem;
+  }
+
+  .accounting-month-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .mobile-payment-chip {
+    display: grid;
+    gap: 4px;
+    min-height: 62px;
+    border: 1px solid rgba(17, 17, 20, 0.06);
+    border-radius: 16px;
+    padding: 10px;
+    color: var(--text);
+    text-align: left;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.82);
+  }
+
+  .mobile-payment-chip span {
+    color: rgba(17, 17, 20, 0.56);
+    font-size: 0.72rem;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+
+  .mobile-payment-chip strong {
+    font-size: 0.86rem;
+  }
+
+  .accounting-mobile-card.accounting-row-selected {
+    border-color: rgba(0, 122, 255, 0.34);
+    background: linear-gradient(145deg, rgba(0, 122, 255, 0.15), rgba(255, 255, 255, 0.86));
+  }
+}
+
+@media (max-width: 420px) {
+  .accounting-month-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

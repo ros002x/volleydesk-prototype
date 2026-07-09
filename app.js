@@ -277,11 +277,27 @@ function updateAccountingControls() {
   editAccountingButton.disabled = activeAccountingIndex === null && selectedAccountingRows.size !== 1;
 }
 
+function visibleAccountingMonths() {
+  const startValue = accountingStartDate.value || "2026-09-01";
+  const endValue = accountingEndDate.value || "2027-08-31";
+  const start = new Date(`${startValue}T00:00:00`);
+  const end = new Date(`${endValue}T23:59:59`);
+
+  return seasonMonths.filter((month, index) => {
+    const year = index <= 3 ? 2026 : 2027;
+    const monthNumber = [8, 9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7][index];
+    const monthStart = new Date(year, monthNumber, 1);
+    const monthEnd = new Date(year, monthNumber + 1, 0, 23, 59, 59);
+    return monthEnd >= start && monthStart <= end;
+  });
+}
+
 function renderAccounting() {
   const rows = currentAccountingList();
+  const visibleMonths = visibleAccountingMonths();
   const header = `
     <div class="accounting-cell accounting-head accounting-name">Atleta</div>
-    ${seasonMonths.map((month) => `<div class="accounting-cell accounting-head">${month.label}</div>`).join("")}
+    ${visibleMonths.map((month) => `<div class="accounting-cell accounting-head">${month.label}</div>`).join("")}
   `;
 
   const body = rows.map(({ athlete, index }) => {
@@ -291,7 +307,7 @@ function renderAccounting() {
         ${athleteName(athlete)}
         <span>${athlete.category}</span>
       </div>
-      ${seasonMonths.map((month) => {
+      ${visibleMonths.map((month) => {
         const payment = athlete.accounting[month.key];
         const state = paymentState(payment);
         return `
@@ -304,7 +320,37 @@ function renderAccounting() {
     `;
   }).join("");
 
-  accountingBoard.innerHTML = `<div class="accounting-grid">${header}${body}</div>`;
+  const mobileCards = rows.map(({ athlete, index }) => {
+    const selected = selectedAccountingRows.has(index) || activeAccountingIndex === index;
+    return `
+      <article class="accounting-mobile-card ${selected ? "accounting-row-selected" : ""}" data-index="${index}">
+        <header>
+          <div>
+            <strong>${athleteName(athlete)}</strong>
+            <span>${athlete.category}</span>
+          </div>
+          <button class="soft-button mobile-edit-payment" type="button" data-index="${index}">Modifica</button>
+        </header>
+        <div class="accounting-month-list">
+          ${visibleMonths.map((month) => {
+            const payment = athlete.accounting[month.key];
+            const state = paymentState(payment);
+            return `
+              <button class="mobile-payment-chip payment-${state}" type="button" data-index="${index}" data-month="${month.key}">
+                <span>${month.label}</span>
+                <strong>\u20ac${payment.paid}/${payment.expected}</strong>
+              </button>
+            `;
+          }).join("")}
+        </div>
+      </article>
+    `;
+  }).join("");
+
+  accountingBoard.innerHTML = `
+    <div class="accounting-desktop-grid accounting-grid">${header}${body}</div>
+    <div class="accounting-mobile-list">${mobileCards}</div>
+  `;
   updateAccountingControls();
 }
 
@@ -457,6 +503,32 @@ accountingStartDate.addEventListener("change", () => renderAccounting());
 accountingEndDate.addEventListener("change", () => renderAccounting());
 
 accountingBoard.addEventListener("click", (event) => {
+  const editButton = event.target.closest(".mobile-edit-payment");
+  if (editButton) {
+    const index = Number(editButton.dataset.index);
+    activeAccountingIndex = index;
+    openPaymentModal(index, activeAccountingMonth, true);
+    return;
+  }
+
+  const paymentChip = event.target.closest(".mobile-payment-chip");
+  if (paymentChip) {
+    const index = Number(paymentChip.dataset.index);
+    activeAccountingIndex = index;
+    activeAccountingMonth = paymentChip.dataset.month;
+    if (accountingSelectionMode) {
+      if (selectedAccountingRows.has(index)) {
+        selectedAccountingRows.delete(index);
+      } else {
+        selectedAccountingRows.add(index);
+      }
+      renderAccounting();
+      return;
+    }
+    openPaymentModal(index, activeAccountingMonth, true);
+    return;
+  }
+
   const cell = event.target.closest("[data-index]");
   if (!cell) return;
 
@@ -688,3 +760,5 @@ function renderAll() {
 }
 
 renderAll();
+
+
