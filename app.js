@@ -99,6 +99,8 @@ const accountingBoard = document.querySelector("#accountingBoard");
 const documentList = document.querySelector("#documentList");
 const deadlineList = document.querySelector("#deadlineList");
 const deadlineTotal = document.querySelector("#deadlineTotal");
+const notificationToggle = document.querySelector("#notificationToggle");
+const notificationPanel = document.querySelector("#notificationPanel");
 const searchInput = document.querySelector("#athleteSearch");
 const accountingSearch = document.querySelector("#accountingSearch");
 const accountingFilter = document.querySelector("#accountingFilter");
@@ -557,6 +559,13 @@ document.querySelectorAll(".nav-item-proxy").forEach((item) => {
 
 bottomNavItems.forEach((item) => {
   item.addEventListener("click", () => showView(item.dataset.view));
+});
+notificationToggle?.addEventListener("click", () => {
+  const isOpen = notificationPanel?.hidden === false;
+  if (!notificationPanel) return;
+  notificationPanel.hidden = isOpen;
+  notificationToggle.classList.toggle("active", !isOpen);
+  notificationToggle.setAttribute("aria-expanded", String(!isOpen));
 });
 deadlineList?.addEventListener("click", (event) => {
   const chip = event.target.closest(".season-month");

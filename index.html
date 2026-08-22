@@ -13,12 +13,8 @@
   <main class="screen">
     <section class="product-shell">
       <aside class="side-nav" aria-label="Navigazione principale">
-        <a class="brand" href="#overview" aria-label="NS Volley home">
+        <a class="brand brand-compact nav-item-proxy" href="#overview" data-target="overview" aria-label="NS Volley home">
           <span class="brand-mark">NS</span>
-          <span>
-            <strong>NS Volley</strong>
-            <small>Gestione sportiva</small>
-          </span>
         </a>
         <nav class="pill-nav" aria-label="Sezioni rapide">
           <button class="nav-item active" type="button" data-view="overview">Home</button>
@@ -36,12 +32,11 @@
       </aside>
 
       <section class="workspace">        <header class="mobile-app-header" aria-label="NS Volley">
-          <button class="icon-button nav-item-proxy top-notification" type="button" data-target="communications" aria-label="Notifiche">
+          <button class="icon-button top-notification" id="notificationToggle" type="button" aria-label="Attiva notifiche" aria-expanded="false">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg>
           </button>
-          <a class="app-logo nav-item-proxy" href="#overview" data-target="overview" aria-label="NS Volley home">
+          <a class="app-logo app-logo-compact nav-item-proxy" href="#overview" data-target="overview" aria-label="NS Volley home">
             <span>NS</span>
-            <strong>Volley</strong>
           </a>
           <details class="top-menu">
             <summary class="icon-button" aria-label="Apri menu">
@@ -52,7 +47,12 @@
               <button class="nav-item-proxy" type="button" data-target="documents">Documenti</button>
             </div>
           </details>
-        </header>        <section class="showcase view active mobile-home" id="overview">
+        </header>
+        <div class="notification-popover" id="notificationPanel" hidden>
+          <strong>Notifiche attive</strong>
+          <p>Riceverai avvisi per scadenze, certificati e quote aperte.</p>
+        </div>
+        <section class="showcase view active mobile-home" id="overview">
           <section class="home-hero" aria-labelledby="homeHeroTitle">
             <div class="hero-text">
               <p class="hello">Ciao Rosario</p>
