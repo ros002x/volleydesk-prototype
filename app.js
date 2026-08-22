@@ -92,7 +92,7 @@ const payments = [
 
 const views = document.querySelectorAll(".view");
 const navItems = document.querySelectorAll(".nav-item");
-const bottomNavItems = document.querySelectorAll(".bottom-nav-item");
+const bottomNavItems = document.querySelectorAll(".bottom-nav-item, .bottom-nav-home");
 const athleteTable = document.querySelector("#athleteTable");
 const certificateGrid = document.querySelector("#certificateGrid");
 const accountingBoard = document.querySelector("#accountingBoard");
@@ -547,6 +547,7 @@ document.querySelectorAll(".nav-item-proxy").forEach((item) => {
   item.addEventListener("click", (event) => {
     event.preventDefault();
     showView(item.dataset.target);
+    item.closest("details")?.removeAttribute("open");
   });
 });
 
