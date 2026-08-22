@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VolleyDesk</title>
+  <title>Ace | Volley Desk</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -12,136 +12,156 @@
 <body>
   <main class="screen">
     <section class="product-shell">
-      <header class="top-nav">
-        <a class="brand" href="#overview" aria-label="VolleyDesk">VolleyDesk</a>
+      <aside class="side-nav" aria-label="Navigazione principale">
+        <a class="brand" href="#overview" aria-label="Ace home">
+          <span class="brand-mark">A</span>
+          <span>
+            <strong>Ace</strong>
+            <small>VolleyDesk</small>
+          </span>
+        </a>
         <nav class="pill-nav" aria-label="Sezioni rapide">
           <button class="nav-item active" type="button" data-view="overview">Home</button>
           <button class="nav-item" type="button" data-view="athletes">Atleti</button>
           <button class="nav-item" type="button" data-view="certificates">Certificati</button>
-          <button class="nav-item" type="button" data-view="accounting">Contabilità</button>
+          <button class="nav-item" type="button" data-view="accounting">Contabilita</button>
           <button class="nav-item" type="button" data-view="documents">Documenti</button>
           <button class="nav-item" type="button" data-view="storage">Dati</button>
         </nav>
-      </header>
-
-      <section class="showcase view active" id="overview">
-        <div class="headline">
-          <span class="micro">ATHLETE DATA</span>
-          <h1>Gestione<br>atleti</h1>
-          <p>Roster, certificati, quote e documenti in un unico spazio.</p>
+        <div class="side-meta">
+          <span>Stagione</span>
+          <strong>2026 / 2027</strong>
         </div>
+      </aside>
 
-        <div class="athlete-visual" aria-hidden="true">
-          <article class="profile-card">
-            <div class="profile-top">
-              <span class="avatar" aria-hidden="true">
-                <span class="ball-icon"></span>
-              </span>
-              <div>
-                <strong>Sara Conti</strong>
-                <span>U18 · Libero</span>
-              </div>
-            </div>
-            <div class="progress-ring">
-              <span>94%</span>
-            </div>
-            <div class="profile-stats">
-              <span>Certificato</span>
-              <strong>OK</strong>
-            </div>
-          </article>
-          <article class="mini-card mini-doc">
-            <span>Docs</span>
-            <strong>24</strong>
-          </article>
-          <article class="mini-card mini-fee">
-            <span>Quote</span>
-            <strong>€0</strong>
-          </article>
-          <span class="soft-shadow"></span>
-        </div>
-
-        <div class="side-stack">
-          <article class="glass-card">
-            <span>Atleti</span>
-            <strong id="athleteCount">0</strong>
-          </article>
-          <article class="glass-card">
-            <span>Certificati</span>
-            <strong id="certificateCount">0</strong>
-          </article>
-          <article class="glass-card">
-            <span>Quote aperte</span>
-            <strong id="debtCount">0</strong>
-          </article>
-        </div>
-      </section>
-
-      <section class="data-panel view" id="athletes">
-        <div class="panel-title">
-          <span>Roster</span>
-          <h2>Elenco atleti</h2>
-          <div class="panel-actions">
-            <input id="athleteSearch" type="search" placeholder="Cerca">
-            <button class="soft-button" id="selectAthletesButton" type="button">Seleziona</button>
-            <button class="danger-button" id="deleteSelectedButton" type="button" hidden>Elimina 0</button>
-            <button class="primary-action inline" id="addAthleteButton" type="button">Nuovo atleta</button>
+      <section class="workspace">
+        <header class="top-bar">
+          <div>
+            <span class="micro">Gestione societa</span>
+            <h1>Dashboard operativa</h1>
           </div>
-        </div>
-        <div class="data-list" id="athleteTable"></div>
-      </section>
-
-      <section class="data-panel view" id="certificates">
-        <div class="panel-title">
-          <span>Salute</span>
-          <h2>Certificati</h2>
-          <button class="soft-button" type="button">Carica PDF</button>
-        </div>
-        <div class="tile-grid" id="certificateGrid"></div>
-      </section>
-
-      <section class="data-panel view" id="accounting">
-        <div class="panel-title">
-          <span>Quote</span>
-          <h2>Contabilità</h2>
-          <div class="panel-actions accounting-actions">
-            <input id="accountingSearch" type="search" placeholder="Cerca">
-            <select class="toolbar-select" id="accountingFilter">
-              <option value="all">Tutti</option>
-              <option value="paid">Pagati</option>
-              <option value="partial">Parziali</option>
-              <option value="unpaid">Scoperti</option>
-            </select>
-            <input id="accountingStartDate" type="date" value="2026-09-01" aria-label="Data inizio">
-            <input id="accountingEndDate" type="date" value="2027-08-31" aria-label="Data fine">
-            <button class="soft-button" id="editAccountingButton" type="button">Modifica</button>
-            <button class="soft-button" id="selectAccountingButton" type="button">Seleziona</button>
-            <button class="danger-button" id="deleteAccountingButton" type="button" hidden>Elimina 0</button>
+          <div class="top-actions">
+            <span class="status-dot"></span>
+            <span>Dati locali</span>
           </div>
-        </div>
-        <div class="accounting-board" id="accountingBoard"></div>
-      </section>
+        </header>
 
-      <section class="data-panel view" id="documents">
-        <div class="panel-title">
-          <span>Archivio</span>
-          <h2>Documenti</h2>
-          <strong id="documentCount">0</strong>
-        </div>
-        <div class="data-list" id="documentList"></div>
-      </section>
+        <section class="showcase view active" id="overview">
+          <div class="hero-copy">
+            <span class="micro">Roster, quote, salute, archivio</span>
+            <h2>Ogni atleta sotto controllo, anche da telefono.</h2>
+            <p>Una scrivania sportiva per segreteria e staff: schede, certificati, pagamenti mensili e documenti in un flusso unico.</p>
+            <div class="hero-actions">
+              <button class="primary-action inline nav-item-proxy" type="button" data-target="athletes">Apri roster</button>
+              <button class="soft-button nav-item-proxy" type="button" data-target="accounting">Vai alle quote</button>
+            </div>
+          </div>
 
-      <section class="data-panel view" id="storage">
-        <div class="panel-title">
-          <span>Deposito</span>
-          <h2>Dati</h2>
-          <button class="soft-button" id="exportButton" type="button">Esporta</button>
-        </div>
-        <div class="storage-box">
-          <strong id="storageSize">0 KB</strong>
-          <div class="storage-bar"><span id="storageFill"></span></div>
-          <pre id="dataPreview"></pre>
-        </div>
+          <div class="court-panel" aria-hidden="true">
+            <div class="court-lines"></div>
+            <article class="match-card">
+              <span>Atleta pronta</span>
+              <strong>Sara Conti</strong>
+              <small>U18 - Libero - Certificato OK</small>
+            </article>
+            <article class="score-card">
+              <span>Incassato</span>
+              <strong id="seasonBalance">0</strong>
+            </article>
+          </div>
+
+          <div class="metric-grid">
+            <article class="glass-card">
+              <span>Atleti</span>
+              <strong id="athleteCount">0</strong>
+            </article>
+            <article class="glass-card">
+              <span>Certificati validi</span>
+              <strong id="certificateCount">0</strong>
+            </article>
+            <article class="glass-card">
+              <span>Quote aperte</span>
+              <strong id="debtCount">0</strong>
+            </article>
+          </div>
+        </section>
+
+        <section class="data-panel view" id="athletes">
+          <div class="panel-title">
+            <div>
+              <span>Roster</span>
+              <h2>Elenco atleti</h2>
+            </div>
+            <div class="panel-actions">
+              <input id="athleteSearch" type="search" placeholder="Cerca atleta">
+              <button class="soft-button" id="selectAthletesButton" type="button">Seleziona</button>
+              <button class="danger-button" id="deleteSelectedButton" type="button" hidden>Elimina 0</button>
+              <button class="primary-action inline" id="addAthleteButton" type="button">Nuovo atleta</button>
+            </div>
+          </div>
+          <div class="data-list" id="athleteTable"></div>
+        </section>
+
+        <section class="data-panel view" id="certificates">
+          <div class="panel-title">
+            <div>
+              <span>Salute</span>
+              <h2>Certificati</h2>
+            </div>
+            <button class="soft-button" type="button">Carica PDF</button>
+          </div>
+          <div class="tile-grid" id="certificateGrid"></div>
+        </section>
+
+        <section class="data-panel view" id="accounting">
+          <div class="panel-title accounting-title">
+            <div>
+              <span>Quote</span>
+              <h2>Contabilita</h2>
+            </div>
+            <div class="panel-actions accounting-actions">
+              <input id="accountingSearch" type="search" placeholder="Cerca">
+              <select class="toolbar-select" id="accountingFilter">
+                <option value="all">Tutti</option>
+                <option value="paid">Pagati</option>
+                <option value="partial">Parziali</option>
+                <option value="unpaid">Scoperti</option>
+              </select>
+              <input id="accountingStartDate" type="date" value="2026-09-01" aria-label="Data inizio">
+              <input id="accountingEndDate" type="date" value="2027-08-31" aria-label="Data fine">
+              <button class="soft-button" id="editAccountingButton" type="button">Modifica</button>
+              <button class="soft-button" id="selectAccountingButton" type="button">Seleziona</button>
+              <button class="danger-button" id="deleteAccountingButton" type="button" hidden>Elimina 0</button>
+            </div>
+          </div>
+          <div class="accounting-board" id="accountingBoard"></div>
+        </section>
+
+        <section class="data-panel view" id="documents">
+          <div class="panel-title">
+            <div>
+              <span>Archivio</span>
+              <h2>Documenti</h2>
+            </div>
+            <strong class="count-pill" id="documentCount">0</strong>
+          </div>
+          <div class="data-list" id="documentList"></div>
+        </section>
+
+        <section class="data-panel view" id="storage">
+          <div class="panel-title">
+            <div>
+              <span>Deposito</span>
+              <h2>Dati</h2>
+            </div>
+            <button class="soft-button" id="exportButton" type="button">Esporta</button>
+          </div>
+          <div class="storage-box">
+            <strong id="storageSize">0 KB</strong>
+            <div class="storage-bar"><span id="storageFill"></span></div>
+            <pre id="dataPreview"></pre>
+          </div>
+        </section>
       </section>
 
       <a class="creator-tag" href="#" aria-label="Instagram Rosario Trupo">
@@ -166,8 +186,7 @@
         <label>Cognome <input name="lastName" type="text" required></label>
         <label>Email <input name="email" type="email"></label>
         <label>Cellulare <input name="phone" type="tel"></label>
-        <label>
-          Sesso
+        <label>Sesso
           <select name="gender">
             <option value="">Seleziona</option>
             <option value="F">Femminile</option>
@@ -231,30 +250,12 @@
       </header>
 
       <div class="form-grid">
-        <label>
-          Da mese
-          <select name="startMonth" id="paymentStartMonth"></select>
-        </label>
-        <label>
-          A mese
-          <select name="endMonth" id="paymentEndMonth"></select>
-        </label>
-        <label>
-          Mese
-          <select name="month" id="paymentMonth"></select>
-        </label>
-        <label>
-          Quota prevista
-          <input name="expected" type="number" min="0" step="5">
-        </label>
-        <label>
-          Pagato
-          <input name="paid" type="number" min="0" step="5">
-        </label>
-        <label>
-          Giorni a settimana
-          <input name="days" type="number" min="0" max="7" step="1">
-        </label>
+        <label>Da mese <select name="startMonth" id="paymentStartMonth"></select></label>
+        <label>A mese <select name="endMonth" id="paymentEndMonth"></select></label>
+        <label>Mese <select name="month" id="paymentMonth"></select></label>
+        <label>Quota prevista <input name="expected" type="number" min="0" step="5"></label>
+        <label>Pagato <input name="paid" type="number" min="0" step="5"></label>
+        <label>Giorni a settimana <input name="days" type="number" min="0" max="7" step="1"></label>
       </div>
 
       <footer class="modal-actions">
@@ -267,4 +268,3 @@
   <script src="app.js"></script>
 </body>
 </html>
-

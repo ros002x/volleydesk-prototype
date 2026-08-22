@@ -249,7 +249,7 @@ function renderCertificates() {
     <article class="certificate-card ${certificateCardClass(athlete.certificate)}">
       <div>
         <strong>${athleteName(athlete)}</strong>
-        <div class="muted">${athlete.category} · ${athlete.email || "Nessuna email"}</div>
+        <div class="muted">${athlete.category} - ${athlete.email || "Nessuna email"}</div>
       </div>
     </article>
   `).join("");
@@ -491,6 +491,10 @@ function addFiles(fileType, fileList) {
 
 navItems.forEach((item) => {
   item.addEventListener("click", () => showView(item.dataset.view));
+});
+
+document.querySelectorAll(".nav-item-proxy").forEach((item) => {
+  item.addEventListener("click", () => showView(item.dataset.target));
 });
 
 searchInput.addEventListener("input", (event) => {
@@ -760,5 +764,8 @@ function renderAll() {
 }
 
 renderAll();
+
+
+
 
 
