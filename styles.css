@@ -1087,3 +1087,161 @@ pre { background: #ffffff; color: var(--ink); box-shadow: inset 0 0 0 1px rgba(2
   }
   .quick-actions { grid-template-columns: repeat(5, minmax(82px, 1fr)); }
 }
+
+/* Device-specific layouts */
+@media (max-width: 699px) {
+  .screen {
+    width: min(100%, 430px);
+    padding: max(14px, env(safe-area-inset-top)) 18px calc(98px + env(safe-area-inset-bottom));
+  }
+  .product-shell { display: block; }
+  .side-nav { display: none; }
+  .workspace { gap: 18px; }
+  .mobile-app-header { display: grid; }
+  .showcase.active.mobile-home { grid-template-columns: 1fr; gap: 22px; }
+  .home-hero { min-height: 355px; padding-top: 14px; border-radius: 0; background: transparent; box-shadow: none; }
+  .hero-text { width: 60%; min-width: 208px; }
+  .hero-player { right: -86px; top: 10px; bottom: -18px; width: 295px; }
+  .match-surface { padding: 22px 20px 20px; }
+  .quick-actions { grid-auto-flow: column; grid-auto-columns: minmax(68px, 1fr); overflow-x: auto; }
+  .latest-news { padding-bottom: 8px; background: transparent; box-shadow: none; }
+  .bottom-nav { display: grid; }
+}
+
+@media (min-width: 700px) and (max-width: 1179px) {
+  body {
+    background:
+      radial-gradient(circle at 82% 4%, rgba(40, 103, 255, .10), transparent 34%),
+      linear-gradient(180deg, #ffffff 0%, #f8faff 68%, #f4f8ff 100%);
+  }
+  .screen {
+    width: 100%;
+    max-width: 1060px;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: max(22px, env(safe-area-inset-top)) 28px calc(112px + env(safe-area-inset-bottom));
+    background: transparent;
+    box-shadow: none;
+  }
+  .product-shell {
+    display: block;
+    min-height: auto;
+  }
+  .side-nav { display: none; }
+  .workspace { gap: 24px; }
+  .mobile-app-header {
+    position: sticky;
+    top: 0;
+    display: grid;
+    grid-template-columns: 56px 1fr auto;
+    min-height: 70px;
+    padding: 0 0 14px;
+    background: linear-gradient(180deg, rgba(248,250,255,.97), rgba(248,250,255,.78));
+    backdrop-filter: blur(20px);
+  }
+  .icon-button,
+  .user-avatar { width: 50px; height: 50px; }
+  .app-logo span { width: 40px; height: 40px; border-radius: 15px; }
+  .app-logo strong { font-size: 1.12rem; }
+  .showcase.active.mobile-home {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 330px;
+    gap: 22px;
+    align-items: start;
+  }
+  .home-hero {
+    grid-column: 1 / -1;
+    min-height: 520px;
+    padding: 48px 50px;
+    border-radius: 36px;
+    background:
+      linear-gradient(105deg, rgba(255,255,255,.98) 0%, rgba(255,255,255,.88) 46%, rgba(248,250,255,.20) 71%, rgba(248,250,255,0) 100%),
+      radial-gradient(circle at 72% 18%, rgba(40,103,255,.12), transparent 38%);
+    box-shadow: 0 26px 76px rgba(24,58,119,.085);
+  }
+  .hero-text { width: min(47%, 430px); }
+  .hello { font-size: 1.16rem; }
+  .home-hero h2 {
+    margin-top: 18px;
+    font-size: clamp(4.6rem, 9.4vw, 6.7rem);
+    line-height: .86;
+  }
+  .hero-subtitle { margin-top: 24px; font-size: 1.22rem; }
+  .calendar-cta { min-height: 54px; margin-top: 32px; padding: 0 24px; }
+  .hero-player {
+    right: -78px;
+    top: 8px;
+    bottom: -10px;
+    width: min(66%, 680px);
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 13%, #000 69%, transparent 100%), linear-gradient(180deg, #000 0%, #000 74%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 13%, #000 69%, transparent 100%), linear-gradient(180deg, #000 0%, #000 74%, transparent 100%);
+  }
+  .hero-player img { object-fit: cover; object-position: center center; }
+  .match-surface {
+    min-height: 300px;
+    padding: 28px;
+    border-radius: 32px;
+  }
+  .quick-actions {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    overflow: visible;
+    padding: 24px;
+    border-radius: 32px;
+    background: rgba(255,255,255,.68);
+    box-shadow: 0 20px 62px rgba(24,58,119,.06);
+  }
+  .quick-action { min-height: 98px; }
+  .quick-action span { width: 58px; height: 58px; }
+  .latest-news {
+    grid-column: 1 / -1;
+    padding: 28px 30px 32px;
+    border-radius: 32px;
+    background: rgba(255,255,255,.66);
+    box-shadow: 0 20px 62px rgba(24,58,119,.055);
+  }
+  .bottom-nav {
+    display: grid;
+    width: min(calc(100% - 56px), 720px);
+    min-height: 82px;
+    grid-template-columns: repeat(2, 1fr) 72px repeat(2, 1fr);
+    padding: 10px 16px;
+    border-radius: 32px;
+  }
+  .bottom-nav-add { width: 64px; height: 64px; font-size: 2rem; }
+  .bottom-nav-item { font-size: .74rem; }
+}
+
+@media (min-width: 1180px) {
+  .screen {
+    width: 100%;
+    max-width: none;
+    min-height: 100vh;
+    margin: 0;
+    padding: 24px;
+  }
+  .product-shell {
+    display: grid;
+    grid-template-columns: 264px minmax(0, 1fr);
+  }
+  .side-nav { display: flex; }
+  .bottom-nav { display: none; }
+  .showcase.active.mobile-home {
+    grid-template-columns: minmax(0, 1.22fr) minmax(340px, .78fr);
+  }
+}
+
+@media (min-width: 1440px) {
+  .product-shell { max-width: 1640px; grid-template-columns: 286px minmax(0, 1fr); }
+  .home-hero { min-height: 560px; padding: 70px 76px; }
+  .home-hero h2 { font-size: clamp(6.4rem, 7vw, 8.8rem); }
+  .hero-player { width: min(68%, 960px); right: -34px; }
+  .match-surface { min-height: 340px; }
+}
+
+@media (min-width: 700px) and (max-width: 1179px) {
+  .mobile-app-header .icon-button:first-child { display: grid; }
+  .app-logo { justify-self: center; margin-right: 0; }
+  .header-actions { margin-left: 0; }
+}
