@@ -101,6 +101,7 @@ const deadlineList = document.querySelector("#deadlineList");
 const deadlineTotal = document.querySelector("#deadlineTotal");
 const notificationToggle = document.querySelector("#notificationToggle");
 const notificationPanel = document.querySelector("#notificationPanel");
+const notificationClose = document.querySelector("#notificationClose");
 const searchInput = document.querySelector("#athleteSearch");
 const accountingSearch = document.querySelector("#accountingSearch");
 const accountingFilter = document.querySelector("#accountingFilter");
@@ -574,12 +575,43 @@ document.querySelectorAll(".nav-item-proxy").forEach((item) => {
 bottomNavItems.forEach((item) => {
   item.addEventListener("click", () => showView(item.dataset.view));
 });
-notificationToggle?.addEventListener("click", () => {
-  const isOpen = notificationPanel?.hidden === false;
+let notificationTimer;
+let notificationStartY = null;
+
+function hideNotificationToast() {
   if (!notificationPanel) return;
-  notificationPanel.hidden = isOpen;
-  notificationToggle.classList.toggle("active", !isOpen);
-  notificationToggle.setAttribute("aria-expanded", String(!isOpen));
+  notificationPanel.classList.remove("show");
+  notificationPanel.classList.add("hide");
+  notificationToggle?.classList.remove("active");
+  notificationToggle?.setAttribute("aria-expanded", "false");
+  window.clearTimeout(notificationTimer);
+  window.setTimeout(() => {
+    notificationPanel.hidden = true;
+    notificationPanel.classList.remove("hide");
+  }, 260);
+}
+
+function showNotificationToast() {
+  if (!notificationPanel) return;
+  window.clearTimeout(notificationTimer);
+  notificationPanel.hidden = false;
+  notificationPanel.classList.remove("hide");
+  notificationPanel.classList.add("show");
+  notificationToggle?.classList.add("active");
+  notificationToggle?.setAttribute("aria-expanded", "true");
+  notificationTimer = window.setTimeout(hideNotificationToast, 4200);
+}
+
+notificationToggle?.addEventListener("click", showNotificationToast);
+notificationClose?.addEventListener("click", hideNotificationToast);
+notificationPanel?.addEventListener("pointerdown", (event) => {
+  notificationStartY = event.clientY;
+});
+notificationPanel?.addEventListener("pointerup", (event) => {
+  if (notificationStartY === null) return;
+  const deltaY = event.clientY - notificationStartY;
+  notificationStartY = null;
+  if (deltaY < -24) hideNotificationToast();
 });
 deadlineList?.addEventListener("click", (event) => {
   const chip = event.target.closest(".season-month");

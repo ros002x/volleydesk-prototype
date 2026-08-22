@@ -13,9 +13,7 @@
   <main class="screen">
     <section class="product-shell">
       <aside class="side-nav" aria-label="Navigazione principale">
-        <a class="brand brand-compact nav-item-proxy" href="#overview" data-target="overview" aria-label="NS Volley home">
-          <span class="brand-mark">NS</span>
-        </a>
+        <div class="brand-space" aria-hidden="true"></div>
         <nav class="pill-nav" aria-label="Sezioni rapide">
           <button class="nav-item active" type="button" data-view="overview">Home</button>
           <button class="nav-item" type="button" data-view="athletes">Atleti</button>
@@ -35,9 +33,7 @@
           <button class="icon-button top-notification" id="notificationToggle" type="button" aria-label="Attiva notifiche" aria-expanded="false">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg>
           </button>
-          <a class="app-logo app-logo-compact nav-item-proxy" href="#overview" data-target="overview" aria-label="NS Volley home">
-            <span>NS</span>
-          </a>
+          <div class="app-header-space" aria-hidden="true"></div>
           <details class="top-menu">
             <summary class="icon-button" aria-label="Apri menu">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
@@ -48,9 +44,12 @@
             </div>
           </details>
         </header>
-        <div class="notification-popover" id="notificationPanel" hidden>
-          <strong>Notifiche attive</strong>
-          <p>Riceverai avvisi per scadenze, certificati e quote aperte.</p>
+        <div class="notification-toast" id="notificationPanel" role="status" aria-live="polite" hidden>
+          <div>
+            <strong>Notifiche attive</strong>
+            <p>Avvisi attivati per scadenze, certificati e quote aperte.</p>
+          </div>
+          <button class="toast-close" id="notificationClose" type="button" aria-label="Chiudi notifica">x</button>
         </div>
         <section class="showcase view active mobile-home" id="overview">
           <section class="home-hero" aria-labelledby="homeHeroTitle">
