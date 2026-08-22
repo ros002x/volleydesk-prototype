@@ -97,6 +97,8 @@ const athleteTable = document.querySelector("#athleteTable");
 const certificateGrid = document.querySelector("#certificateGrid");
 const accountingBoard = document.querySelector("#accountingBoard");
 const documentList = document.querySelector("#documentList");
+const deadlineList = document.querySelector("#deadlineList");
+const deadlineTotal = document.querySelector("#deadlineTotal");
 const searchInput = document.querySelector("#athleteSearch");
 const accountingSearch = document.querySelector("#accountingSearch");
 const accountingFilter = document.querySelector("#accountingFilter");
@@ -356,6 +358,40 @@ function renderAccounting() {
   updateAccountingControls();
 }
 
+
+function renderDeadlines() {
+  if (!deadlineList || !deadlineTotal) return;
+
+  const items = [
+    { date: "Dom 26 Mag", title: "Bari Volley vs Monza Volley", meta: "Partita - ore 18:00", tone: "match" },
+    { date: "Lun 20 Mag", title: "Nuovi orari allenamenti", meta: "Comunicazione staff", tone: "info" }
+  ];
+
+  athletes.forEach((athlete) => {
+    if (athlete.certificate === "Mancante") {
+      items.push({ date: "Urgente", title: `Certificato mancante - ${athleteName(athlete)}`, meta: athlete.category || "Roster", tone: "danger" });
+    }
+
+    if (athlete.certificate === "Scade") {
+      items.push({ date: "7 giorni", title: `Certificato in scadenza - ${athleteName(athlete)}`, meta: athlete.category || "Roster", tone: "warning" });
+    }
+
+    if (athlete.balance > 0) {
+      items.push({ date: "Fine mese", title: `Quota aperta - ${athleteName(athlete)}`, meta: `Saldo euro ${athlete.balance}`, tone: "money" });
+    }
+  });
+
+  deadlineTotal.textContent = items.length;
+  deadlineList.innerHTML = items.map((item) => `
+    <article class="deadline-item deadline-${item.tone}">
+      <time>${item.date}</time>
+      <div>
+        <strong>${item.title}</strong>
+        <span>${item.meta}</span>
+      </div>
+    </article>
+  `).join("");
+}
 function renderDocuments() {
   const uploadedDocuments = athletes.flatMap((athlete) => [
     ...athlete.files.certificate.map((file) => ({ title: file.name, type: "CERT", owner: athleteName(athlete) })),
@@ -496,7 +532,10 @@ navItems.forEach((item) => {
 });
 
 document.querySelectorAll(".nav-item-proxy").forEach((item) => {
-  item.addEventListener("click", () => showView(item.dataset.target));
+  item.addEventListener("click", (event) => {
+    event.preventDefault();
+    showView(item.dataset.target);
+  });
 });
 
 bottomNavItems.forEach((item) => {

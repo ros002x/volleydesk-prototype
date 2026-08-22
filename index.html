@@ -23,9 +23,14 @@
         <nav class="pill-nav" aria-label="Sezioni rapide">
           <button class="nav-item active" type="button" data-view="overview">Home</button>
           <button class="nav-item" type="button" data-view="athletes">Atleti</button>
+          <button class="nav-item" type="button" data-view="deadlines">Scadenziario</button>
+          <button class="nav-item" type="button" data-view="attendance">Presenze</button>
+          <button class="nav-item" type="button" data-view="standings">Classifiche</button>
+          <button class="nav-item" type="button" data-view="communications">Comunicazioni</button>
           <button class="nav-item" type="button" data-view="certificates">Certificati</button>
           <button class="nav-item" type="button" data-view="accounting">Contabilita</button>
           <button class="nav-item" type="button" data-view="documents">Documenti</button>
+          <button class="nav-item" type="button" data-view="more">Altro</button>
           <button class="nav-item" type="button" data-view="storage">Dati</button>
         </nav>
         <div class="side-meta">
@@ -35,18 +40,18 @@
       </aside>
 
       <section class="workspace">        <header class="mobile-app-header" aria-label="NS Volley">
-          <button class="icon-button" type="button" aria-label="Apri menu">
+          <button class="icon-button nav-item-proxy" type="button" data-target="more" aria-label="Apri menu">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
           </button>
-          <a class="app-logo" href="#overview" aria-label="NS Volley home">
+          <a class="app-logo nav-item-proxy" href="#overview" data-target="overview" aria-label="NS Volley home">
             <span>NS</span>
             <strong>Volley</strong>
           </a>
           <div class="header-actions">
-            <button class="icon-button" type="button" aria-label="Notifiche">
+            <button class="icon-button nav-item-proxy" type="button" data-target="communications" aria-label="Notifiche">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg>
             </button>
-            <button class="user-avatar" type="button" aria-label="Profilo utente">R</button>
+            <button class="user-avatar nav-item-proxy" type="button" data-target="athletes" aria-label="Profilo utente">R</button>
           </div>
         </header>        <section class="showcase view active mobile-home" id="overview">
           <section class="home-hero" aria-labelledby="homeHeroTitle">
@@ -54,7 +59,7 @@
               <p class="hello">Ciao Rosario</p>
               <h2 id="homeHeroTitle">Insieme,<br><span>pi&ugrave; forti.</span></h2>
               <p class="hero-subtitle">Ogni allenamento<br>ci avvicina alla vittoria.</p>
-              <button class="calendar-cta nav-item-proxy" type="button" data-target="accounting">Calendario <span aria-hidden="true">&rarr;</span></button>
+              <button class="calendar-cta nav-item-proxy" type="button" data-target="deadlines">Calendario <span aria-hidden="true">&rarr;</span></button>
             </div>
             <figure class="hero-player">
               <img src="assets/hero-volley-players.png" alt="Giocatore di pallavolo in schiacciata">
@@ -79,16 +84,16 @@
 
           <section class="quick-actions" aria-label="Azioni rapide">
             <button class="quick-action nav-item-proxy" type="button" data-target="athletes"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Squadre</button>
-            <button class="quick-action" type="button"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 4h10v5a5 5 0 0 1-10 0V4Z"/><path d="M17 6h3a2 2 0 0 1-2 4h-1"/><path d="M7 6H4a2 2 0 0 0 2 4h1"/></svg></span>Classifiche</button>
-            <button class="quick-action nav-item-proxy" type="button" data-target="accounting"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>Presenze</button>
+            <button class="quick-action nav-item-proxy" type="button" data-target="standings"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 4h10v5a5 5 0 0 1-10 0V4Z"/><path d="M17 6h3a2 2 0 0 1-2 4h-1"/><path d="M7 6H4a2 2 0 0 0 2 4h1"/></svg></span>Classifiche</button>
+            <button class="quick-action nav-item-proxy" type="button" data-target="attendance"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>Presenze</button>
             <button class="quick-action nav-item-proxy" type="button" data-target="documents"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg></span>Documenti</button>
-            <button class="quick-action nav-item-proxy" type="button" data-target="storage"><span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></span>Altro</button>
+            <button class="quick-action nav-item-proxy" type="button" data-target="more"><span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></span>Altro</button>
           </section>
 
           <section class="latest-news" aria-label="Ultime notizie">
             <div class="section-headline">
               <h3>ULTIME NOTIZIE</h3>
-              <button type="button">Vedi tutte <span aria-hidden="true">&rarr;</span></button>
+              <button class="nav-item-proxy" type="button" data-target="communications">Vedi tutte <span aria-hidden="true">&rarr;</span></button>
             </div>
             <article class="news-row">
               <div>
@@ -130,7 +135,7 @@
               <span>Salute</span>
               <h2>Certificati</h2>
             </div>
-            <button class="soft-button" type="button">Carica PDF</button>
+            <button class="soft-button nav-item-proxy" type="button" data-target="athletes">Seleziona atleta</button>
           </div>
           <div class="tile-grid" id="certificateGrid"></div>
         </section>
@@ -170,6 +175,84 @@
           <div class="data-list" id="documentList"></div>
         </section>
 
+
+        <section class="data-panel view deadlines-panel" id="deadlines">
+          <div class="panel-title">
+            <div>
+              <span>Agenda societa</span>
+              <h2>Scadenziario</h2>
+            </div>
+            <button class="soft-button nav-item-proxy" type="button" data-target="documents">Documenti</button>
+          </div>
+          <div class="deadline-hero">
+            <div>
+              <span>Da controllare</span>
+              <strong id="deadlineTotal">0</strong>
+              <p>Certificati, quote, documenti e appuntamenti ordinati per priorita.</p>
+            </div>
+            <button class="primary-action inline nav-item-proxy" type="button" data-target="certificates">Verifica certificati</button>
+          </div>
+          <div class="deadline-grid" id="deadlineList"></div>
+        </section>
+
+        <section class="data-panel view" id="attendance">
+          <div class="panel-title">
+            <div>
+              <span>Allenamenti</span>
+              <h2>Presenze</h2>
+            </div>
+            <button class="soft-button nav-item-proxy" type="button" data-target="athletes">Apri roster</button>
+          </div>
+          <div class="attendance-strip">
+            <article><span>Questa settimana</span><strong>86%</strong><small>Presenza media</small></article>
+            <article><span>U18</span><strong>18/20</strong><small>Ultimo allenamento</small></article>
+            <article><span>Serie D</span><strong>12/14</strong><small>Ultima sessione</small></article>
+          </div>
+        </section>
+
+        <section class="data-panel view" id="standings">
+          <div class="panel-title">
+            <div>
+              <span>Campionato</span>
+              <h2>Classifiche</h2>
+            </div>
+            <button class="soft-button nav-item-proxy" type="button" data-target="deadlines">Prossime gare</button>
+          </div>
+          <div class="standings-list">
+            <article><strong>1</strong><span>NS Volley</span><em>42 pt</em></article>
+            <article><strong>2</strong><span>Bari Volley</span><em>39 pt</em></article>
+            <article><strong>3</strong><span>Monza Volley</span><em>36 pt</em></article>
+          </div>
+        </section>
+
+        <section class="data-panel view" id="communications">
+          <div class="panel-title">
+            <div>
+              <span>Bacheca</span>
+              <h2>Comunicazioni</h2>
+            </div>
+            <button class="soft-button nav-item-proxy" type="button" data-target="documents">Archivio</button>
+          </div>
+          <div class="comms-list">
+            <article><span>ALLENAMENTI</span><strong>Nuovi orari di allenamento</strong><p>Da lunedi 20 Maggio nuovi orari per tutte le squadre.</p><time>2 ore fa</time></article>
+            <article><span>SEGRETERIA</span><strong>Consegna documenti iscrizione</strong><p>Controllare moduli privacy e certificati mancanti entro fine mese.</p><time>Ieri</time></article>
+          </div>
+        </section>
+
+        <section class="data-panel view" id="more">
+          <div class="panel-title">
+            <div>
+              <span>Menu</span>
+              <h2>Altro</h2>
+            </div>
+          </div>
+          <div class="more-grid">
+            <button class="nav-item-proxy" type="button" data-target="deadlines">Scadenziario</button>
+            <button class="nav-item-proxy" type="button" data-target="accounting">Contabilita</button>
+            <button class="nav-item-proxy" type="button" data-target="certificates">Certificati</button>
+            <button class="nav-item-proxy" type="button" data-target="storage">Dati ed export</button>
+          </div>
+        </section>
         <section class="data-panel view" id="storage">
           <div class="panel-title">
             <div>
@@ -188,9 +271,9 @@
 
       <nav class="bottom-nav" aria-label="Navigazione mobile">
         <button class="bottom-nav-item active" type="button" data-view="overview"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3V10.5Z"/></svg>Home</button>
-        <button class="bottom-nav-item" type="button" data-view="documents"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a4 4 0 0 1-4 4H7l-4 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8Z"/></svg>Comunicazioni</button>
+        <button class="bottom-nav-item" type="button" data-view="communications"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a4 4 0 0 1-4 4H7l-4 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8Z"/></svg>Comunicazioni</button>
         <button class="bottom-nav-add" type="button" id="mobileAddButton" aria-label="Nuovo atleta">+</button>
-        <button class="bottom-nav-item" type="button" data-view="accounting"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 16v-5"/><path d="M13 16V8"/><path d="M18 16v-3"/></svg>Statistiche</button>
+        <button class="bottom-nav-item" type="button" data-view="standings"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 16v-5"/><path d="M13 16V8"/><path d="M18 16v-3"/></svg>Statistiche</button>
         <button class="bottom-nav-item" type="button" data-view="athletes"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>Profilo</button>
       </nav>
       <a class="creator-tag" href="#" aria-label="Instagram Rosario Trupo">
