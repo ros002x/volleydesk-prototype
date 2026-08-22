@@ -364,42 +364,46 @@ function renderAccounting() {
 function renderDeadlines() {
   if (!deadlineList || !deadlineTotal) return;
 
-  const items = [
-    { date: "Dom 26 Mag", title: "Bari Volley vs Monza Volley", meta: "Partita - ore 18:00", tone: "match" },
-    { date: "Lun 20 Mag", title: "Nuovi orari allenamenti", meta: "Aggiornamento developer", tone: "info" }
-  ];
+  const openPayments = athletes.reduce((total, athlete) => {
+    return total + seasonMonths.filter((month) => paymentState(athlete.accounting[month.key]) !== "paid").length;
+  }, 0);
 
-  athletes.forEach((athlete) => {
-    if (athlete.certificate === "Mancante") {
-      items.push({ date: "Urgente", title: `Certificato mancante - ${athleteName(athlete)}`, meta: athlete.category || "Roster", tone: "danger" });
-    }
+  deadlineTotal.textContent = openPayments;
+  deadlineList.innerHTML = athletes.map((athlete, index) => {
+    const paidMonths = seasonMonths.filter((month) => paymentState(athlete.accounting[month.key]) === "paid").length;
+    const dueAmount = seasonMonths.reduce((total, month) => {
+      const payment = athlete.accounting[month.key];
+      return total + Math.max(0, payment.expected - payment.paid);
+    }, 0);
 
-    if (athlete.certificate === "Scade") {
-      items.push({ date: "7 giorni", title: `Certificato in scadenza - ${athleteName(athlete)}`, meta: athlete.category || "Roster", tone: "warning" });
-    }
-
-    const dueMonth = seasonMonths.find((month) => paymentState(athlete.accounting[month.key]) !== "paid");
-    if (dueMonth) {
-      const payment = athlete.accounting[dueMonth.key];
-      items.push({
-        date: dueMonth.label,
-        title: `Quota ${dueMonth.label} - ${athleteName(athlete)}`,
-        meta: `Euro ${payment.paid}/${payment.expected} - ${payment.days}g/set`,
-        tone: payment.paid > 0 ? "warning" : "money"
-      });
-    }
-  });
-
-  deadlineTotal.textContent = items.length;
-  deadlineList.innerHTML = items.map((item) => `
-    <article class="deadline-item deadline-${item.tone}">
-      <time>${item.date}</time>
-      <div>
-        <strong>${item.title}</strong>
-        <span>${item.meta}</span>
-      </div>
-    </article>
-  `).join("");
+    return `
+      <article class="season-row" data-index="${index}">
+        <header class="season-athlete">
+          <div>
+            <strong>${athleteName(athlete)}</strong>
+            <span>${athlete.category || "Categoria"}</span>
+          </div>
+          <em>${paidMonths}/12</em>
+        </header>
+        <div class="season-months" aria-label="Quote mensili ${athleteName(athlete)}">
+          ${seasonMonths.map((month) => {
+            const payment = athlete.accounting[month.key];
+            const state = paymentState(payment);
+            return `
+              <button class="season-month season-${state}" type="button" data-index="${index}" data-month="${month.key}" aria-label="${athleteName(athlete)} ${month.label} euro ${payment.paid} su ${payment.expected}">
+                <span>${month.label}</span>
+                <strong>${payment.paid}/${payment.expected}</strong>
+              </button>
+            `;
+          }).join("")}
+        </div>
+        <footer class="season-summary">
+          <span>Residuo</span>
+          <strong>Euro ${dueAmount}</strong>
+        </footer>
+      </article>
+    `;
+  }).join("");
 }
 function renderDocuments() {
   const uploadedDocuments = athletes.flatMap((athlete) => [
@@ -553,6 +557,11 @@ document.querySelectorAll(".nav-item-proxy").forEach((item) => {
 
 bottomNavItems.forEach((item) => {
   item.addEventListener("click", () => showView(item.dataset.view));
+});
+deadlineList?.addEventListener("click", (event) => {
+  const chip = event.target.closest(".season-month");
+  if (!chip) return;
+  openPaymentModal(Number(chip.dataset.index), chip.dataset.month, false);
 });
 
 searchInput.addEventListener("input", (event) => {
