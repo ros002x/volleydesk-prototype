@@ -370,7 +370,21 @@ function renderDeadlines() {
     return total + seasonMonths.filter((month) => paymentState(athlete.accounting[month.key]) !== "paid").length;
   }, 0);
 
+  const paidPayments = athletes.reduce((total, athlete) => {
+    return total + seasonMonths.filter((month) => paymentState(athlete.accounting[month.key]) === "paid").length;
+  }, 0);
+  const dueAmountTotal = athletes.reduce((total, athlete) => {
+    return total + seasonMonths.reduce((monthTotal, month) => {
+      const payment = athlete.accounting[month.key];
+      return monthTotal + Math.max(0, payment.expected - payment.paid);
+    }, 0);
+  }, 0);
+  const paidTotal = document.querySelector("#deadlinePaidTotal");
+  const dueTotal = document.querySelector("#deadlineDueTotal");
+
   deadlineTotal.textContent = openPayments;
+  if (paidTotal) paidTotal.textContent = paidPayments;
+  if (dueTotal) dueTotal.textContent = `Euro ${dueAmountTotal}`;
   deadlineList.innerHTML = athletes.map((athlete, index) => {
     const paidMonths = seasonMonths.filter((month) => paymentState(athlete.accounting[month.key]) === "paid").length;
     const dueAmount = seasonMonths.reduce((total, month) => {

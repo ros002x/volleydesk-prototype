@@ -154,22 +154,31 @@
         <section class="data-panel view deadlines-panel" id="deadlines">
           <div class="panel-title">
             <div>
-              <span>Agenda societa</span>
+              <span>Quote stagione</span>
               <h2>Scadenziario</h2>
             </div>
-
           </div>
-          <div class="deadline-hero">
-            <div>
-              <span>Da controllare</span>
+          <div class="deadline-hero deadline-summary">
+            <article>
+              <span>Mesi aperti</span>
               <strong id="deadlineTotal">0</strong>
-              <p>Quote mensili stagione Settembre-Agosto, atleta per atleta.</p>
-            </div>
-            <button class="primary-action inline nav-item-proxy" type="button" data-target="certificates">Apri certificati</button>
+            </article>
+            <article>
+              <span>Da incassare</span>
+              <strong id="deadlineDueTotal">Euro 0</strong>
+            </article>
+            <article>
+              <span>Mesi pagati</span>
+              <strong id="deadlinePaidTotal">0</strong>
+            </article>
+          </div>
+          <div class="deadline-legend" aria-label="Legenda stato quote">
+            <span><i class="legend-paid"></i>Pagato</span>
+            <span><i class="legend-partial"></i>Parziale</span>
+            <span><i class="legend-unpaid"></i>Scoperto</span>
           </div>
           <div class="deadline-grid" id="deadlineList"></div>
         </section>
-
         <section class="data-panel view" id="standings">
           <div class="panel-title">
             <div>
