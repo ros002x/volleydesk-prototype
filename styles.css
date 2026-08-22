@@ -1472,3 +1472,89 @@ pre { background: #ffffff; color: var(--ink); box-shadow: inset 0 0 0 1px rgba(2
   .more-grid { grid-template-columns: 1fr; }
   .more-grid button { min-height: 54px; }
 }
+
+/* Mobile hero rebuild */
+@media (max-width: 699px) {
+  .home-hero {
+    display: grid;
+    grid-template-rows: auto minmax(185px, 42vw);
+    gap: 18px;
+    min-height: auto;
+    padding: 8px 0 0;
+    overflow: visible;
+  }
+  .hero-text {
+    width: 100%;
+    min-width: 0;
+    padding-right: 0;
+  }
+  .home-hero h2 {
+    max-width: 330px;
+    font-size: clamp(3.25rem, 16vw, 4.25rem);
+    line-height: .88;
+  }
+  .hero-subtitle {
+    max-width: 245px;
+    margin-top: 16px;
+  }
+  .calendar-cta {
+    margin-top: 20px;
+    min-height: 48px;
+  }
+  .hero-player {
+    position: relative;
+    right: auto;
+    top: auto;
+    bottom: auto;
+    width: calc(100% + 32px);
+    height: clamp(188px, 46vw, 230px);
+    margin: -4px -16px 0;
+    border-radius: 0 0 30px 30px;
+    opacity: 1;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 12%, #000 66%, transparent 100%);
+    mask-image: linear-gradient(180deg, transparent 0%, #000 12%, #000 66%, transparent 100%);
+  }
+  .hero-player::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      linear-gradient(90deg, rgba(248,250,255,.96) 0%, rgba(248,250,255,.38) 34%, rgba(248,250,255,0) 58%),
+      linear-gradient(180deg, rgba(248,250,255,0) 40%, var(--canvas) 100%);
+    pointer-events: none;
+  }
+  .hero-player::after {
+    height: 58%;
+    z-index: 2;
+  }
+  .hero-player img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 54% 39%;
+    transform: scale(1.03);
+  }
+  .match-surface { margin-top: -4px; }
+}
+
+@media (max-width: 390px) {
+  .home-hero h2 { font-size: clamp(3rem, 15.2vw, 3.72rem); }
+  .hero-player {
+    width: calc(100% + 30px);
+    height: 188px;
+    margin-inline: -15px;
+  }
+}
+
+@media (max-width: 360px) {
+  .home-hero h2 { font-size: clamp(2.78rem, 14.8vw, 3.25rem); }
+  .hero-subtitle { font-size: .94rem; }
+  .hero-player {
+    right: auto;
+    width: calc(100% + 30px);
+    height: 176px;
+    opacity: 1;
+  }
+}
