@@ -92,6 +92,7 @@ const payments = [
 
 const views = document.querySelectorAll(".view");
 const navItems = document.querySelectorAll(".nav-item");
+const bottomNavItems = document.querySelectorAll(".bottom-nav-item");
 const athleteTable = document.querySelector("#athleteTable");
 const certificateGrid = document.querySelector("#certificateGrid");
 const accountingBoard = document.querySelector("#accountingBoard");
@@ -173,6 +174,7 @@ function paymentState(payment) {
 function showView(viewId) {
   views.forEach((view) => view.classList.toggle("active", view.id === viewId));
   navItems.forEach((item) => item.classList.toggle("active", item.dataset.view === viewId));
+  bottomNavItems.forEach((item) => item.classList.toggle("active", item.dataset.view === viewId));
 }
 
 function badgeClass(value) {
@@ -497,6 +499,10 @@ document.querySelectorAll(".nav-item-proxy").forEach((item) => {
   item.addEventListener("click", () => showView(item.dataset.target));
 });
 
+bottomNavItems.forEach((item) => {
+  item.addEventListener("click", () => showView(item.dataset.view));
+});
+
 searchInput.addEventListener("input", (event) => {
   renderCurrentAthletes();
 });
@@ -642,7 +648,7 @@ deleteSelectedButton.addEventListener("click", () => {
   renderAll();
 });
 
-document.querySelector("#addAthleteButton").addEventListener("click", () => {
+function createAthleteFromUi() {
   setSelectionMode(false);
   athletes.push({
     firstName: "Nuovo",
@@ -663,7 +669,10 @@ document.querySelector("#addAthleteButton").addEventListener("click", () => {
   renderAll();
   showView("athletes");
   openAthleteModal(athletes.length - 1);
-});
+}
+
+document.querySelector("#addAthleteButton").addEventListener("click", createAthleteFromUi);
+document.querySelector("#mobileAddButton")?.addEventListener("click", createAthleteFromUi);
 
 document.querySelector("#closeModalButton").addEventListener("click", () => modal.close());
 document.querySelector("#cancelModalButton").addEventListener("click", () => modal.close());
