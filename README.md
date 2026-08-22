@@ -1,6 +1,6 @@
-# Ace
+# NS Volley
 
-Applicazione statica per la gestione di una societa di volley. Mantiene le aree operative di VolleyDesk con una nuova interfaccia mobile-first.
+Applicazione statica per la gestione di una societa di volley. Mantiene le aree operative per roster, certificati, quote, documenti e dati con una nuova interfaccia mobile-first.
 
 ## Aree
 
