@@ -1558,3 +1558,94 @@ pre { background: #ffffff; color: var(--ink); box-shadow: inset 0 0 0 1px rgba(2
     opacity: 1;
   }
 }
+
+/* Removed-area cleanup and compact mobile data rows */
+@media (max-width: 699px) {
+  .data-list { gap: 8px; }
+  .table-row.athlete-row {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    min-height: 58px;
+    padding: 11px 12px;
+    border-left-width: 4px;
+    border-radius: 18px;
+    gap: 9px;
+  }
+  .table-row.athlete-row > div:first-child { min-width: 0; }
+  .table-row.athlete-row .name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: .94rem;
+  }
+  .table-row.athlete-row .athlete-contact {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+    margin-top: 2px;
+    font-size: .72rem;
+  }
+  .table-row.athlete-row .athlete-contact span + span { display: none; }
+  .table-row.athlete-row > div:nth-child(2),
+  .table-row.athlete-row > div:nth-child(3) {
+    display: inline-flex;
+    align-items: center;
+    min-height: 28px;
+    padding: 0 8px;
+    border-radius: 999px;
+    background: rgba(40,103,255,.07);
+    color: var(--accent);
+    font-size: .72rem;
+    font-weight: 900;
+    white-space: nowrap;
+  }
+
+  .deadline-hero {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 10px;
+  }
+  .deadline-hero strong { font-size: 2.2rem; }
+  .deadline-hero p { font-size: .82rem; }
+  .deadline-hero .primary-action {
+    grid-column: 1 / -1;
+    min-height: 44px;
+  }
+  .deadline-grid { gap: 8px; }
+  .deadline-item {
+    grid-template-columns: 62px minmax(0, 1fr);
+    min-height: 58px;
+    padding: 9px 10px;
+    border-radius: 18px;
+    gap: 10px;
+  }
+  .deadline-item time {
+    min-height: 42px;
+    border-radius: 14px;
+    font-size: .62rem;
+    line-height: 1.05;
+  }
+  .deadline-item div { min-width: 0; }
+  .deadline-item strong {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: .88rem;
+  }
+  .deadline-item span {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-top: 2px;
+    font-size: .72rem;
+  }
+
+  .quick-actions {
+    grid-auto-columns: minmax(74px, 1fr);
+  }
+  .quick-action { min-height: 76px; }
+  .quick-action span { width: 44px; height: 44px; }
+}

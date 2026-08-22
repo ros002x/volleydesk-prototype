@@ -24,14 +24,10 @@
           <button class="nav-item active" type="button" data-view="overview">Home</button>
           <button class="nav-item" type="button" data-view="athletes">Atleti</button>
           <button class="nav-item" type="button" data-view="deadlines">Scadenziario</button>
-          <button class="nav-item" type="button" data-view="attendance">Presenze</button>
           <button class="nav-item" type="button" data-view="standings">Classifiche</button>
           <button class="nav-item" type="button" data-view="communications">Comunicazioni</button>
           <button class="nav-item" type="button" data-view="certificates">Certificati</button>
-          <button class="nav-item" type="button" data-view="accounting">Contabilita</button>
           <button class="nav-item" type="button" data-view="documents">Documenti</button>
-          <button class="nav-item" type="button" data-view="more">Altro</button>
-          <button class="nav-item" type="button" data-view="storage">Dati</button>
         </nav>
         <div class="side-meta">
           <span>Stagione</span>
@@ -40,7 +36,7 @@
       </aside>
 
       <section class="workspace">        <header class="mobile-app-header" aria-label="NS Volley">
-          <button class="icon-button nav-item-proxy" type="button" data-target="more" aria-label="Apri menu">
+          <button class="icon-button nav-item-proxy" type="button" data-target="deadlines" aria-label="Apri scadenziario">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
           </button>
           <a class="app-logo nav-item-proxy" href="#overview" data-target="overview" aria-label="NS Volley home">
@@ -85,9 +81,9 @@
           <section class="quick-actions" aria-label="Azioni rapide">
             <button class="quick-action nav-item-proxy" type="button" data-target="athletes"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Squadre</button>
             <button class="quick-action nav-item-proxy" type="button" data-target="standings"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 4h10v5a5 5 0 0 1-10 0V4Z"/><path d="M17 6h3a2 2 0 0 1-2 4h-1"/><path d="M7 6H4a2 2 0 0 0 2 4h1"/></svg></span>Classifiche</button>
-            <button class="quick-action nav-item-proxy" type="button" data-target="attendance"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>Presenze</button>
+            <button class="quick-action nav-item-proxy" type="button" data-target="deadlines"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>Scadenze</button>
             <button class="quick-action nav-item-proxy" type="button" data-target="documents"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg></span>Documenti</button>
-            <button class="quick-action nav-item-proxy" type="button" data-target="more"><span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></span>Altro</button>
+            <button class="quick-action nav-item-proxy" type="button" data-target="certificates"><span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></span>Certificati</button>
           </section>
 
           <section class="latest-news" aria-label="Ultime notizie">
@@ -140,34 +136,10 @@
           <div class="tile-grid" id="certificateGrid"></div>
         </section>
 
-        <section class="data-panel view" id="accounting">
-          <div class="panel-title accounting-title">
-            <div>
-              <span>Quote</span>
-              <h2>Contabilita</h2>
-            </div>
-            <div class="panel-actions accounting-actions">
-              <input id="accountingSearch" type="search" placeholder="Cerca">
-              <select class="toolbar-select" id="accountingFilter">
-                <option value="all">Tutti</option>
-                <option value="paid">Pagati</option>
-                <option value="partial">Parziali</option>
-                <option value="unpaid">Scoperti</option>
-              </select>
-              <input id="accountingStartDate" type="date" value="2026-09-01" aria-label="Data inizio">
-              <input id="accountingEndDate" type="date" value="2027-08-31" aria-label="Data fine">
-              <button class="soft-button" id="editAccountingButton" type="button">Modifica</button>
-              <button class="soft-button" id="selectAccountingButton" type="button">Seleziona</button>
-              <button class="danger-button" id="deleteAccountingButton" type="button" hidden>Elimina 0</button>
-            </div>
-          </div>
-          <div class="accounting-board" id="accountingBoard"></div>
-        </section>
-
         <section class="data-panel view" id="documents">
           <div class="panel-title">
             <div>
-              <span>Archivio</span>
+              <span>Documenti societa</span>
               <h2>Documenti</h2>
             </div>
             <strong class="count-pill" id="documentCount">0</strong>
@@ -182,7 +154,7 @@
               <span>Agenda societa</span>
               <h2>Scadenziario</h2>
             </div>
-            <button class="soft-button nav-item-proxy" type="button" data-target="documents">Documenti</button>
+
           </div>
           <div class="deadline-hero">
             <div>
@@ -195,28 +167,13 @@
           <div class="deadline-grid" id="deadlineList"></div>
         </section>
 
-        <section class="data-panel view" id="attendance">
-          <div class="panel-title">
-            <div>
-              <span>Allenamenti</span>
-              <h2>Presenze</h2>
-            </div>
-            <button class="soft-button nav-item-proxy" type="button" data-target="athletes">Apri roster</button>
-          </div>
-          <div class="attendance-strip">
-            <article><span>Questa settimana</span><strong>86%</strong><small>Presenza media</small></article>
-            <article><span>U18</span><strong>18/20</strong><small>Ultimo allenamento</small></article>
-            <article><span>Serie D</span><strong>12/14</strong><small>Ultima sessione</small></article>
-          </div>
-        </section>
-
         <section class="data-panel view" id="standings">
           <div class="panel-title">
             <div>
               <span>Campionato</span>
               <h2>Classifiche</h2>
             </div>
-            <button class="soft-button nav-item-proxy" type="button" data-target="deadlines">Prossime gare</button>
+
           </div>
           <div class="standings-list">
             <article><strong>1</strong><span>NS Volley</span><em>42 pt</em></article>
@@ -231,40 +188,11 @@
               <span>Bacheca</span>
               <h2>Comunicazioni</h2>
             </div>
-            <button class="soft-button nav-item-proxy" type="button" data-target="documents">Archivio</button>
+
           </div>
           <div class="comms-list">
-            <article><span>ALLENAMENTI</span><strong>Nuovi orari di allenamento</strong><p>Da lunedi 20 Maggio nuovi orari per tutte le squadre.</p><time>2 ore fa</time></article>
-            <article><span>SEGRETERIA</span><strong>Consegna documenti iscrizione</strong><p>Controllare moduli privacy e certificati mancanti entro fine mese.</p><time>Ieri</time></article>
-          </div>
-        </section>
-
-        <section class="data-panel view" id="more">
-          <div class="panel-title">
-            <div>
-              <span>Menu</span>
-              <h2>Altro</h2>
-            </div>
-          </div>
-          <div class="more-grid">
-            <button class="nav-item-proxy" type="button" data-target="deadlines">Scadenziario</button>
-            <button class="nav-item-proxy" type="button" data-target="accounting">Contabilita</button>
-            <button class="nav-item-proxy" type="button" data-target="certificates">Certificati</button>
-            <button class="nav-item-proxy" type="button" data-target="storage">Dati ed export</button>
-          </div>
-        </section>
-        <section class="data-panel view" id="storage">
-          <div class="panel-title">
-            <div>
-              <span>Deposito</span>
-              <h2>Dati</h2>
-            </div>
-            <button class="soft-button" id="exportButton" type="button">Esporta</button>
-          </div>
-          <div class="storage-box">
-            <strong id="storageSize">0 KB</strong>
-            <div class="storage-bar"><span id="storageFill"></span></div>
-            <pre id="dataPreview"></pre>
+            <article><span>UPDATE</span><strong>Area scadenziario aggiornata</strong><p>Le quote e le scadenze operative sono ora raccolte in un unico pannello.</p><time>Developer</time></article>
+            <article><span>RELEASE</span><strong>Layout mobile compatto</strong><p>Liste atleti e scadenze ottimizzate per consultazione rapida da telefono.</p><time>Developer</time></article>
           </div>
         </section>
       </section>
@@ -273,7 +201,7 @@
         <button class="bottom-nav-item active" type="button" data-view="overview"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3V10.5Z"/></svg>Home</button>
         <button class="bottom-nav-item" type="button" data-view="communications"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a4 4 0 0 1-4 4H7l-4 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8Z"/></svg>Comunicazioni</button>
         <button class="bottom-nav-add" type="button" id="mobileAddButton" aria-label="Nuovo atleta">+</button>
-        <button class="bottom-nav-item" type="button" data-view="standings"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 16v-5"/><path d="M13 16V8"/><path d="M18 16v-3"/></svg>Statistiche</button>
+        <button class="bottom-nav-item" type="button" data-view="deadlines"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 16v-5"/><path d="M13 16V8"/><path d="M18 16v-3"/></svg>Scadenze</button>
         <button class="bottom-nav-item" type="button" data-view="athletes"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>Profilo</button>
       </nav>
       <a class="creator-tag" href="#" aria-label="Instagram Rosario Trupo">

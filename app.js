@@ -260,8 +260,8 @@ function renderCertificates() {
 }
 
 function currentAccountingList() {
-  const query = accountingSearch.value.toLowerCase();
-  const filter = accountingFilter.value;
+  const query = accountingSearch?.value?.toLowerCase() || "";
+  const filter = accountingFilter?.value || "all";
 
   return athletes
     .map((athlete, index) => ({ athlete, index }))
@@ -275,6 +275,7 @@ function currentAccountingList() {
 function updateAccountingControls() {
   const count = selectedAccountingRows.size;
   const activeCount = count || (activeAccountingIndex === null ? 0 : 1);
+  if (!selectAccountingButton || !deleteAccountingButton || !editAccountingButton) return;
   selectAccountingButton.textContent = accountingSelectionMode ? `Annulla (${count})` : "Seleziona";
   deleteAccountingButton.hidden = activeCount === 0;
   deleteAccountingButton.textContent = `Elimina ${activeCount}`;
@@ -282,8 +283,8 @@ function updateAccountingControls() {
 }
 
 function visibleAccountingMonths() {
-  const startValue = accountingStartDate.value || "2026-09-01";
-  const endValue = accountingEndDate.value || "2027-08-31";
+  const startValue = accountingStartDate?.value || "2026-09-01";
+  const endValue = accountingEndDate?.value || "2027-08-31";
   const start = new Date(`${startValue}T00:00:00`);
   const end = new Date(`${endValue}T23:59:59`);
 
@@ -297,6 +298,7 @@ function visibleAccountingMonths() {
 }
 
 function renderAccounting() {
+  if (!accountingBoard) return;
   const rows = currentAccountingList();
   const visibleMonths = visibleAccountingMonths();
   const header = `
@@ -364,7 +366,7 @@ function renderDeadlines() {
 
   const items = [
     { date: "Dom 26 Mag", title: "Bari Volley vs Monza Volley", meta: "Partita - ore 18:00", tone: "match" },
-    { date: "Lun 20 Mag", title: "Nuovi orari allenamenti", meta: "Comunicazione staff", tone: "info" }
+    { date: "Lun 20 Mag", title: "Nuovi orari allenamenti", meta: "Aggiornamento developer", tone: "info" }
   ];
 
   athletes.forEach((athlete) => {
@@ -376,8 +378,15 @@ function renderDeadlines() {
       items.push({ date: "7 giorni", title: `Certificato in scadenza - ${athleteName(athlete)}`, meta: athlete.category || "Roster", tone: "warning" });
     }
 
-    if (athlete.balance > 0) {
-      items.push({ date: "Fine mese", title: `Quota aperta - ${athleteName(athlete)}`, meta: `Saldo euro ${athlete.balance}`, tone: "money" });
+    const dueMonth = seasonMonths.find((month) => paymentState(athlete.accounting[month.key]) !== "paid");
+    if (dueMonth) {
+      const payment = athlete.accounting[dueMonth.key];
+      items.push({
+        date: dueMonth.label,
+        title: `Quota ${dueMonth.label} - ${athleteName(athlete)}`,
+        meta: `Euro ${payment.paid}/${payment.expected} - ${payment.days}g/set`,
+        tone: payment.paid > 0 ? "warning" : "money"
+      });
     }
   });
 
@@ -425,9 +434,12 @@ function updateSummary() {
   document.querySelector("#debtCount").textContent = openDebts;
   document.querySelector("#documentCount").textContent = documents.length + uploadedFileCount;
   document.querySelector("#seasonBalance").textContent = `\u20ac${balance}`;
-  document.querySelector("#storageSize").textContent = `${Math.ceil(json.length / 1024)} KB`;
-  document.querySelector("#storageFill").style.width = `${Math.min(92, json.length / 40)}%`;
-  document.querySelector("#dataPreview").textContent = json;
+  const storageSize = document.querySelector("#storageSize");
+  const storageFill = document.querySelector("#storageFill");
+  const dataPreview = document.querySelector("#dataPreview");
+  if (storageSize) storageSize.textContent = `${Math.ceil(json.length / 1024)} KB`;
+  if (storageFill) storageFill.style.width = `${Math.min(92, json.length / 40)}%`;
+  if (dataPreview) dataPreview.textContent = json;
 }
 
 function setFormValue(name, value) {
@@ -546,12 +558,12 @@ searchInput.addEventListener("input", (event) => {
   renderCurrentAthletes();
 });
 
-accountingSearch.addEventListener("input", () => renderAccounting());
-accountingFilter.addEventListener("change", () => renderAccounting());
-accountingStartDate.addEventListener("change", () => renderAccounting());
-accountingEndDate.addEventListener("change", () => renderAccounting());
+accountingSearch?.addEventListener("input", () => renderAccounting());
+accountingFilter?.addEventListener("change", () => renderAccounting());
+accountingStartDate?.addEventListener("change", () => renderAccounting());
+accountingEndDate?.addEventListener("change", () => renderAccounting());
 
-accountingBoard.addEventListener("click", (event) => {
+accountingBoard?.addEventListener("click", (event) => {
   const editButton = event.target.closest(".mobile-edit-payment");
   if (editButton) {
     const index = Number(editButton.dataset.index);
@@ -598,13 +610,13 @@ accountingBoard.addEventListener("click", (event) => {
   renderAccounting();
 });
 
-accountingBoard.addEventListener("dblclick", (event) => {
+accountingBoard?.addEventListener("dblclick", (event) => {
   const cell = event.target.closest(".accounting-payment");
   if (!cell) return;
   openPaymentModal(Number(cell.dataset.index), cell.dataset.month, true);
 });
 
-selectAccountingButton.addEventListener("click", () => {
+selectAccountingButton?.addEventListener("click", () => {
   accountingSelectionMode = !accountingSelectionMode;
   if (!accountingSelectionMode) {
     selectedAccountingRows.clear();
@@ -612,13 +624,13 @@ selectAccountingButton.addEventListener("click", () => {
   renderAccounting();
 });
 
-editAccountingButton.addEventListener("click", () => {
+editAccountingButton?.addEventListener("click", () => {
   const index = selectedAccountingRows.size ? [...selectedAccountingRows][0] : activeAccountingIndex;
   if (index === null || index === undefined) return;
   openPaymentModal(index, activeAccountingMonth, true);
 });
 
-deleteAccountingButton.addEventListener("click", () => {
+deleteAccountingButton?.addEventListener("click", () => {
   const targets = selectedAccountingRows.size ? selectedAccountingRows : new Set([activeAccountingIndex]);
   const indexes = [...targets].filter((index) => index !== null && index !== undefined).sort((a, b) => b - a);
   indexes.forEach((index) => {
@@ -795,7 +807,7 @@ document.querySelectorAll(".drop-zone").forEach((zone) => {
   });
 });
 
-document.querySelector("#exportButton").addEventListener("click", () => {
+document.querySelector("#exportButton")?.addEventListener("click", () => {
   const payload = JSON.stringify({ athletes, payments, documents }, null, 2);
   navigator.clipboard?.writeText(payload);
 });
