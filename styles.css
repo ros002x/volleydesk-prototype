@@ -4554,3 +4554,98 @@ body.modal-open {
     line-height: 1.25 !important;
   }
 }
+
+/* Mobile prima nota: compact 2x3 movement rows */
+@media (max-width: 699px) {
+  .prima-nota-table-scroll {
+    max-height: calc(100dvh - 332px) !important;
+    overflow: auto !important;
+  }
+  .prima-nota-table tbody {
+    display: grid !important;
+    gap: 9px !important;
+  }
+  .prima-nota-table tr.prima-nota-row {
+    display: grid !important;
+    grid-template-columns: minmax(72px, .8fr) minmax(0, 1.35fr) minmax(76px, .78fr) !important;
+    grid-template-rows: auto auto !important;
+    align-items: center !important;
+    column-gap: 10px !important;
+    row-gap: 4px !important;
+    min-height: 74px !important;
+    padding: 10px 10px 10px 16px !important;
+  }
+  .prima-nota-table tr.prima-nota-row td {
+    display: block !important;
+    width: auto !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    font-size: .78rem !important;
+    line-height: 1.18 !important;
+  }
+  .prima-nota-table tr.prima-nota-row td::before {
+    display: none !important;
+  }
+  .prima-nota-row td:nth-child(1) {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    color: #142e5b !important;
+    font-weight: 950 !important;
+    white-space: nowrap !important;
+  }
+  .prima-nota-row td:nth-child(2) {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+  }
+  .prima-nota-row td:nth-child(3) {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    overflow: hidden !important;
+  }
+  .prima-nota-row td:nth-child(3) strong {
+    display: block !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+  .prima-nota-row td:nth-child(4) {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    color: #7a8aa6 !important;
+    font-weight: 800 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+  .prima-nota-row td:nth-child(5),
+  .prima-nota-row td:nth-child(6) {
+    grid-column: 3 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    font-size: .82rem !important;
+    font-weight: 950 !important;
+  }
+  .prima-nota-row td:nth-child(5) {
+    grid-row: 1 !important;
+  }
+  .prima-nota-row td:nth-child(6) {
+    grid-row: 2 !important;
+  }
+  .prima-nota-row td.money-col:empty,
+  .prima-nota-row td.money-col:has(:empty) {
+    opacity: .28;
+  }
+  .prima-nota-row .method-pill {
+    min-height: 24px !important;
+    max-width: 100% !important;
+    padding: 0 8px !important;
+    font-size: .66rem !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+}
