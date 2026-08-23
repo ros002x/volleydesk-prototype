@@ -3266,3 +3266,39 @@ pre { background: #ffffff; color: var(--ink); box-shadow: inset 0 0 0 1px rgba(2
     text-align: left;
   }
 }
+/* Sidebar must never become a scrollable rail */
+.side-nav {
+  overflow: hidden;
+}
+
+@media (max-width: 1179px) {
+  .product-shell {
+    display: block;
+    min-height: auto;
+  }
+  .side-nav {
+    display: none !important;
+    overflow: hidden;
+  }
+  .sidebar-toggle {
+    display: none !important;
+  }
+}
+
+@media (min-width: 1180px) {
+  .side-nav {
+    position: sticky;
+    top: 24px;
+    height: calc(100dvh - 48px);
+    max-height: calc(100dvh - 48px);
+    overflow: hidden;
+    flex-direction: column;
+  }
+  .pill-nav {
+    min-width: 0;
+    overflow: hidden;
+  }
+  .nav-item {
+    white-space: normal;
+  }
+}
