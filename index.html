@@ -10,34 +10,6 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="app-splash" id="appSplash" aria-label="Avvio NS Volley">
-    <canvas class="splash-rive-canvas" id="splashRiveCanvas" width="320" height="320" aria-hidden="true"></canvas>
-    <div class="splash-stage splash-fallback" aria-hidden="true">
-      <span class="splash-halo"></span>
-      <svg class="splash-volley" viewBox="0 0 160 160" role="img" aria-label="Pallone NS Volley">
-        <defs>
-          <linearGradient id="splashBallGradient" x1="32" y1="24" x2="128" y2="136" gradientUnits="userSpaceOnUse">
-            <stop offset="0" stop-color="#7DB8FF"/>
-            <stop offset="0.48" stop-color="#2867FF"/>
-            <stop offset="1" stop-color="#0E3CB8"/>
-          </linearGradient>
-          <filter id="splashShadow" x="-30%" y="-30%" width="160%" height="160%">
-            <feDropShadow dx="0" dy="18" stdDeviation="14" flood-color="#2867FF" flood-opacity="0.22"/>
-          </filter>
-        </defs>
-        <circle class="splash-ball-core" cx="80" cy="80" r="52" fill="url(#splashBallGradient)" filter="url(#splashShadow)"/>
-        <path class="splash-ball-line" d="M43 54c28-11 58-5 81 17"/>
-        <path class="splash-ball-line" d="M48 108c23-27 49-42 83-38"/>
-        <path class="splash-ball-line" d="M78 30c-6 32 1 64 24 96"/>
-        <path class="splash-ball-line" d="M34 82c31 6 58 25 78 55"/>
-        <circle class="splash-ball-glint" cx="60" cy="49" r="7"/>
-      </svg>
-      <div class="splash-title-wrap">
-        <strong class="splash-title">NS Volley</strong>
-        <span class="splash-progress"><i></i></span>
-      </div>
-    </div>
-  </div>
   <main class="screen">
     <section class="product-shell">
       <aside class="side-nav" aria-label="Navigazione principale">
@@ -344,7 +316,6 @@
     </form>
   </dialog>
 
-  <script src="https://unpkg.com/@rive-app/canvas-lite"></script>
   <script src="app.js"></script>
 </body>
 </html>
