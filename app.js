@@ -98,6 +98,9 @@ const primaNotaMovements = [
   { date: "2026-10-02", method: "Bonifico", who: "Giulia Ferri", reason: "Quota ottobre", type: "in", amount: 30 }
 ];
 
+const productShell = document.querySelector(".product-shell");
+const sideNav = document.querySelector(".side-nav");
+const sidebarToggle = document.querySelector("#sidebarToggle");
 const views = document.querySelectorAll(".view");
 const navItems = document.querySelectorAll(".nav-item");
 const bottomNavItems = document.querySelectorAll(".bottom-nav-item, .bottom-nav-home");
@@ -198,6 +201,29 @@ function paymentState(payment) {
   return "unpaid";
 }
 
+function isDesktopSidebar() {
+  return window.matchMedia("(min-width: 1180px)").matches;
+}
+
+function updateSidebarTogglePosition() {
+  if (!productShell || !sideNav || !sidebarToggle || !isDesktopSidebar()) return;
+  const shellRect = productShell.getBoundingClientRect();
+  const navRect = sideNav.getBoundingClientRect();
+  const collapsed = productShell.classList.contains("sidebar-collapsed");
+  const left = collapsed ? shellRect.left + 10 : navRect.right - 18;
+  sidebarToggle.style.setProperty("--sidebar-toggle-left", `${Math.max(10, left)}px`);
+}
+
+function setSidebarCollapsed(collapsed, persist = true) {
+  if (!productShell || !sidebarToggle) return;
+  productShell.classList.toggle("sidebar-collapsed", collapsed);
+  sidebarToggle.setAttribute("aria-expanded", String(!collapsed));
+  sidebarToggle.setAttribute("aria-label", collapsed ? "Mostra sidebar" : "Nascondi sidebar");
+  const icon = sidebarToggle.querySelector("span");
+  if (icon) icon.textContent = collapsed ? ">" : "<";
+  if (persist) localStorage.setItem("nsVolleySidebarCollapsed", collapsed ? "1" : "0");
+  window.requestAnimationFrame(updateSidebarTogglePosition);
+}
 function showView(viewId) {
   views.forEach((view) => view.classList.toggle("active", view.id === viewId));
   navItems.forEach((item) => item.classList.toggle("active", item.dataset.view === viewId));
@@ -676,6 +702,15 @@ function addFiles(fileType, fileList) {
 
   renderModalFiles(athletes[activeAthleteIndex]);
   renderAll();
+}
+
+if (productShell && sidebarToggle) {
+  setSidebarCollapsed(localStorage.getItem("nsVolleySidebarCollapsed") === "1", false);
+  sidebarToggle.addEventListener("click", () => {
+    setSidebarCollapsed(!productShell.classList.contains("sidebar-collapsed"));
+  });
+  window.addEventListener("resize", updateSidebarTogglePosition);
+  window.addEventListener("scroll", updateSidebarTogglePosition, { passive: true });
 }
 
 navItems.forEach((item) => {
