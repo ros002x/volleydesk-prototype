@@ -3809,3 +3809,135 @@ html.tablet-layout .bottom-nav-home {
     display: none !important;
   }
 }
+/* iPad home scroll layout: hero top, match + actions, news below */
+@media (min-width: 700px) and (max-width: 1366px) {
+  html.tablet-layout,
+  html.tablet-layout body {
+    height: 100dvh;
+    overflow: hidden !important;
+  }
+  html.tablet-layout .screen,
+  html.tablet-layout .product-shell,
+  html.tablet-layout .workspace {
+    height: 100dvh !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+  }
+  html.tablet-layout .workspace {
+    gap: 0 !important;
+  }
+  html.tablet-layout .mobile-app-header {
+    flex: 0 0 58px;
+  }
+  html.tablet-layout .showcase.active.mobile-home {
+    height: calc(100dvh - 58px - max(12px, env(safe-area-inset-top))) !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    overscroll-behavior: contain;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 360px) !important;
+    grid-template-rows: auto auto auto !important;
+    align-content: start !important;
+    gap: 18px !important;
+    padding: 0 0 34px !important;
+  }
+  html.tablet-layout .showcase.active.mobile-home::-webkit-scrollbar {
+    display: none;
+  }
+  html.tablet-layout .home-hero {
+    grid-column: 1 / -1 !important;
+    grid-row: 1 !important;
+    justify-self: center !important;
+    width: min(100%, 1020px) !important;
+    min-height: 440px !important;
+    height: auto !important;
+    padding: 46px 54px !important;
+    border-radius: 34px !important;
+    overflow: hidden !important;
+  }
+  html.tablet-layout .hero-text {
+    width: min(50%, 450px) !important;
+  }
+  html.tablet-layout .home-hero h2 {
+    font-size: clamp(4.7rem, 7.4vw, 7rem) !important;
+  }
+  html.tablet-layout .hero-subtitle {
+    font-size: 1.12rem !important;
+  }
+  html.tablet-layout .hero-player {
+    right: -42px !important;
+    top: 0 !important;
+    bottom: -10px !important;
+    width: min(60%, 650px) !important;
+  }
+  html.tablet-layout .match-surface {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    min-height: 260px !important;
+    height: auto !important;
+    padding: 26px !important;
+    border-radius: 30px !important;
+  }
+  html.tablet-layout .quick-actions {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    align-self: stretch !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-auto-flow: row !important;
+    gap: 12px !important;
+    padding: 18px !important;
+    border-radius: 30px !important;
+    overflow: hidden !important;
+  }
+  html.tablet-layout .quick-action {
+    min-height: 82px !important;
+    height: auto !important;
+    padding: 8px 6px !important;
+    gap: 7px !important;
+    align-content: center !important;
+  }
+  html.tablet-layout .quick-action span {
+    width: 46px !important;
+    height: 46px !important;
+  }
+  html.tablet-layout .quick-action:nth-child(5) {
+    grid-column: 1 / -1 !important;
+  }
+  html.tablet-layout .latest-news {
+    display: block !important;
+    grid-column: 1 / -1 !important;
+    grid-row: 3 !important;
+    min-height: 0 !important;
+    padding: 24px 28px !important;
+    border-radius: 30px !important;
+    overflow: visible !important;
+  }
+}
+
+@media (orientation: landscape) and (min-width: 700px) and (max-width: 1366px) {
+  html.tablet-layout .screen {
+    padding: 18px 22px !important;
+  }
+  html.tablet-layout .product-shell {
+    display: grid !important;
+    grid-template-columns: 220px minmax(0, 1fr) !important;
+    gap: 22px !important;
+  }
+  html.tablet-layout .side-nav {
+    display: flex !important;
+    height: calc(100dvh - 36px) !important;
+    max-height: calc(100dvh - 36px) !important;
+  }
+  html.tablet-layout .mobile-app-header,
+  html.tablet-layout .bottom-nav {
+    display: none !important;
+  }
+  html.tablet-layout .workspace {
+    height: calc(100dvh - 36px) !important;
+  }
+  html.tablet-layout .showcase.active.mobile-home {
+    height: calc(100dvh - 36px) !important;
+  }
+}
