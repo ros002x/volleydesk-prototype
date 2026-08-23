@@ -99,6 +99,7 @@ const accountingBoard = document.querySelector("#accountingBoard");
 const documentList = document.querySelector("#documentList");
 const deadlineList = document.querySelector("#deadlineList");
 const deadlineTotal = document.querySelector("#deadlineTotal");
+const calendarCta = document.querySelector("#calendarCta");
 const notificationToggle = document.querySelector("#notificationToggle");
 const notificationPanel = document.querySelector("#notificationPanel");
 const notificationClose = document.querySelector("#notificationClose");
@@ -205,16 +206,18 @@ function currentAthleteList() {
 
 function renderAthletes(list = athletes.map((athlete, index) => ({ athlete, index }))) {
   athleteTable.innerHTML = list.map(({ athlete, index }) => `
-    <article class="table-row athlete-row ${certificateStateClass(athlete.certificate)} ${selectedAthletes.has(index) ? "selected" : ""}" data-index="${index}" tabindex="0" role="button" aria-label="${selectionMode ? "Seleziona" : "Modifica"} ${athleteName(athlete)}">
-      <div>
-        <div class="name">${athleteName(athlete)}</div>
-        <div class="muted athlete-contact">
-          <span>${athlete.email || "Email mancante"}</span>
-          <span>${athlete.phone || "Cellulare mancante"}</span>
-        </div>
+    <article class="table-row athlete-row person-card ${certificateStateClass(athlete.certificate)} ${selectedAthletes.has(index) ? "selected" : ""}" data-index="${index}" tabindex="0" role="button" aria-label="${selectionMode ? "Seleziona" : "Modifica"} ${athleteName(athlete)}">
+      <header class="person-card-head">
+        <strong>${athleteName(athlete)}</strong>
+        <span>Sesso ${athlete.gender || "-"}</span>
+      </header>
+      <div class="person-card-meta">
+        <span>${athlete.email || "Email mancante"}</span>
+        <span>${athlete.phone || "Cellulare mancante"}</span>
       </div>
-      <div>${athlete.category}</div>
-      <div class="muted">\u20ac${athlete.balance}</div>
+      <footer class="person-card-tags">
+        <span>${athlete.category || "Categoria"}</span>
+      </footer>
     </article>
   `).join("");
 }
@@ -250,14 +253,20 @@ function toggleAthleteSelection(index) {
 }
 
 function renderCertificates() {
-  certificateGrid.innerHTML = athletes
-    .filter((athlete) => athlete.certificate !== "Mancante")
-    .map((athlete) => `
-    <article class="certificate-card ${certificateCardClass(athlete.certificate)}">
-      <div>
+  certificateGrid.innerHTML = athletes.map((athlete) => `
+    <article class="certificate-card person-card ${certificateCardClass(athlete.certificate)}">
+      <header class="person-card-head">
         <strong>${athleteName(athlete)}</strong>
-        <div class="muted">${athlete.category} - ${athlete.email || "Nessuna email"}</div>
+        <span>${athlete.certificate || "Stato"}</span>
+      </header>
+      <div class="person-card-meta">
+        <span>${athlete.email || "Email mancante"}</span>
+        <span>${athlete.phone || "Cellulare mancante"}</span>
       </div>
+      <footer class="person-card-tags">
+        <span>Sesso ${athlete.gender || "-"}</span>
+        <span>${athlete.category || "Categoria"}</span>
+      </footer>
     </article>
   `).join("");
 }
@@ -591,18 +600,79 @@ function hideNotificationToast() {
   }, 260);
 }
 
-function showNotificationToast() {
+function showNotificationToast(title = "Notifiche attive", message = "Avvisi attivati per scadenze, certificati e quote aperte.", activateBell = false) {
   if (!notificationPanel) return;
+  const titleEl = notificationPanel.querySelector("strong");
+  const messageEl = notificationPanel.querySelector("p");
+  if (titleEl) titleEl.textContent = title;
+  if (messageEl) messageEl.textContent = message;
   window.clearTimeout(notificationTimer);
   notificationPanel.hidden = false;
   notificationPanel.classList.remove("hide");
   notificationPanel.classList.add("show");
-  notificationToggle?.classList.add("active");
-  notificationToggle?.setAttribute("aria-expanded", "true");
+  notificationToggle?.classList.toggle("active", activateBell);
+  notificationToggle?.setAttribute("aria-expanded", String(activateBell));
   notificationTimer = window.setTimeout(hideNotificationToast, 4200);
 }
 
-notificationToggle?.addEventListener("click", showNotificationToast);
+function isMobileCalendarDevice() {
+  return window.matchMedia("(max-width: 820px) and (pointer: coarse)").matches;
+}
+
+function openMobileCalendar() {
+  const title = "Bari Volley vs Monza Volley";
+  const description = "Prossima partita NS Volley";
+  const location = "Palazzetto";
+  const start = new Date("2027-05-26T18:00:00+02:00");
+  const end = new Date("2027-05-26T20:00:00+02:00");
+  const userAgent = navigator.userAgent || "";
+
+  if (/Android/i.test(userAgent)) {
+    const params = new URLSearchParams({
+      title,
+      description,
+      eventLocation: location,
+      beginTime: String(start.getTime()),
+      endTime: String(end.getTime())
+    });
+    window.location.href = `intent://insert?${params.toString()}#Intent;scheme=content;action=android.intent.action.INSERT;type=vnd.android.cursor.item/event;end`;
+    return;
+  }
+
+  const ics = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//NS Volley//Calendario//IT",
+    "BEGIN:VEVENT",
+    "UID:ns-volley-bari-monza@example.local",
+    "DTSTAMP:20260823T000000Z",
+    "DTSTART:20270526T160000Z",
+    "DTEND:20270526T180000Z",
+    `SUMMARY:${title}`,
+    `DESCRIPTION:${description}`,
+    `LOCATION:${location}`,
+    "END:VEVENT",
+    "END:VCALENDAR"
+  ].join("\r\n");
+  const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "ns-volley-partita.ics";
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(url), 1200);
+}
+
+notificationToggle?.addEventListener("click", () => showNotificationToast(undefined, undefined, true));
+calendarCta?.addEventListener("click", () => {
+  if (isMobileCalendarDevice()) {
+    openMobileCalendar();
+    return;
+  }
+  showNotificationToast("Feature Mobile", "Apri questa funzione dal telefono per aggiungere la partita al calendario.");
+});
 notificationClose?.addEventListener("click", hideNotificationToast);
 notificationPanel?.addEventListener("pointerdown", (event) => {
   notificationStartY = event.clientY;

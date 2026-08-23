@@ -57,7 +57,7 @@
               <p class="hello">Ciao Rosario</p>
               <h2 id="homeHeroTitle">Insieme,<br><span>pi&ugrave; forti.</span></h2>
               <p class="hero-subtitle">Ogni allenamento<br>ci avvicina alla vittoria.</p>
-              <button class="calendar-cta nav-item-proxy" type="button" data-target="deadlines">Calendario <span aria-hidden="true">&rarr;</span></button>
+              <button class="calendar-cta" id="calendarCta" type="button">Calendario <span aria-hidden="true">&rarr;</span></button>
             </div>
             <figure class="hero-player">
               <img src="assets/hero-volley-players.png" alt="Giocatore di pallavolo in schiacciata">
@@ -111,8 +111,8 @@
           </div>
         </section>
 
-        <section class="data-panel view" id="athletes">
-          <div class="panel-title">
+        <section class="data-panel view directory-panel" id="athletes">
+          <div class="panel-title directory-toolbar">
             <div>
               <span>Roster</span>
               <h2>Elenco atleti</h2>
@@ -124,18 +124,18 @@
               <button class="primary-action inline" id="addAthleteButton" type="button">Nuovo atleta</button>
             </div>
           </div>
-          <div class="data-list" id="athleteTable"></div>
+          <div class="data-list directory-scroll" id="athleteTable"></div>
         </section>
 
-        <section class="data-panel view" id="certificates">
-          <div class="panel-title">
+        <section class="data-panel view directory-panel" id="certificates">
+          <div class="panel-title directory-toolbar">
             <div>
               <span>Salute</span>
               <h2>Certificati</h2>
             </div>
             <button class="soft-button nav-item-proxy" type="button" data-target="athletes">Seleziona atleta</button>
           </div>
-          <div class="tile-grid" id="certificateGrid"></div>
+          <div class="tile-grid directory-scroll" id="certificateGrid"></div>
         </section>
 
         <section class="data-panel view" id="documents">
