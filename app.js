@@ -144,10 +144,10 @@ function runAppSplash() {
     appSplash.classList.add("is-leaving");
     document.body.classList.remove("app-is-loading");
     document.body.classList.add("app-is-ready");
-  }, 1550);
+  }, 1320);
   window.setTimeout(() => {
     appSplash.hidden = true;
-  }, 2150);
+  }, 1840);
 }
 
 runAppSplash();
