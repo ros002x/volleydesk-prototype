@@ -3446,3 +3446,30 @@ pre { background: #ffffff; color: var(--ink); box-shadow: inset 0 0 0 1px rgba(2
     height: 54px !important;
   }
 }
+/* Tablet quick actions fallback: force 2 columns even when pointer media is not reported */
+@media (min-width: 700px) and (max-width: 1366px) {
+  .showcase.active.mobile-home .quick-actions,
+  .quick-actions {
+    display: grid !important;
+    grid-auto-flow: row !important;
+    grid-auto-columns: unset !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-rows: none !important;
+    width: 100% !important;
+    max-width: none !important;
+    gap: 14px !important;
+    overflow: visible !important;
+  }
+  .showcase.active.mobile-home .quick-action,
+  .quick-action {
+    min-width: 0 !important;
+    width: 100% !important;
+    min-height: 98px !important;
+    overflow: hidden !important;
+    white-space: normal !important;
+    word-break: normal !important;
+  }
+  .quick-action:nth-child(5) {
+    grid-column: 1 / -1;
+  }
+}
