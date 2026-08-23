@@ -2531,3 +2531,280 @@ pre { background: #ffffff; color: var(--ink); box-shadow: inset 0 0 0 1px rgba(2
     grid-row: 1;
   }
 }
+
+/* Scadenziario quote + Prima nota registro */
+.deadlines-panel .accounting-board {
+  min-height: 0;
+  overflow: hidden;
+}
+.deadlines-panel .accounting-desktop-grid {
+  border-color: rgba(20,46,91,.08);
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 16px 42px rgba(24,58,119,.06);
+}
+.deadlines-panel .accounting-head {
+  background: #f8faff;
+  color: #71809b;
+}
+.deadlines-panel .accounting-payment {
+  cursor: pointer;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.deadlines-panel .accounting-payment:hover {
+  transform: translateY(-1px);
+  box-shadow: inset 0 0 0 999px rgba(40,103,255,.035);
+}
+.prima-nota-panel {
+  min-height: 0;
+}
+.prima-nota-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 0;
+}
+.prima-nota-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px;
+  border: 1px solid rgba(20,46,91,.07);
+  border-radius: 24px;
+  background: rgba(255,255,255,.86);
+  box-shadow: 0 14px 34px rgba(24,58,119,.07);
+  backdrop-filter: blur(18px);
+}
+.prima-nota-search {
+  flex: 1 1 320px;
+  min-width: 220px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 14px;
+  border-radius: 16px;
+  background: #f8faff;
+  color: #7a8aa6;
+}
+.prima-nota-search input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--ink);
+  font-weight: 750;
+}
+.prima-nota-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.prima-nota-actions select,
+.prima-nota-actions input {
+  height: 44px;
+  border: 0;
+  border-radius: 16px;
+  padding: 0 12px;
+  background: #f8faff;
+  color: #263858;
+  font-weight: 850;
+}
+.prima-nota-tool {
+  min-height: 44px;
+  border: 0;
+  border-radius: 16px;
+  padding: 0 16px;
+  background: #fff;
+  color: var(--ink);
+  font-weight: 900;
+  box-shadow: 0 8px 18px rgba(24,58,119,.07);
+}
+.prima-nota-tool.primary {
+  background: #2867ff;
+  color: #fff;
+  box-shadow: 0 12px 26px rgba(40,103,255,.22);
+}
+.prima-nota-kpis {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.prima-nota-kpis article {
+  padding: 16px;
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 14px 34px rgba(24,58,119,.055);
+}
+.prima-nota-kpis span {
+  display: block;
+  color: #7a8aa6;
+  font-size: .72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+.prima-nota-kpis strong {
+  display: block;
+  margin-top: 7px;
+  color: #142e5b;
+  font-size: 1.08rem;
+}
+.prima-nota-table-wrap {
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: 0 18px 44px rgba(24,58,119,.065);
+}
+.prima-nota-table-scroll {
+  overflow: auto;
+  max-height: min(62vh, 620px);
+}
+.prima-nota-table {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.prima-nota-table th,
+.prima-nota-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(20,46,91,.07);
+  text-align: left;
+  vertical-align: middle;
+}
+.prima-nota-table th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #f8faff;
+  color: #71809b;
+  font-size: .72rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+.prima-nota-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+.prima-nota-table tbody tr:hover td {
+  background: rgba(40,103,255,.035);
+}
+.prima-nota-row td:first-child {
+  border-left: 5px solid rgba(148,163,184,.45);
+}
+.prima-nota-row.movement-in td:first-child {
+  border-left-color: rgba(40,103,255,.72);
+}
+.prima-nota-row.movement-out td:first-child {
+  border-left-color: rgba(229,75,106,.62);
+}
+.method-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: rgba(40,103,255,.075);
+  color: #2867ff;
+  font-size: .76rem;
+  font-weight: 950;
+}
+.money-col {
+  text-align: right !important;
+  white-space: nowrap;
+  font-weight: 950;
+}
+.positive-value { color: #2867ff; }
+.negative-value { color: #d83255; }
+.prima-nota-empty td {
+  padding: 28px 16px;
+  color: #7a8aa6;
+  text-align: center;
+  font-weight: 850;
+}
+
+@media (max-width: 900px) {
+  .prima-nota-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+    border-radius: 22px;
+  }
+  .prima-nota-search {
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+  }
+  .prima-nota-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+  }
+  .prima-nota-actions .prima-nota-tool {
+    grid-column: 1 / -1;
+  }
+  .prima-nota-kpis {
+    grid-template-columns: 1fr;
+  }
+  .prima-nota-table-scroll {
+    max-height: calc(100dvh - 360px);
+    overflow: visible;
+  }
+  .prima-nota-table {
+    min-width: 0;
+    border-spacing: 0 10px;
+  }
+  .prima-nota-table thead {
+    display: none;
+  }
+  .prima-nota-table,
+  .prima-nota-table tbody,
+  .prima-nota-table tr,
+  .prima-nota-table td {
+    display: block;
+    width: 100%;
+  }
+  .prima-nota-table tr {
+    position: relative;
+    padding: 12px 12px 12px 18px;
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 12px 28px rgba(24,58,119,.055);
+  }
+  .prima-nota-row::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 5px;
+    border-radius: 18px 0 0 18px;
+    background: rgba(148,163,184,.45);
+  }
+  .prima-nota-row.movement-in::before { background: rgba(40,103,255,.72); }
+  .prima-nota-row.movement-out::before { background: rgba(229,75,106,.62); }
+  .prima-nota-table td {
+    display: grid;
+    grid-template-columns: 76px minmax(0, 1fr);
+    gap: 10px;
+    padding: 5px 0;
+    border: 0;
+    font-size: .82rem;
+  }
+  .prima-nota-table td::before {
+    content: attr(data-label);
+    color: #7a8aa6;
+    font-size: .68rem;
+    font-weight: 950;
+    text-transform: uppercase;
+  }
+  .prima-nota-row td:first-child {
+    border-left: 0;
+  }
+  .money-col {
+    text-align: left !important;
+  }
+}

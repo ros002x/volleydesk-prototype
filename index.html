@@ -151,32 +151,32 @@
 
 
         <section class="data-panel view deadlines-panel" id="deadlines">
-          <div class="panel-title">
+          <div class="panel-title accounting-title">
             <div>
-              <span>Quote stagione</span>
-              <h2>Scadenziario</h2>
+              <span>Scadenziario</span>
+              <h2>Quote stagione</h2>
             </div>
-          </div>
-          <div class="deadline-hero deadline-summary">
-            <article>
-              <span>Mesi aperti</span>
-              <strong id="deadlineTotal">0</strong>
-            </article>
-            <article>
-              <span>Da incassare</span>
-              <strong id="deadlineDueTotal">Euro 0</strong>
-            </article>
-            <article>
-              <span>Mesi pagati</span>
-              <strong id="deadlinePaidTotal">0</strong>
-            </article>
+            <div class="panel-actions accounting-actions">
+              <input id="accountingSearch" type="search" placeholder="Cerca atleta">
+              <select id="accountingFilter" aria-label="Filtra stato pagamento">
+                <option value="all">Tutti</option>
+                <option value="paid">Pagati</option>
+                <option value="partial">Parziali</option>
+                <option value="unpaid">Scoperti</option>
+              </select>
+              <input id="accountingStartDate" type="date" value="2026-09-01" aria-label="Data inizio">
+              <input id="accountingEndDate" type="date" value="2027-08-31" aria-label="Data fine">
+              <button class="soft-button" id="selectAccountingButton" type="button">Seleziona</button>
+              <button class="soft-button" id="editAccountingButton" type="button" disabled>Modifica</button>
+              <button class="danger-button" id="deleteAccountingButton" type="button" hidden>Elimina 0</button>
+            </div>
           </div>
           <div class="deadline-legend" aria-label="Legenda stato quote">
             <span><i class="legend-paid"></i>Pagato</span>
             <span><i class="legend-partial"></i>Parziale</span>
             <span><i class="legend-unpaid"></i>Scoperto</span>
           </div>
-          <div class="deadline-grid" id="deadlineList"></div>
+          <div class="accounting-board" id="accountingBoard"></div>
         </section>
         <section class="data-panel view" id="standings">
           <div class="panel-title">
@@ -194,28 +194,52 @@
         </section>
 
 
-        <section class="data-panel view" id="accounting">
-          <div class="panel-title accounting-title">
+        <section class="data-panel view prima-nota-panel" id="accounting">
+          <div class="panel-title">
             <div>
               <span>Prima nota</span>
-              <h2>Quote e pagamenti</h2>
-            </div>
-            <div class="panel-actions accounting-actions">
-              <input id="accountingSearch" type="search" placeholder="Cerca atleta">
-              <select id="accountingFilter" aria-label="Filtra stato pagamento">
-                <option value="all">Tutti</option>
-                <option value="paid">Pagati</option>
-                <option value="partial">Parziali</option>
-                <option value="unpaid">Scoperti</option>
-              </select>
-              <input id="accountingStartDate" type="date" value="2026-09-01" aria-label="Data inizio">
-              <input id="accountingEndDate" type="date" value="2027-08-31" aria-label="Data fine">
-              <button class="soft-button" id="selectAccountingButton" type="button">Seleziona</button>
-              <button class="soft-button" id="editAccountingButton" type="button" disabled>Modifica</button>
-              <button class="danger-button" id="deleteAccountingButton" type="button" hidden>Elimina 0</button>
+              <h2>Registro movimenti</h2>
             </div>
           </div>
-          <div class="accounting-board" id="accountingBoard"></div>
+          <div class="prima-nota-shell">
+            <div class="prima-nota-toolbar" aria-label="Strumenti Prima nota">
+              <div class="prima-nota-search">
+                <span aria-hidden="true">⌕</span>
+                <input type="search" id="primaNotaSearch" placeholder="Cerca movimento">
+              </div>
+              <div class="prima-nota-actions">
+                <select id="primaNotaType" aria-label="Filtra tipo movimento">
+                  <option value="all">Tutti</option>
+                  <option value="in">Entrate</option>
+                  <option value="out">Uscite</option>
+                </select>
+                <input type="date" id="primaNotaDate" aria-label="Filtra data">
+                <button class="prima-nota-tool primary" id="addPrimaNotaButton" type="button">Movimento</button>
+              </div>
+            </div>
+            <div class="prima-nota-kpis" aria-label="Totali prima nota">
+              <article><span>Entrate</span><strong id="primaNotaTotalIn">Euro 0</strong></article>
+              <article><span>Uscite</span><strong id="primaNotaTotalOut">Euro 0</strong></article>
+              <article><span>Saldo</span><strong id="primaNotaBalance">Euro 0</strong></article>
+            </div>
+            <div class="prima-nota-table-wrap">
+              <div class="prima-nota-table-scroll">
+                <table class="prima-nota-table">
+                  <thead>
+                    <tr>
+                      <th>Data</th>
+                      <th>Metodo</th>
+                      <th>Chi</th>
+                      <th>Causale</th>
+                      <th>Dare</th>
+                      <th>Avere</th>
+                    </tr>
+                  </thead>
+                  <tbody id="primaNotaTableBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         </section>
         <section class="data-panel view" id="communications">
           <div class="panel-title">

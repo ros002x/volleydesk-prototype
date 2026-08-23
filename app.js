@@ -90,6 +90,14 @@ const payments = [
   { athlete: "Elena Costa", amount: 240, state: "Aperto" }
 ];
 
+const primaNotaMovements = [
+  { date: "2026-09-05", method: "Bonifico", who: "Sara Conti", reason: "Quota iscrizione U18", type: "in", amount: 120 },
+  { date: "2026-09-08", method: "Carta", who: "NS Volley", reason: "Materiale allenamento", type: "out", amount: 86 },
+  { date: "2026-09-12", method: "Contanti", who: "Marta Riva", reason: "Acconto quota mensile", type: "in", amount: 60 },
+  { date: "2026-09-18", method: "Bonifico", who: "Palazzetto", reason: "Affitto campo", type: "out", amount: 140 },
+  { date: "2026-10-02", method: "Bonifico", who: "Giulia Ferri", reason: "Quota ottobre", type: "in", amount: 30 }
+];
+
 const views = document.querySelectorAll(".view");
 const navItems = document.querySelectorAll(".nav-item");
 const bottomNavItems = document.querySelectorAll(".bottom-nav-item, .bottom-nav-home");
@@ -111,6 +119,14 @@ const accountingEndDate = document.querySelector("#accountingEndDate");
 const editAccountingButton = document.querySelector("#editAccountingButton");
 const selectAccountingButton = document.querySelector("#selectAccountingButton");
 const deleteAccountingButton = document.querySelector("#deleteAccountingButton");
+const primaNotaSearch = document.querySelector("#primaNotaSearch");
+const primaNotaType = document.querySelector("#primaNotaType");
+const primaNotaDate = document.querySelector("#primaNotaDate");
+const addPrimaNotaButton = document.querySelector("#addPrimaNotaButton");
+const primaNotaTableBody = document.querySelector("#primaNotaTableBody");
+const primaNotaTotalIn = document.querySelector("#primaNotaTotalIn");
+const primaNotaTotalOut = document.querySelector("#primaNotaTotalOut");
+const primaNotaBalance = document.querySelector("#primaNotaBalance");
 const modal = document.querySelector("#athleteModal");
 const athleteForm = document.querySelector("#athleteForm");
 const modalTitle = document.querySelector("#modalTitle");
@@ -432,6 +448,57 @@ function renderDeadlines() {
     `;
   }).join("");
 }
+function formatEuro(value) {
+  return `Euro ${Number(value || 0).toLocaleString("it-IT", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+}
+
+function formatDateIt(value) {
+  if (!value) return "-";
+  const [year, month, day] = value.split("-");
+  return `${day}/${month}/${year}`;
+}
+
+function currentPrimaNotaRows() {
+  const query = (primaNotaSearch?.value || "").trim().toLowerCase();
+  const type = primaNotaType?.value || "all";
+  const date = primaNotaDate?.value || "";
+
+  return primaNotaMovements
+    .filter((movement) => type === "all" || movement.type === type)
+    .filter((movement) => !date || movement.date === date)
+    .filter((movement) => {
+      if (!query) return true;
+      return [movement.date, movement.method, movement.who, movement.reason]
+        .some((value) => String(value).toLowerCase().includes(query));
+    })
+    .sort((a, b) => b.date.localeCompare(a.date));
+}
+
+function renderPrimaNota() {
+  if (!primaNotaTableBody) return;
+  const rows = currentPrimaNotaRows();
+  const totalIn = rows.reduce((total, movement) => total + (movement.type === "in" ? movement.amount : 0), 0);
+  const totalOut = rows.reduce((total, movement) => total + (movement.type === "out" ? movement.amount : 0), 0);
+
+  if (primaNotaTotalIn) primaNotaTotalIn.textContent = formatEuro(totalIn);
+  if (primaNotaTotalOut) primaNotaTotalOut.textContent = formatEuro(totalOut);
+  if (primaNotaBalance) primaNotaBalance.textContent = formatEuro(totalIn - totalOut);
+
+  primaNotaTableBody.innerHTML = rows.map((movement) => `
+    <tr class="prima-nota-row movement-${movement.type}">
+      <td data-label="Data">${formatDateIt(movement.date)}</td>
+      <td data-label="Metodo"><span class="method-pill">${movement.method}</span></td>
+      <td data-label="Chi"><strong>${movement.who}</strong></td>
+      <td data-label="Causale">${movement.reason}</td>
+      <td data-label="Dare" class="money-col negative-value">${movement.type === "out" ? formatEuro(movement.amount) : "-"}</td>
+      <td data-label="Avere" class="money-col positive-value">${movement.type === "in" ? formatEuro(movement.amount) : "-"}</td>
+    </tr>
+  `).join("") || `
+    <tr class="prima-nota-empty">
+      <td colspan="6">Nessun movimento trovato</td>
+    </tr>
+  `;
+}
 function renderDocuments() {
   const uploadedDocuments = athletes.flatMap((athlete) => [
     ...athlete.files.certificate.map((file) => ({ title: file.name, type: "CERT", owner: athleteName(athlete) })),
@@ -698,6 +765,22 @@ accountingSearch?.addEventListener("input", () => renderAccounting());
 accountingFilter?.addEventListener("change", () => renderAccounting());
 accountingStartDate?.addEventListener("change", () => renderAccounting());
 accountingEndDate?.addEventListener("change", () => renderAccounting());
+primaNotaSearch?.addEventListener("input", renderPrimaNota);
+primaNotaType?.addEventListener("change", renderPrimaNota);
+primaNotaDate?.addEventListener("change", renderPrimaNota);
+addPrimaNotaButton?.addEventListener("click", () => {
+  const nextIsIncome = primaNotaMovements.length % 2 === 0;
+  primaNotaMovements.unshift({
+    date: new Date().toISOString().slice(0, 10),
+    method: nextIsIncome ? "Bonifico" : "Carta",
+    who: nextIsIncome ? "Nuovo atleta" : "NS Volley",
+    reason: nextIsIncome ? "Nuova entrata" : "Nuova uscita",
+    type: nextIsIncome ? "in" : "out",
+    amount: nextIsIncome ? 30 : 25
+  });
+  renderPrimaNota();
+  showNotificationToast("Movimento aggiunto", "Prima nota aggiornata con una nuova riga modificabile nei dati.");
+});
 
 accountingBoard?.addEventListener("click", (event) => {
   const editButton = event.target.closest(".mobile-edit-payment");
@@ -954,6 +1037,7 @@ function renderAll() {
   renderCurrentAthletes();
   renderCertificates();
   renderAccounting();
+  renderPrimaNota();
   renderDocuments();
   updateSummary();
   updateSelectionControls();
