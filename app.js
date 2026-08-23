@@ -204,20 +204,24 @@ function currentAthleteList() {
     .filter(({ athlete }) => athleteName(athlete).toLowerCase().includes(query));
 }
 
+function genderCardClass(value) {
+  const normalized = String(value || "").toLowerCase();
+  if (normalized === "f" || normalized.startsWith("fem")) return "gender-female";
+  if (normalized === "m" || normalized.startsWith("mas")) return "gender-male";
+  return "gender-neutral";
+}
 function renderAthletes(list = athletes.map((athlete, index) => ({ athlete, index }))) {
   athleteTable.innerHTML = list.map(({ athlete, index }) => `
-    <article class="table-row athlete-row person-card ${certificateStateClass(athlete.certificate)} ${selectedAthletes.has(index) ? "selected" : ""}" data-index="${index}" tabindex="0" role="button" aria-label="${selectionMode ? "Seleziona" : "Modifica"} ${athleteName(athlete)}">
+    <article class="table-row athlete-row person-card ${genderCardClass(athlete.gender)} ${certificateStateClass(athlete.certificate)} ${selectedAthletes.has(index) ? "selected" : ""}" data-index="${index}" tabindex="0" role="button" aria-label="${selectionMode ? "Seleziona" : "Modifica"} ${athleteName(athlete)}">
       <header class="person-card-head">
         <strong>${athleteName(athlete)}</strong>
-        <span>Sesso ${athlete.gender || "-"}</span>
+        <span>${athlete.category || "Categoria"}</span>
       </header>
       <div class="person-card-meta">
         <span>${athlete.email || "Email mancante"}</span>
         <span>${athlete.phone || "Cellulare mancante"}</span>
       </div>
-      <footer class="person-card-tags">
-        <span>${athlete.category || "Categoria"}</span>
-      </footer>
+
     </article>
   `).join("");
 }
@@ -254,18 +258,17 @@ function toggleAthleteSelection(index) {
 
 function renderCertificates() {
   certificateGrid.innerHTML = athletes.map((athlete) => `
-    <article class="certificate-card person-card ${certificateCardClass(athlete.certificate)}">
+    <article class="certificate-card person-card ${genderCardClass(athlete.gender)} ${certificateCardClass(athlete.certificate)}">
       <header class="person-card-head">
         <strong>${athleteName(athlete)}</strong>
-        <span>${athlete.certificate || "Stato"}</span>
+        <span>${athlete.category || "Categoria"}</span>
       </header>
       <div class="person-card-meta">
         <span>${athlete.email || "Email mancante"}</span>
         <span>${athlete.phone || "Cellulare mancante"}</span>
       </div>
       <footer class="person-card-tags">
-        <span>Sesso ${athlete.gender || "-"}</span>
-        <span>${athlete.category || "Categoria"}</span>
+        <span>${athlete.certificate || "Stato"}</span>
       </footer>
     </article>
   `).join("");

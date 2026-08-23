@@ -2391,3 +2391,24 @@ pre { background: #ffffff; color: var(--ink); box-shadow: inset 0 0 0 1px rgba(2
     font-size: .78rem;
   }
 }
+/* Gender color coding for person cards */
+.table-row.person-card.gender-female,
+.certificate-card.person-card.gender-female {
+  background: rgba(255, 219, 234, .70);
+}
+.table-row.person-card.gender-male,
+.certificate-card.person-card.gender-male {
+  background: rgba(218, 235, 255, .70);
+}
+.table-row.person-card.gender-neutral,
+.certificate-card.person-card.gender-neutral {
+  background: rgba(255,255,255,.92);
+}
+.table-row.person-card.gender-female:hover,
+.certificate-card.person-card.gender-female:hover {
+  background: rgba(255, 211, 229, .78);
+}
+.table-row.person-card.gender-male:hover,
+.certificate-card.person-card.gender-male:hover {
+  background: rgba(207, 229, 255, .78);
+}
