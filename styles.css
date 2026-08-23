@@ -3135,3 +3135,134 @@ pre { background: #ffffff; color: var(--ink); box-shadow: inset 0 0 0 1px rgba(2
     min-width: 0;
   }
 }
+/* Mobile certificates fix */
+@media (max-width: 699px) {
+  .certificates-panel.directory-panel {
+    max-height: calc(100dvh - 132px);
+    overflow: hidden;
+  }
+  .certificates-toolbar.directory-toolbar {
+    flex: 0 0 auto;
+    align-items: stretch;
+    margin-bottom: 8px;
+  }
+  .certificates-toolbar .panel-actions.certificate-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 92px;
+    gap: 7px;
+  }
+  .certificates-toolbar .certificate-actions input {
+    grid-column: 1 / -1;
+    min-height: 40px;
+  }
+  .certificates-toolbar .certificate-actions select,
+  .certificates-toolbar .certificate-actions .soft-button {
+    min-width: 0;
+    min-height: 40px;
+    padding: 0 9px;
+    border-radius: 14px;
+    font-size: .76rem;
+  }
+  .certificate-summary {
+    flex: 0 0 auto;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+  .certificate-summary article {
+    min-width: 0;
+    padding: 9px 7px;
+    border-radius: 15px;
+  }
+  .certificate-summary span {
+    overflow-wrap: anywhere;
+    font-size: .54rem;
+  }
+  .certificate-summary strong {
+    margin-top: 5px;
+    font-size: .96rem;
+  }
+  .certificate-list.directory-scroll {
+    min-height: 0;
+    overflow-y: auto;
+    display: grid;
+    gap: 8px;
+    padding: 0 2px 4px 0;
+  }
+  .certificate-row {
+    display: grid;
+    grid-template-columns: 5px minmax(0, 1fr);
+    min-height: 0;
+    padding: 12px 12px 12px 0;
+    border-radius: 17px;
+    gap: 7px 10px;
+  }
+  .certificate-status-dot {
+    grid-column: 1;
+    grid-row: 1 / span 4;
+    width: 5px;
+    min-height: 100%;
+    border-radius: 17px 0 0 17px;
+  }
+  .certificate-main {
+    grid-column: 2;
+    display: grid;
+    gap: 3px;
+  }
+  .certificate-main strong {
+    font-size: .92rem;
+    line-height: 1.15;
+  }
+  .certificate-main span {
+    font-size: .72rem;
+  }
+  .certificate-contact {
+    grid-column: 2;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 8px;
+  }
+  .certificate-contact span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: .72rem;
+  }
+  .certificate-contact em {
+    min-height: 24px;
+    margin: 0;
+    padding: 4px 8px;
+    font-size: .64rem;
+  }
+  .certificate-expiry {
+    grid-column: 2;
+    grid-row: auto;
+    justify-self: stretch;
+    max-width: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    min-height: 30px;
+    padding-top: 2px;
+    text-align: left;
+  }
+  .certificate-expiry span {
+    font-size: .62rem;
+  }
+  .certificate-expiry strong {
+    margin: 0;
+    font-size: .76rem;
+  }
+  .certificate-row p {
+    grid-column: 2;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: .72rem;
+    text-align: left;
+  }
+}
