@@ -134,20 +134,63 @@ let paymentBulkMode = false;
 function runAppSplash() {
   if (!appSplash) return;
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reduceMotion) {
+  if (reduceMotion || !appSplash.animate) {
     appSplash.hidden = true;
     return;
   }
 
+  const ball = appSplash.querySelector(".splash-volley");
+  const title = appSplash.querySelector(".splash-title");
+  const titleLine = appSplash.querySelector(".splash-title-line");
+  const ballLines = appSplash.querySelectorAll(".splash-ball-line");
+  const glint = appSplash.querySelector(".splash-ball-glint");
+  const easeOut = "cubic-bezier(.16,1,.3,1)";
+
   document.body.classList.add("app-is-loading");
+  ball?.animate([
+    { transform: "translate3d(-42px, 22px, 0) scale(.78) rotate(-22deg)", opacity: 0, filter: "blur(8px)" },
+    { transform: "translate3d(6px, -8px, 0) scale(1.04) rotate(7deg)", opacity: 1, filter: "blur(0)" },
+    { transform: "translate3d(0, 0, 0) scale(1) rotate(0deg)", opacity: 1, filter: "blur(0)" }
+  ], { duration: 980, easing: easeOut, fill: "both" });
+
+  ballLines.forEach((line, index) => {
+    line.animate([
+      { strokeDashoffset: 180, opacity: 0 },
+      { opacity: 1, offset: .25 },
+      { strokeDashoffset: 0, opacity: 1 }
+    ], { duration: 760, delay: 180 + index * 70, easing: easeOut, fill: "both" });
+  });
+
+  glint?.animate([
+    { transform: "scale(.35)", opacity: 0 },
+    { transform: "scale(1.22)", opacity: .95 },
+    { transform: "scale(1)", opacity: .76 }
+  ], { duration: 620, delay: 420, easing: easeOut, fill: "both" });
+
+  title?.animate([
+    { transform: "translateY(18px) scale(.96)", opacity: 0, filter: "blur(8px)" },
+    { transform: "translateY(-2px) scale(1.01)", opacity: 1, filter: "blur(0)" },
+    { transform: "translateY(0) scale(1)", opacity: 1, filter: "blur(0)" }
+  ], { duration: 820, delay: 420, easing: easeOut, fill: "both" });
+
+  titleLine?.animate([
+    { transform: "scaleX(0)", opacity: 0 },
+    { transform: "scaleX(1)", opacity: 1 },
+    { transform: "scaleX(.42)", opacity: .72 }
+  ], { duration: 720, delay: 650, easing: easeOut, fill: "both" });
+
   window.setTimeout(() => {
-    appSplash.classList.add("is-leaving");
+    appSplash.animate([
+      { opacity: 1, transform: "scale(1)" },
+      { opacity: 0, transform: "scale(1.025)" }
+    ], { duration: 520, easing: "cubic-bezier(.4,0,.2,1)", fill: "forwards" });
     document.body.classList.remove("app-is-loading");
     document.body.classList.add("app-is-ready");
-  }, 1320);
+  }, 1420);
+
   window.setTimeout(() => {
     appSplash.hidden = true;
-  }, 1840);
+  }, 1980);
 }
 
 runAppSplash();
