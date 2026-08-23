@@ -3941,3 +3941,25 @@ html.tablet-layout .bottom-nav-home {
     height: calc(100dvh - 36px) !important;
   }
 }
+/* iPad landscape: adapt home when desktop sidebar is collapsed */
+@media (orientation: landscape) and (min-width: 700px) and (max-width: 1366px) {
+  html.tablet-layout .product-shell.sidebar-collapsed {
+    grid-template-columns: 0 minmax(0, 1fr) !important;
+    gap: 0 !important;
+  }
+  html.tablet-layout .product-shell.sidebar-collapsed .side-nav {
+    transform: translateX(calc(-100% - 28px)) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+  html.tablet-layout .product-shell.sidebar-collapsed .workspace {
+    width: 100% !important;
+    max-width: none !important;
+  }
+  html.tablet-layout .product-shell.sidebar-collapsed .showcase.active.mobile-home {
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 380px) !important;
+  }
+  html.tablet-layout .product-shell.sidebar-collapsed .home-hero {
+    width: 100% !important;
+  }
+}
