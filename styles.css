@@ -4334,3 +4334,96 @@ body.modal-open {
   width: min(680px, calc(100vw - 24px));
   margin: 0 auto;
 }
+/* Mobile scadenziario: athlete accordion only */
+@media (max-width: 699px) {
+  .deadlines-panel .accounting-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .deadlines-panel .accounting-actions input[type="search"] {
+    grid-column: 1 / -1;
+  }
+  .deadlines-panel .accounting-actions input[type="date"],
+  .deadlines-panel .accounting-actions .soft-button,
+  .deadlines-panel .accounting-actions .danger-button {
+    display: none;
+  }
+  .deadlines-panel .deadline-legend {
+    margin-bottom: 10px;
+  }
+  .deadlines-panel .accounting-mobile-list {
+    display: grid !important;
+    gap: 8px !important;
+  }
+  .accounting-mobile-card.accounting-athlete-toggle {
+    padding: 0 !important;
+    border: 1px solid rgba(20,46,91,.07) !important;
+    border-radius: 18px !important;
+    background: #fff !important;
+    box-shadow: 0 10px 26px rgba(24,58,119,.045);
+    overflow: hidden;
+  }
+  .accounting-athlete-toggle > summary {
+    min-height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 0 14px 0 16px;
+    list-style: none;
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+  .accounting-athlete-toggle > summary::-webkit-details-marker {
+    display: none;
+  }
+  .accounting-athlete-toggle > summary strong {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #071630;
+    font-size: .95rem;
+    font-weight: 950;
+  }
+  .accounting-athlete-toggle > summary span {
+    flex: 0 0 28px;
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    color: #2867ff;
+    background: rgba(40,103,255,.08);
+    font-size: 1rem;
+    font-weight: 950;
+  }
+  .accounting-athlete-toggle[open] > summary {
+    border-bottom: 1px solid rgba(20,46,91,.06);
+  }
+  .accounting-athlete-toggle[open] > summary span {
+    transform: rotate(45deg);
+  }
+  .accounting-athlete-toggle .accounting-month-list {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 7px !important;
+    padding: 10px !important;
+  }
+  .accounting-athlete-toggle .mobile-payment-chip {
+    min-height: 54px !important;
+    padding: 7px 6px !important;
+    border: 0 !important;
+    border-radius: 14px !important;
+    text-align: center !important;
+  }
+  .accounting-athlete-toggle .mobile-payment-chip span {
+    font-size: .62rem !important;
+    letter-spacing: .02em;
+  }
+  .accounting-athlete-toggle .mobile-payment-chip strong {
+    margin-top: 3px;
+    font-size: .76rem !important;
+  }
+}

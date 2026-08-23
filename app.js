@@ -511,15 +511,12 @@ function renderAccounting() {
   const mobileCards = rows.map(({ athlete, index }) => {
     const selected = selectedAccountingRows.has(index) || activeAccountingIndex === index;
     return `
-      <article class="accounting-mobile-card ${selected ? "accounting-row-selected" : ""}" data-index="${index}">
-        <header>
-          <div>
-            <strong>${athleteName(athlete)}</strong>
-            <span>${athlete.category}</span>
-          </div>
-          <button class="soft-button mobile-edit-payment" type="button" data-index="${index}">Modifica</button>
-        </header>
-        <div class="accounting-month-list">
+      <details class="accounting-mobile-card accounting-athlete-toggle ${selected ? "accounting-row-selected" : ""}">
+        <summary>
+          <strong>${athleteName(athlete)}</strong>
+          <span aria-hidden="true">+</span>
+        </summary>
+        <div class="accounting-month-list" aria-label="Stato quote ${athleteName(athlete)}">
           ${visibleMonths.map((month) => {
             const payment = athlete.accounting[month.key];
             const state = paymentState(payment);
@@ -531,7 +528,7 @@ function renderAccounting() {
             `;
           }).join("")}
         </div>
-      </article>
+      </details>
     `;
   }).join("");
 
