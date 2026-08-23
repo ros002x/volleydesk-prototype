@@ -2268,8 +2268,11 @@ pre { background: #ffffff; color: var(--ink); box-shadow: inset 0 0 0 1px rgba(2
   display: grid;
 }
 /* Directory areas: Atleti and Certificati */
-.directory-panel {
+.view.directory-panel.active {
   display: flex;
+}
+.directory-panel {
+  display: none;
   flex-direction: column;
   max-height: calc(100vh - 36px);
   overflow: hidden;
