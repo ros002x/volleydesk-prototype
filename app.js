@@ -90,6 +90,7 @@ const payments = [
   { athlete: "Elena Costa", amount: 240, state: "Aperto" }
 ];
 
+const appSplash = document.querySelector("#appSplash");
 const views = document.querySelectorAll(".view");
 const navItems = document.querySelectorAll(".nav-item");
 const bottomNavItems = document.querySelectorAll(".bottom-nav-item, .bottom-nav-home");
@@ -130,6 +131,26 @@ let activeAccountingIndex = null;
 let activeAccountingMonth = "sep";
 let paymentBulkMode = false;
 
+function runAppSplash() {
+  if (!appSplash) return;
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduceMotion) {
+    appSplash.hidden = true;
+    return;
+  }
+
+  document.body.classList.add("app-is-loading");
+  window.setTimeout(() => {
+    appSplash.classList.add("is-leaving");
+    document.body.classList.remove("app-is-loading");
+    document.body.classList.add("app-is-ready");
+  }, 1550);
+  window.setTimeout(() => {
+    appSplash.hidden = true;
+  }, 2150);
+}
+
+runAppSplash();
 const seasonMonths = [
   { key: "sep", label: "Set" },
   { key: "oct", label: "Ott" },
