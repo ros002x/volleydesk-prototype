@@ -1,3 +1,27 @@
+let lockedScrollY = 0;
+
+function lockDocumentScroll() {
+  if (document.body.classList.contains("modal-open")) return;
+  lockedScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+  document.documentElement.classList.add("modal-open");
+  document.body.classList.add("modal-open");
+  document.body.style.top = `-${lockedScrollY}px`;
+}
+
+function unlockDocumentScroll() {
+  const hasOpenDialog = [...document.querySelectorAll("dialog")].some((dialog) => dialog.open);
+  if (hasOpenDialog) return;
+  document.documentElement.classList.remove("modal-open");
+  document.body.classList.remove("modal-open");
+  document.body.style.top = "";
+  window.scrollTo(0, lockedScrollY);
+}
+
+function openLockedDialog(dialog) {
+  if (!dialog) return;
+  lockDocumentScroll();
+  dialog.showModal();
+}
 function setDeviceLayoutClass() {
   const width = window.innerWidth || document.documentElement.clientWidth;
   const isTabletRange = width >= 700 && width <= 1366;
@@ -650,7 +674,7 @@ function renderModalFiles(athlete) {
 function openAthleteModal(index) {
   activeAthleteIndex = index;
   fillForm(athletes[index]);
-  modal.showModal();
+  openLockedDialog(modal);
 }
 
 function fillPaymentMonthOptions() {
@@ -693,7 +717,7 @@ function openPaymentModal(index, monthKey = activeAccountingMonth, bulk = true) 
   paymentForm.elements.expected.value = payment.expected;
   paymentForm.elements.paid.value = payment.paid;
   paymentForm.elements.days.value = payment.days;
-  paymentModal.showModal();
+  openLockedDialog(paymentModal);
 }
 
 function addFiles(fileType, fileList) {
@@ -1045,6 +1069,10 @@ function createAthleteFromUi() {
 document.querySelector("#addAthleteButton").addEventListener("click", createAthleteFromUi);
 document.querySelector("#mobileAddButton")?.addEventListener("click", createAthleteFromUi);
 
+[modal, paymentModal].forEach((dialog) => {
+  dialog?.addEventListener("close", () => window.setTimeout(unlockDocumentScroll, 0));
+  dialog?.addEventListener("cancel", () => window.setTimeout(unlockDocumentScroll, 0));
+});
 document.querySelector("#closeModalButton").addEventListener("click", () => modal.close());
 document.querySelector("#cancelModalButton").addEventListener("click", () => modal.close());
 document.querySelector("#closePaymentButton").addEventListener("click", () => paymentModal.close());
