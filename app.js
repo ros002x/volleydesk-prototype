@@ -139,58 +139,71 @@ function runAppSplash() {
     return;
   }
 
+  const stage = appSplash.querySelector(".splash-stage");
+  const halo = appSplash.querySelector(".splash-halo");
   const ball = appSplash.querySelector(".splash-volley");
   const title = appSplash.querySelector(".splash-title");
-  const titleLine = appSplash.querySelector(".splash-title-line");
+  const progress = appSplash.querySelector(".splash-progress i");
   const ballLines = appSplash.querySelectorAll(".splash-ball-line");
   const glint = appSplash.querySelector(".splash-ball-glint");
   const easeOut = "cubic-bezier(.16,1,.3,1)";
 
   document.body.classList.add("app-is-loading");
+
+  stage?.animate([
+    { transform: "translateY(12px) scale(.98)", opacity: .98 },
+    { transform: "translateY(0) scale(1)", opacity: 1 }
+  ], { duration: 720, easing: easeOut, fill: "both" });
+
+  halo?.animate([
+    { transform: "translate(-50%, -50%) scale(.62)", opacity: 0 },
+    { transform: "translate(-50%, -50%) scale(1)", opacity: .72, offset: .45 },
+    { transform: "translate(-50%, -50%) scale(1.18)", opacity: .18 }
+  ], { duration: 1180, easing: easeOut, fill: "both" });
+
   ball?.animate([
-    { transform: "translate3d(-42px, 22px, 0) scale(.78) rotate(-22deg)", opacity: 0, filter: "blur(8px)" },
-    { transform: "translate3d(6px, -8px, 0) scale(1.04) rotate(7deg)", opacity: 1, filter: "blur(0)" },
-    { transform: "translate3d(0, 0, 0) scale(1) rotate(0deg)", opacity: 1, filter: "blur(0)" }
+    { transform: "translateY(18px) scale(.86) rotate(-10deg)", opacity: 0, filter: "blur(8px)" },
+    { transform: "translateY(-5px) scale(1.035) rotate(3deg)", opacity: 1, filter: "blur(0)", offset: .62 },
+    { transform: "translateY(0) scale(1) rotate(0deg)", opacity: 1, filter: "blur(0)" }
   ], { duration: 980, easing: easeOut, fill: "both" });
 
   ballLines.forEach((line, index) => {
     line.animate([
-      { strokeDashoffset: 180, opacity: 0 },
-      { opacity: 1, offset: .25 },
-      { strokeDashoffset: 0, opacity: 1 }
-    ], { duration: 760, delay: 180 + index * 70, easing: easeOut, fill: "both" });
+      { strokeDashoffset: "180", opacity: 0 },
+      { opacity: 1, offset: .22 },
+      { strokeDashoffset: "0", opacity: 1 }
+    ], { duration: 700, delay: 230 + index * 58, easing: easeOut, fill: "both" });
   });
 
   glint?.animate([
-    { transform: "scale(.35)", opacity: 0 },
-    { transform: "scale(1.22)", opacity: .95 },
-    { transform: "scale(1)", opacity: .76 }
-  ], { duration: 620, delay: 420, easing: easeOut, fill: "both" });
+    { transform: "scale(.2)", opacity: 0 },
+    { transform: "scale(1.22)", opacity: .9 },
+    { transform: "scale(1)", opacity: .72 }
+  ], { duration: 560, delay: 500, easing: easeOut, fill: "both" });
 
   title?.animate([
-    { transform: "translateY(18px) scale(.96)", opacity: 0, filter: "blur(8px)" },
-    { transform: "translateY(-2px) scale(1.01)", opacity: 1, filter: "blur(0)" },
-    { transform: "translateY(0) scale(1)", opacity: 1, filter: "blur(0)" }
-  ], { duration: 820, delay: 420, easing: easeOut, fill: "both" });
+    { transform: "translateY(14px)", opacity: 0, filter: "blur(8px)" },
+    { transform: "translateY(0)", opacity: 1, filter: "blur(0)" }
+  ], { duration: 620, delay: 610, easing: easeOut, fill: "both" });
 
-  titleLine?.animate([
-    { transform: "scaleX(0)", opacity: 0 },
-    { transform: "scaleX(1)", opacity: 1 },
-    { transform: "scaleX(.42)", opacity: .72 }
-  ], { duration: 720, delay: 650, easing: easeOut, fill: "both" });
+  progress?.animate([
+    { transform: "scaleX(0)", opacity: .55 },
+    { transform: "scaleX(.58)", opacity: 1, offset: .58 },
+    { transform: "scaleX(1)", opacity: 1 }
+  ], { duration: 760, delay: 780, easing: easeOut, fill: "both" });
 
   window.setTimeout(() => {
     appSplash.animate([
-      { opacity: 1, transform: "scale(1)" },
-      { opacity: 0, transform: "scale(1.025)" }
-    ], { duration: 520, easing: "cubic-bezier(.4,0,.2,1)", fill: "forwards" });
+      { opacity: 1, transform: "scale(1)", filter: "blur(0)" },
+      { opacity: 0, transform: "scale(1.018)", filter: "blur(6px)" }
+    ], { duration: 500, easing: "cubic-bezier(.4,0,.2,1)", fill: "forwards" });
     document.body.classList.remove("app-is-loading");
     document.body.classList.add("app-is-ready");
-  }, 1420);
+  }, 1560);
 
   window.setTimeout(() => {
     appSplash.hidden = true;
-  }, 1980);
+  }, 2120);
 }
 
 runAppSplash();

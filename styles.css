@@ -2276,30 +2276,20 @@ pre { background: #ffffff; color: var(--ink); box-shadow: inset 0 0 0 1px rgba(2
   place-items: center;
   padding: max(18px, env(safe-area-inset-top)) 18px max(18px, env(safe-area-inset-bottom));
   background:
-    radial-gradient(circle at 50% 42%, rgba(40,103,255,.12), transparent 28%),
+    radial-gradient(circle at 50% 42%, rgba(40,103,255,.10), transparent 30%),
     linear-gradient(180deg, #ffffff 0%, #f8faff 100%);
   color: #101a33;
   overflow: hidden;
 }
-.app-splash::before,
-.app-splash::after {
+.app-splash::before {
   content: "";
   position: absolute;
-  pointer-events: none;
-  border-radius: 999px;
-}
-.app-splash::before {
   width: min(78vw, 440px);
   aspect-ratio: 1;
-  border: 1px solid rgba(40,103,255,.10);
-  box-shadow: inset 0 0 60px rgba(40,103,255,.045);
-}
-.app-splash::after {
-  width: min(52vw, 290px);
-  aspect-ratio: 1;
-  background: rgba(40,103,255,.055);
-  filter: blur(32px);
-  transform: translateY(8px);
+  border-radius: 999px;
+  border: 1px solid rgba(40,103,255,.09);
+  box-shadow: inset 0 0 72px rgba(40,103,255,.045);
+  pointer-events: none;
 }
 .splash-stage {
   position: relative;
@@ -2307,20 +2297,34 @@ pre { background: #ffffff; color: var(--ink); box-shadow: inset 0 0 0 1px rgba(2
   display: grid;
   justify-items: center;
   gap: 18px;
+  min-width: min(78vw, 360px);
+}
+.splash-halo {
+  position: absolute;
+  top: 62px;
+  left: 50%;
+  width: clamp(136px, 34vw, 210px);
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(40,103,255,.18), rgba(40,103,255,.04) 58%, transparent 70%);
+  filter: blur(4px);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(.62);
+  pointer-events: none;
 }
 .splash-volley {
-  width: clamp(94px, 24vw, 136px);
+  position: relative;
+  z-index: 2;
+  width: clamp(96px, 24vw, 138px);
   height: auto;
   overflow: visible;
+  opacity: 0;
   transform-box: fill-box;
-  transform-origin: center;
-}
-.splash-ball-core {
   transform-origin: center;
 }
 .splash-ball-line {
   fill: none;
-  stroke: rgba(255,255,255,.86);
+  stroke: rgba(255,255,255,.88);
   stroke-width: 6;
   stroke-linecap: round;
   stroke-dasharray: 180;
@@ -2328,31 +2332,46 @@ pre { background: #ffffff; color: var(--ink); box-shadow: inset 0 0 0 1px rgba(2
 }
 .splash-ball-glint {
   fill: rgba(255,255,255,.86);
+  opacity: 0;
   transform-box: fill-box;
   transform-origin: center;
 }
 .splash-title-wrap {
+  position: relative;
+  z-index: 2;
   display: grid;
   justify-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 .splash-title {
+  color: #101a33;
   font-size: clamp(2.35rem, 8.5vw, 5rem);
   line-height: .9;
   letter-spacing: 0;
   font-weight: 900;
-  color: #101a33;
+  opacity: 0;
 }
-.splash-title-line {
-  width: min(42vw, 220px);
+.splash-progress {
+  display: block;
+  width: min(42vw, 210px);
   height: 3px;
+  overflow: hidden;
   border-radius: 999px;
-  background: linear-gradient(90deg, transparent, #2867ff, transparent);
-  transform-origin: center;
+  background: rgba(40,103,255,.10);
+}
+.splash-progress i {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, transparent, #2867ff 22%, #82c6ff 78%, transparent);
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left center;
 }
 body.app-is-loading .screen {
   transform: scale(.986);
-  opacity: .64;
+  opacity: .62;
 }
 body.app-is-ready .screen {
   animation: appEnter .44s cubic-bezier(.16,1,.3,1) both;
@@ -2360,6 +2379,10 @@ body.app-is-ready .screen {
 @keyframes appEnter {
   from { transform: scale(.99); opacity: .84; }
   to { transform: scale(1); opacity: 1; }
+}
+@media (max-width: 520px) {
+  .splash-stage { gap: 16px; }
+  .splash-halo { top: 56px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .app-splash { display: none; }
