@@ -266,10 +266,8 @@ function renderCertificates() {
       <div class="person-card-meta">
         <span>${athlete.email || "Email mancante"}</span>
         <span>${athlete.phone || "Cellulare mancante"}</span>
-      </div>
-      <footer class="person-card-tags">
         <span>${athlete.certificate || "Stato"}</span>
-      </footer>
+      </div>
     </article>
   `).join("");
 }
