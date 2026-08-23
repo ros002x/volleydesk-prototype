@@ -4788,3 +4788,69 @@ body.modal-open {
     grid-template-columns: 1fr !important;
   }
 }
+
+/* Mobile athletes: roomier readable cards */
+@media (max-width: 699px) {
+  #athleteTable.directory-scroll {
+    display: grid !important;
+    gap: 10px !important;
+    padding: 0 2px 92px 0 !important;
+  }
+  #athleteTable .athlete-row.person-card {
+    position: relative !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    grid-template-rows: auto auto !important;
+    align-items: center !important;
+    min-height: 78px !important;
+    height: auto !important;
+    padding: 14px 13px 14px 18px !important;
+    gap: 8px 10px !important;
+    border-radius: 19px !important;
+    overflow: hidden !important;
+  }
+  #athleteTable .athlete-row.person-card::before {
+    width: 5px !important;
+    border-radius: 19px 0 0 19px !important;
+  }
+  #athleteTable .athlete-row .person-card-head {
+    display: contents !important;
+  }
+  #athleteTable .athlete-row .person-card-head strong {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    font-size: .98rem !important;
+    line-height: 1.14 !important;
+  }
+  #athleteTable .athlete-row .person-card-head span {
+    grid-column: 2 !important;
+    grid-row: 1 / span 2 !important;
+    align-self: center !important;
+    justify-self: end !important;
+    min-height: 30px !important;
+    padding: 0 10px !important;
+    font-size: .72rem !important;
+  }
+  #athleteTable .athlete-row .person-card-meta {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(112px, .72fr) !important;
+    gap: 8px !important;
+    min-width: 0 !important;
+  }
+  #athleteTable .athlete-row .person-card-meta span {
+    min-width: 0 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    color: #71809b !important;
+    font-size: .74rem !important;
+    font-weight: 850 !important;
+    line-height: 1.2 !important;
+  }
+}
