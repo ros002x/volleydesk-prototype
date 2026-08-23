@@ -3302,3 +3302,108 @@ pre { background: #ffffff; color: var(--ink); box-shadow: inset 0 0 0 1px rgba(2
     white-space: normal;
   }
 }
+/* Final mobile certificates layout */
+@media (max-width: 699px) {
+  .certificates-panel.directory-panel.active {
+    display: flex;
+    height: calc(100dvh - 132px);
+    max-height: calc(100dvh - 132px);
+    padding: 14px 14px 12px;
+    overflow: hidden;
+  }
+  .certificates-toolbar.directory-toolbar {
+    position: relative;
+    top: auto;
+    z-index: 2;
+    display: grid;
+    gap: 10px;
+    flex: 0 0 auto;
+    margin: 0 0 8px;
+    padding: 0;
+    background: transparent;
+    backdrop-filter: none;
+  }
+  .certificate-summary {
+    flex: 0 0 auto;
+    margin: 0 0 10px;
+  }
+  .certificate-list.directory-scroll {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    align-content: start;
+    gap: 10px;
+    padding: 0 2px 88px 0;
+  }
+  .certificate-row {
+    display: grid !important;
+    grid-template-columns: 5px minmax(0, 1fr) !important;
+    grid-template-rows: auto auto auto auto !important;
+    align-items: start !important;
+    min-height: 128px !important;
+    height: auto !important;
+    padding: 13px 12px 13px 0 !important;
+    border-radius: 18px !important;
+    gap: 7px 10px !important;
+    overflow: hidden;
+    transform: none !important;
+  }
+  .certificate-row:hover,
+  .certificate-row:focus-visible {
+    transform: none !important;
+  }
+  .certificate-status-dot {
+    grid-column: 1 !important;
+    grid-row: 1 / -1 !important;
+    align-self: stretch !important;
+    width: 5px !important;
+    height: auto !important;
+    min-height: 100% !important;
+    border-radius: 18px 0 0 18px !important;
+  }
+  .certificate-main {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    min-width: 0;
+  }
+  .certificate-contact {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    gap: 8px !important;
+    min-width: 0;
+  }
+  .certificate-expiry {
+    grid-column: 2 !important;
+    grid-row: 3 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    justify-self: stretch !important;
+    max-width: none !important;
+    min-width: 0;
+    min-height: 28px !important;
+    margin: 0 !important;
+    text-align: left !important;
+  }
+  .certificate-row p {
+    grid-column: 2 !important;
+    grid-row: 4 !important;
+    min-width: 0;
+    margin: 0 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    text-align: left !important;
+  }
+  .certificate-main strong,
+  .certificate-main span,
+  .certificate-contact span,
+  .certificate-contact em,
+  .certificate-expiry span,
+  .certificate-expiry strong {
+    max-width: 100%;
+    min-width: 0;
+  }
+}
