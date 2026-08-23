@@ -4009,3 +4009,142 @@ html.tablet-layout .bottom-nav-home {
     font-size: .58rem !important;
   }
 }
+/* iOS/iPadOS: prevent input zoom and keep modals inside viewport */
+@media (max-width: 1366px) {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  button,
+  input,
+  select,
+  textarea,
+  summary,
+  .athlete-row,
+  .certificate-row,
+  .table-row,
+  .nav-item,
+  .nav-item-proxy,
+  .bottom-nav-item,
+  .bottom-nav-home,
+  .quick-action {
+    touch-action: manipulation;
+  }
+  input,
+  select,
+  textarea,
+  label input,
+  label select,
+  .prima-nota-search input,
+  .prima-nota-actions input,
+  .prima-nota-actions select,
+  .certificate-actions input,
+  .certificate-actions select,
+  .accounting-actions input,
+  .accounting-actions select {
+    font-size: 16px !important;
+  }
+  dialog {
+    width: min(760px, calc(100vw - 24px)) !important;
+    max-width: calc(100vw - 24px) !important;
+    max-height: none !important;
+    margin: auto !important;
+    overflow: visible !important;
+  }
+  .athlete-modal,
+  .payment-modal {
+    padding: 0 !important;
+  }
+  .modal-card {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    max-height: calc(100dvh - max(24px, env(safe-area-inset-top)) - max(18px, env(safe-area-inset-bottom))) !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    border-radius: 24px !important;
+  }
+  .modal-head {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 4 !important;
+    flex: 0 0 auto !important;
+    min-height: 70px !important;
+    margin: 0 !important;
+    padding: 16px 16px 12px !important;
+    background: rgba(255,255,255,.96) !important;
+    border-bottom: 1px solid rgba(20,46,91,.08) !important;
+    backdrop-filter: blur(16px) !important;
+  }
+  .modal-head > div {
+    min-width: 0 !important;
+  }
+  .modal-head h2 {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    max-width: 100% !important;
+  }
+  .modal-close {
+    flex: 0 0 42px !important;
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    border-radius: 14px !important;
+    font-size: 16px !important;
+  }
+  .modal-card > .form-grid,
+  .modal-card > .form-section,
+  .modal-card > .drop-grid {
+    flex: 0 0 auto;
+  }
+  .modal-card > .form-grid,
+  .modal-card > .form-section,
+  .modal-card > .drop-grid,
+  .modal-card > .modal-actions {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  .modal-card > .form-grid:first-of-type {
+    padding-top: 16px !important;
+  }
+  .modal-card > .modal-actions {
+    position: sticky !important;
+    bottom: 0 !important;
+    z-index: 4 !important;
+    flex: 0 0 auto !important;
+    margin: 0 !important;
+    padding-top: 12px !important;
+    padding-bottom: calc(14px + env(safe-area-inset-bottom)) !important;
+    background: rgba(255,255,255,.96) !important;
+    backdrop-filter: blur(16px) !important;
+  }
+}
+
+@media (max-width: 699px) {
+  dialog {
+    width: calc(100vw - 16px) !important;
+    max-width: calc(100vw - 16px) !important;
+  }
+  .modal-card {
+    max-height: calc(100dvh - max(18px, env(safe-area-inset-top)) - max(12px, env(safe-area-inset-bottom))) !important;
+    border-radius: 22px !important;
+  }
+  .modal-head {
+    min-height: 64px !important;
+    padding: 14px 14px 10px !important;
+  }
+  .form-grid,
+  .drop-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+/* Modal content scrolls internally while header/actions stay reachable */
+@media (max-width: 1366px) {
+  .modal-card {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    overscroll-behavior: contain !important;
+    -webkit-overflow-scrolling: touch;
+  }
+}
