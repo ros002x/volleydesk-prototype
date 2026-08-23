@@ -184,6 +184,8 @@ const primaNotaSearch = document.querySelector("#primaNotaSearch");
 const primaNotaType = document.querySelector("#primaNotaType");
 const primaNotaDate = document.querySelector("#primaNotaDate");
 const addPrimaNotaButton = document.querySelector("#addPrimaNotaButton");
+const primaNotaModal = document.querySelector("#primaNotaModal");
+const primaNotaForm = document.querySelector("#primaNotaForm");
 const primaNotaTableBody = document.querySelector("#primaNotaTableBody");
 const primaNotaTotalIn = document.querySelector("#primaNotaTotalIn");
 const primaNotaTotalOut = document.querySelector("#primaNotaTotalOut");
@@ -624,6 +626,21 @@ function currentPrimaNotaRows() {
     .sort((a, b) => b.date.localeCompare(a.date));
 }
 
+function updatePrimaNotaDateField() {
+  primaNotaDate?.parentElement?.classList.toggle("date-has-value", Boolean(primaNotaDate.value));
+}
+
+function openPrimaNotaModal() {
+  if (!primaNotaForm) return;
+  const today = new Date().toISOString().slice(0, 10);
+  primaNotaForm.elements.date.value = today;
+  primaNotaForm.elements.type.value = "in";
+  primaNotaForm.elements.method.value = "Bonifico";
+  primaNotaForm.elements.who.value = "";
+  primaNotaForm.elements.reason.value = "";
+  primaNotaForm.elements.amount.value = "";
+  openLockedDialog(primaNotaModal);
+}
 function renderPrimaNota() {
   if (!primaNotaTableBody) return;
   const rows = currentPrimaNotaRows();
@@ -964,20 +981,12 @@ accountingStartDate?.addEventListener("change", () => renderAccounting());
 accountingEndDate?.addEventListener("change", () => renderAccounting());
 primaNotaSearch?.addEventListener("input", renderPrimaNota);
 primaNotaType?.addEventListener("change", renderPrimaNota);
-primaNotaDate?.addEventListener("change", renderPrimaNota);
-addPrimaNotaButton?.addEventListener("click", () => {
-  const nextIsIncome = primaNotaMovements.length % 2 === 0;
-  primaNotaMovements.unshift({
-    date: new Date().toISOString().slice(0, 10),
-    method: nextIsIncome ? "Bonifico" : "Carta",
-    who: nextIsIncome ? "Nuovo atleta" : "NS Volley",
-    reason: nextIsIncome ? "Nuova entrata" : "Nuova uscita",
-    type: nextIsIncome ? "in" : "out",
-    amount: nextIsIncome ? 30 : 25
-  });
+primaNotaDate?.addEventListener("change", () => {
+  updatePrimaNotaDateField();
   renderPrimaNota();
-  showNotificationToast("Movimento aggiunto", "Prima nota aggiornata con una nuova riga modificabile nei dati.");
 });
+primaNotaDate?.addEventListener("input", updatePrimaNotaDateField);
+addPrimaNotaButton?.addEventListener("click", openPrimaNotaModal);
 
 accountingBoard?.addEventListener("click", (event) => {
   const editButton = event.target.closest(".mobile-edit-payment");
@@ -1141,7 +1150,7 @@ function createAthleteFromUi() {
 document.querySelector("#addAthleteButton").addEventListener("click", createAthleteFromUi);
 document.querySelector("#mobileAddButton")?.addEventListener("click", createAthleteFromUi);
 
-[modal, paymentModal, matchModal].forEach((dialog) => {
+[modal, paymentModal, matchModal, primaNotaModal].forEach((dialog) => {
   dialog?.addEventListener("close", () => window.setTimeout(unlockDocumentScroll, 0));
   dialog?.addEventListener("cancel", () => window.setTimeout(unlockDocumentScroll, 0));
 });
@@ -1153,6 +1162,8 @@ matchCard?.addEventListener("keydown", (event) => {
 });
 document.querySelector("#closeMatchButton")?.addEventListener("click", () => matchModal.close());
 document.querySelector("#cancelMatchButton")?.addEventListener("click", () => matchModal.close());
+document.querySelector("#closePrimaNotaButton")?.addEventListener("click", () => primaNotaModal.close());
+document.querySelector("#cancelPrimaNotaButton")?.addEventListener("click", () => primaNotaModal.close());
 matchForm?.addEventListener("submit", (event) => {
   event.preventDefault();
   const form = new FormData(matchForm);
@@ -1166,6 +1177,22 @@ matchForm?.addEventListener("submit", (event) => {
   matchData.seconds = Number(form.get("seconds")) || 0;
   renderMatchCard();
   matchModal.close();
+});
+primaNotaForm?.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const form = new FormData(primaNotaForm);
+  const amount = Number(String(form.get("amount") || "0").replace(",", "."));
+  primaNotaMovements.unshift({
+    date: String(form.get("date") || new Date().toISOString().slice(0, 10)),
+    method: String(form.get("method") || "").trim() || "Bonifico",
+    who: String(form.get("who") || "").trim() || "Movimento",
+    reason: String(form.get("reason") || "").trim() || "Prima nota",
+    type: String(form.get("type") || "in") === "out" ? "out" : "in",
+    amount: Number.isFinite(amount) ? amount : 0
+  });
+  renderPrimaNota();
+  primaNotaModal.close();
+  showNotificationToast("Movimento aggiunto", "Prima nota aggiornata con i dati inseriti.");
 });
 document.querySelector("#closeModalButton").addEventListener("click", () => modal.close());
 document.querySelector("#cancelModalButton").addEventListener("click", () => modal.close());
@@ -1268,8 +1295,4 @@ function renderAll() {
 }
 
 renderAll();
-
-
-
-
-
+updatePrimaNotaDateField();

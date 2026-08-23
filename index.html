@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260823-1530">
+  <link rel="stylesheet" href="styles.css?v=20260823-1554">
 </head>
 <body>
   <main class="screen">
@@ -232,7 +232,7 @@
                   <option value="in">Entrate</option>
                   <option value="out">Uscite</option>
                 </select>
-                <input type="date" id="primaNotaDate" aria-label="Filtra data">
+                <div class="prima-nota-date-field" data-placeholder="Data"><input type="date" id="primaNotaDate" aria-label="Filtra data"></div>
                 <button class="prima-nota-tool primary" id="addPrimaNotaButton" type="button">Movimento</button>
               </div>
             </div>
@@ -411,6 +411,37 @@
     </form>
   </dialog>
 
+
+  <dialog class="prima-nota-modal" id="primaNotaModal">
+    <form class="modal-card prima-nota-editor-card" id="primaNotaForm" method="dialog">
+      <header class="modal-head">
+        <div>
+          <span class="micro">Prima nota</span>
+          <h2>Nuovo movimento</h2>
+        </div>
+        <button class="modal-close" id="closePrimaNotaButton" type="button" aria-label="Chiudi">x</button>
+      </header>
+
+      <div class="form-grid">
+        <label>Data <input name="date" type="date" required></label>
+        <label>Tipo
+          <select name="type" required>
+            <option value="in">Entrata</option>
+            <option value="out">Uscita</option>
+          </select>
+        </label>
+        <label>Metodo <input name="method" type="text" placeholder="Bonifico" required></label>
+        <label>Chi <input name="who" type="text" placeholder="Nome atleta o fornitore" required></label>
+        <label>Causale <input name="reason" type="text" placeholder="Quota, materiale, affitto..." required></label>
+        <label>Importo <input name="amount" type="number" min="0" step="0.01" placeholder="0,00" required></label>
+      </div>
+
+      <footer class="modal-actions">
+        <button class="soft-button" id="cancelPrimaNotaButton" type="button">Annulla</button>
+        <button class="primary-action inline" type="submit">Salva movimento</button>
+      </footer>
+    </form>
+  </dialog>
   <script src="app.js"></script>
 </body>
 </html>

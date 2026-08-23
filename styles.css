@@ -4732,3 +4732,59 @@ body.modal-open {
     max-height: calc(100dvh - 276px) !important;
   }
 }
+
+/* Prima nota date placeholder and movement modal */
+.prima-nota-date-field {
+  position: relative;
+  min-width: 0;
+}
+.prima-nota-date-field input {
+  position: relative;
+  z-index: 1;
+}
+.prima-nota-date-field::before {
+  content: attr(data-placeholder);
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  z-index: 2;
+  transform: translateY(-50%);
+  color: #7a8aa6;
+  font-weight: 900;
+  pointer-events: none;
+}
+.prima-nota-date-field.date-has-value::before,
+.prima-nota-date-field:focus-within::before {
+  opacity: 0;
+}
+.prima-nota-editor-card {
+  width: min(680px, calc(100vw - 24px));
+  margin: 0 auto;
+}
+@media (max-width: 699px) {
+  .prima-nota-date-field {
+    width: 100% !important;
+    height: 46px !important;
+    min-width: 0 !important;
+  }
+  .prima-nota-date-field input {
+    width: 100% !important;
+    height: 46px !important;
+    min-height: 46px !important;
+  }
+  .prima-nota-date-field:not(.date-has-value) input {
+    color: transparent !important;
+  }
+  .prima-nota-date-field:not(.date-has-value) input::-webkit-datetime-edit {
+    color: transparent !important;
+  }
+  .prima-nota-date-field:focus-within input,
+  .prima-nota-date-field.date-has-value input,
+  .prima-nota-date-field:focus-within input::-webkit-datetime-edit,
+  .prima-nota-date-field.date-has-value input::-webkit-datetime-edit {
+    color: #263858 !important;
+  }
+  .prima-nota-editor-card .form-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
