@@ -3963,3 +3963,49 @@ html.tablet-layout .bottom-nav-home {
     width: 100% !important;
   }
 }
+/* iPad match card readability */
+@media (min-width: 700px) and (max-width: 1366px) {
+  html.tablet-layout .match-surface {
+    display: grid !important;
+    align-content: center !important;
+    gap: 14px !important;
+    padding: 24px 28px !important;
+  }
+  html.tablet-layout .match-label {
+    font-size: .84rem !important;
+    letter-spacing: .08em !important;
+  }
+  html.tablet-layout .match-time {
+    margin-top: 0 !important;
+    font-size: 1.18rem !important;
+    line-height: 1.1 !important;
+  }
+  html.tablet-layout .match-time strong {
+    font-size: 1.32rem !important;
+  }
+  html.tablet-layout .teams {
+    margin: 4px 0 !important;
+    gap: 8px !important;
+  }
+  html.tablet-layout .teams strong {
+    font-size: 1.38rem !important;
+    line-height: 1.08 !important;
+  }
+  html.tablet-layout .teams span {
+    font-size: .9rem !important;
+  }
+  html.tablet-layout .countdown {
+    margin-top: 2px !important;
+    gap: 8px !important;
+  }
+  html.tablet-layout .countdown div {
+    min-height: 54px !important;
+    padding: 8px 6px !important;
+  }
+  html.tablet-layout .countdown strong {
+    font-size: 1.02rem !important;
+  }
+  html.tablet-layout .countdown span {
+    font-size: .58rem !important;
+  }
+}
