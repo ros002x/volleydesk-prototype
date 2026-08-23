@@ -923,9 +923,25 @@ searchInput.addEventListener("input", (event) => {
 
 certificateSearch?.addEventListener("input", renderCertificates);
 certificateFilter?.addEventListener("change", renderCertificates);
+function isMobileCertificateView() {
+  return window.matchMedia("(max-width: 699px)").matches;
+}
+
+function toggleCertificateMobileCard(row) {
+  if (!row) return;
+  certificateGrid?.querySelectorAll(".certificate-row.cert-expanded").forEach((item) => {
+    if (item !== row) item.classList.remove("cert-expanded");
+  });
+  row.classList.toggle("cert-expanded");
+}
+
 certificateGrid?.addEventListener("click", (event) => {
   const row = event.target.closest(".certificate-row");
   if (!row) return;
+  if (isMobileCertificateView()) {
+    toggleCertificateMobileCard(row);
+    return;
+  }
   showView("athletes");
   openAthleteModal(Number(row.dataset.index));
 });
@@ -934,6 +950,10 @@ certificateGrid?.addEventListener("keydown", (event) => {
   const row = event.target.closest(".certificate-row");
   if (!row) return;
   event.preventDefault();
+  if (isMobileCertificateView()) {
+    toggleCertificateMobileCard(row);
+    return;
+  }
   showView("athletes");
   openAthleteModal(Number(row.dataset.index));
 });
