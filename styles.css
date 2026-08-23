@@ -3688,3 +3688,124 @@ html.tablet-layout .bottom-nav-home {
     display: none !important;
   }
 }
+/* iPad landscape refinement: larger, not clipped */
+@media (orientation: landscape) {
+  html.tablet-layout .screen {
+    padding: 18px 22px 28px !important;
+  }
+  html.tablet-layout .product-shell {
+    display: grid !important;
+    grid-template-columns: 220px minmax(0, 1fr) !important;
+    gap: 22px !important;
+  }
+  html.tablet-layout .side-nav {
+    display: flex !important;
+    height: calc(100dvh - 46px) !important;
+    max-height: calc(100dvh - 46px) !important;
+    padding: 18px !important;
+    border-radius: 28px !important;
+  }
+  html.tablet-layout .workspace {
+    height: calc(100dvh - 46px) !important;
+  }
+  html.tablet-layout .mobile-app-header {
+    display: none !important;
+  }
+  html.tablet-layout .showcase.active.mobile-home {
+    height: 100% !important;
+    grid-template-columns: minmax(0, 1.18fr) minmax(300px, .72fr) !important;
+    grid-template-rows: minmax(360px, 1fr) 206px !important;
+    gap: 18px !important;
+    overflow: hidden !important;
+  }
+  html.tablet-layout .home-hero {
+    grid-column: 1 / 2 !important;
+    grid-row: 1 / -1 !important;
+    padding: 44px 52px !important;
+    border-radius: 34px !important;
+  }
+  html.tablet-layout .hero-text {
+    width: min(54%, 520px) !important;
+  }
+  html.tablet-layout .hello {
+    font-size: 1.08rem !important;
+  }
+  html.tablet-layout .home-hero h2 {
+    margin-top: 14px !important;
+    font-size: clamp(5.2rem, 7.1vw, 7.6rem) !important;
+    line-height: .86 !important;
+  }
+  html.tablet-layout .hero-subtitle {
+    margin-top: 22px !important;
+    font-size: 1.14rem !important;
+    line-height: 1.28 !important;
+  }
+  html.tablet-layout .calendar-cta {
+    min-height: 52px !important;
+    margin-top: 28px !important;
+    padding: 0 24px !important;
+    font-size: .96rem !important;
+  }
+  html.tablet-layout .hero-player {
+    right: -46px !important;
+    top: 0 !important;
+    bottom: -8px !important;
+    width: min(60%, 660px) !important;
+  }
+  html.tablet-layout .match-surface {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    min-height: 0 !important;
+    padding: 24px !important;
+    border-radius: 30px !important;
+  }
+  html.tablet-layout .match-label {
+    font-size: .74rem !important;
+  }
+  html.tablet-layout .match-time {
+    margin-top: 14px !important;
+    font-size: 1rem !important;
+  }
+  html.tablet-layout .teams {
+    margin: 20px 0 18px !important;
+    gap: 9px !important;
+  }
+  html.tablet-layout .teams strong {
+    font-size: 1.16rem !important;
+  }
+  html.tablet-layout .countdown div {
+    min-height: 52px !important;
+  }
+  html.tablet-layout .quick-actions {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    align-self: stretch !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-auto-flow: row !important;
+    align-content: stretch !important;
+    gap: 10px !important;
+    padding: 14px !important;
+    border-radius: 28px !important;
+    overflow: hidden !important;
+  }
+  html.tablet-layout .quick-action {
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 8px 6px !important;
+    gap: 6px !important;
+    align-content: center !important;
+    font-size: .76rem !important;
+  }
+  html.tablet-layout .quick-action span {
+    width: 42px !important;
+    height: 42px !important;
+  }
+  html.tablet-layout .quick-action:nth-child(5) {
+    grid-column: 1 / -1 !important;
+  }
+  html.tablet-layout .latest-news,
+  html.tablet-layout .bottom-nav {
+    display: none !important;
+  }
+}
