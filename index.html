@@ -17,11 +17,11 @@
         <nav class="pill-nav" aria-label="Sezioni rapide">
           <button class="nav-item active" type="button" data-view="overview">Home</button>
           <button class="nav-item" type="button" data-view="athletes">Atleti</button>
-          <button class="nav-item" type="button" data-view="deadlines">Scadenziario</button>
-          <button class="nav-item" type="button" data-view="standings">Classifiche</button>
-          <button class="nav-item" type="button" data-view="communications">Comunicazioni</button>
           <button class="nav-item" type="button" data-view="certificates">Certificati</button>
           <button class="nav-item" type="button" data-view="documents">Documenti</button>
+          <button class="nav-item" type="button" data-view="standings">Classifiche</button>
+          <button class="nav-item" type="button" data-view="deadlines">Scadenziario</button>
+          <button class="nav-item" type="button" data-view="accounting">Prima nota</button>
         </nav>
         <div class="side-meta">
           <span>Stagione</span>
@@ -193,6 +193,30 @@
           </div>
         </section>
 
+
+        <section class="data-panel view" id="accounting">
+          <div class="panel-title accounting-title">
+            <div>
+              <span>Prima nota</span>
+              <h2>Quote e pagamenti</h2>
+            </div>
+            <div class="panel-actions accounting-actions">
+              <input id="accountingSearch" type="search" placeholder="Cerca atleta">
+              <select id="accountingFilter" aria-label="Filtra stato pagamento">
+                <option value="all">Tutti</option>
+                <option value="paid">Pagati</option>
+                <option value="partial">Parziali</option>
+                <option value="unpaid">Scoperti</option>
+              </select>
+              <input id="accountingStartDate" type="date" value="2026-09-01" aria-label="Data inizio">
+              <input id="accountingEndDate" type="date" value="2027-08-31" aria-label="Data fine">
+              <button class="soft-button" id="selectAccountingButton" type="button">Seleziona</button>
+              <button class="soft-button" id="editAccountingButton" type="button" disabled>Modifica</button>
+              <button class="danger-button" id="deleteAccountingButton" type="button" hidden>Elimina 0</button>
+            </div>
+          </div>
+          <div class="accounting-board" id="accountingBoard"></div>
+        </section>
         <section class="data-panel view" id="communications">
           <div class="panel-title">
             <div>
