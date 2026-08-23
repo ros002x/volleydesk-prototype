@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260823-1451">
+  <link rel="stylesheet" href="styles.css?v=20260823-1456">
 </head>
 <body>
   <main class="screen">
@@ -69,19 +69,19 @@
             </figure>
           </section>
 
-          <section class="match-surface" aria-label="Prossima partita">
+          <section class="match-surface" id="matchCard" role="button" tabindex="0" aria-label="Modifica prossima partita">
             <p class="section-kicker">PROSSIMA PARTITA</p>
             <div class="match-time">
-              <span>Dom 26 Mag</span>
-              <strong>18:00</strong>
+              <span id="matchDateLabel">Dom 26 Mag</span>
+              <strong id="matchTimeLabel">18:00</strong>
             </div>
             <div class="teams">
-              <strong>BARI VOLLEY</strong>
+              <strong id="matchHomeTeam">BARI VOLLEY</strong>
               <span>VS</span>
-              <strong>MONZA VOLLEY</strong>
+              <strong id="matchAwayTeam">MONZA VOLLEY</strong>
             </div>
             <div class="countdown" aria-label="Conto alla rovescia">
-              <span>02 GIORNI</span><i></i><span>14 ORE</span><i></i><span>35 MIN</span><i></i><span>48 SEC</span>
+              <span id="matchDays">02 GIORNI</span><i></i><span id="matchHours">14 ORE</span><i></i><span id="matchMinutes">35 MIN</span><i></i><span id="matchSeconds">48 SEC</span>
             </div>
           </section>
 
@@ -289,6 +289,34 @@
     </section>
   </main>
 
+
+  <dialog class="match-modal" id="matchModal">
+    <form class="modal-card match-editor-card" id="matchForm" method="dialog">
+      <header class="modal-head">
+        <div>
+          <span class="micro">Home</span>
+          <h2>Prossima partita</h2>
+        </div>
+        <button class="modal-close" id="closeMatchButton" type="button" aria-label="Chiudi">x</button>
+      </header>
+
+      <div class="form-grid">
+        <label>Data visualizzata <input name="dateLabel" type="text" required></label>
+        <label>Ora <input name="time" type="time" required></label>
+        <label>Squadra casa <input name="homeTeam" type="text" required></label>
+        <label>Squadra trasferta <input name="awayTeam" type="text" required></label>
+        <label>Giorni countdown <input name="days" type="number" min="0" max="99" required></label>
+        <label>Ore <input name="hours" type="number" min="0" max="23" required></label>
+        <label>Minuti <input name="minutes" type="number" min="0" max="59" required></label>
+        <label>Secondi <input name="seconds" type="number" min="0" max="59" required></label>
+      </div>
+
+      <footer class="modal-actions">
+        <button class="soft-button" id="cancelMatchButton" type="button">Annulla</button>
+        <button class="primary-action inline" type="submit">Salva partita</button>
+      </footer>
+    </form>
+  </dialog>
   <dialog class="athlete-modal" id="athleteModal">
     <form class="modal-card" id="athleteForm" method="dialog">
       <header class="modal-head">

@@ -4319,3 +4319,18 @@ body.modal-open {
     min-height: 44px !important;
   }
 }
+/* Editable match card */
+.match-surface[role="button"] {
+  cursor: pointer;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.match-surface[role="button"]:hover,
+.match-surface[role="button"]:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 24px 68px rgba(24,58,119,.10);
+  outline: none;
+}
+.match-editor-card {
+  width: min(680px, calc(100vw - 24px));
+  margin: 0 auto;
+}

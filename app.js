@@ -129,6 +129,16 @@ const primaNotaMovements = [
   { date: "2026-09-18", method: "Bonifico", who: "Palazzetto", reason: "Affitto campo", type: "out", amount: 140 },
   { date: "2026-10-02", method: "Bonifico", who: "Giulia Ferri", reason: "Quota ottobre", type: "in", amount: 30 }
 ];
+const matchData = {
+  dateLabel: "Dom 26 Mag",
+  time: "18:00",
+  homeTeam: "BARI VOLLEY",
+  awayTeam: "MONZA VOLLEY",
+  days: 2,
+  hours: 14,
+  minutes: 35,
+  seconds: 48
+};
 
 const productShell = document.querySelector(".product-shell");
 const sideNav = document.querySelector(".side-nav");
@@ -148,6 +158,17 @@ const documentList = document.querySelector("#documentList");
 const deadlineList = document.querySelector("#deadlineList");
 const deadlineTotal = document.querySelector("#deadlineTotal");
 const calendarCta = document.querySelector("#calendarCta");
+const matchCard = document.querySelector("#matchCard");
+const matchModal = document.querySelector("#matchModal");
+const matchForm = document.querySelector("#matchForm");
+const matchDateLabel = document.querySelector("#matchDateLabel");
+const matchTimeLabel = document.querySelector("#matchTimeLabel");
+const matchHomeTeam = document.querySelector("#matchHomeTeam");
+const matchAwayTeam = document.querySelector("#matchAwayTeam");
+const matchDays = document.querySelector("#matchDays");
+const matchHours = document.querySelector("#matchHours");
+const matchMinutes = document.querySelector("#matchMinutes");
+const matchSeconds = document.querySelector("#matchSeconds");
 const notificationToggle = document.querySelector("#notificationToggle");
 const notificationPanel = document.querySelector("#notificationPanel");
 const notificationClose = document.querySelector("#notificationClose");
@@ -202,6 +223,37 @@ const seasonMonths = [
   { key: "aug", label: "Ago" }
 ];
 
+function twoDigits(value) {
+  return String(Math.max(0, Number(value) || 0)).padStart(2, "0");
+}
+
+function renderMatchCard() {
+  if (matchDateLabel) matchDateLabel.textContent = matchData.dateLabel;
+  if (matchTimeLabel) matchTimeLabel.textContent = matchData.time;
+  if (matchHomeTeam) matchHomeTeam.textContent = matchData.homeTeam;
+  if (matchAwayTeam) matchAwayTeam.textContent = matchData.awayTeam;
+  if (matchDays) matchDays.textContent = `${twoDigits(matchData.days)} GIORNI`;
+  if (matchHours) matchHours.textContent = `${twoDigits(matchData.hours)} ORE`;
+  if (matchMinutes) matchMinutes.textContent = `${twoDigits(matchData.minutes)} MIN`;
+  if (matchSeconds) matchSeconds.textContent = `${twoDigits(matchData.seconds)} SEC`;
+}
+
+function fillMatchForm() {
+  if (!matchForm) return;
+  matchForm.elements.dateLabel.value = matchData.dateLabel;
+  matchForm.elements.time.value = matchData.time;
+  matchForm.elements.homeTeam.value = matchData.homeTeam;
+  matchForm.elements.awayTeam.value = matchData.awayTeam;
+  matchForm.elements.days.value = matchData.days;
+  matchForm.elements.hours.value = matchData.hours;
+  matchForm.elements.minutes.value = matchData.minutes;
+  matchForm.elements.seconds.value = matchData.seconds;
+}
+
+function openMatchModal() {
+  fillMatchForm();
+  openLockedDialog(matchModal);
+}
 function athleteName(athlete) {
   return `${athlete.firstName} ${athlete.lastName}`.trim();
 }
@@ -321,6 +373,7 @@ function setSelectionMode(enabled) {
   if (!selectionMode) {
     selectedAthletes.clear();
   }
+  renderMatchCard();
   renderCurrentAthletes();
   updateSelectionControls();
 }
@@ -331,6 +384,7 @@ function toggleAthleteSelection(index) {
   } else {
     selectedAthletes.add(index);
   }
+  renderMatchCard();
   renderCurrentAthletes();
   updateSelectionControls();
 }
@@ -796,10 +850,10 @@ function isMobileCalendarDevice() {
 }
 
 function openMobileCalendar() {
-  const title = "Bari Volley vs Monza Volley";
+  const title = `${matchData.homeTeam} vs ${matchData.awayTeam}`;
   const description = "Prossima partita NS Volley";
   const location = "Palazzetto";
-  const start = new Date("2027-05-26T18:00:00+02:00");
+  const start = new Date(`2027-05-26T${matchData.time}:00+02:00`);
   const end = new Date("2027-05-26T20:00:00+02:00");
   const userAgent = navigator.userAgent || "";
 
@@ -866,6 +920,7 @@ deadlineList?.addEventListener("click", (event) => {
 });
 
 searchInput.addEventListener("input", (event) => {
+  renderMatchCard();
   renderCurrentAthletes();
 });
 
@@ -1069,9 +1124,31 @@ function createAthleteFromUi() {
 document.querySelector("#addAthleteButton").addEventListener("click", createAthleteFromUi);
 document.querySelector("#mobileAddButton")?.addEventListener("click", createAthleteFromUi);
 
-[modal, paymentModal].forEach((dialog) => {
+[modal, paymentModal, matchModal].forEach((dialog) => {
   dialog?.addEventListener("close", () => window.setTimeout(unlockDocumentScroll, 0));
   dialog?.addEventListener("cancel", () => window.setTimeout(unlockDocumentScroll, 0));
+});
+matchCard?.addEventListener("click", openMatchModal);
+matchCard?.addEventListener("keydown", (event) => {
+  if (event.key !== "Enter" && event.key !== " ") return;
+  event.preventDefault();
+  openMatchModal();
+});
+document.querySelector("#closeMatchButton")?.addEventListener("click", () => matchModal.close());
+document.querySelector("#cancelMatchButton")?.addEventListener("click", () => matchModal.close());
+matchForm?.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const form = new FormData(matchForm);
+  matchData.dateLabel = String(form.get("dateLabel") || "").trim() || matchData.dateLabel;
+  matchData.time = String(form.get("time") || matchData.time);
+  matchData.homeTeam = String(form.get("homeTeam") || "").trim().toUpperCase() || matchData.homeTeam;
+  matchData.awayTeam = String(form.get("awayTeam") || "").trim().toUpperCase() || matchData.awayTeam;
+  matchData.days = Number(form.get("days")) || 0;
+  matchData.hours = Number(form.get("hours")) || 0;
+  matchData.minutes = Number(form.get("minutes")) || 0;
+  matchData.seconds = Number(form.get("seconds")) || 0;
+  renderMatchCard();
+  matchModal.close();
 });
 document.querySelector("#closeModalButton").addEventListener("click", () => modal.close());
 document.querySelector("#cancelModalButton").addEventListener("click", () => modal.close());
@@ -1163,6 +1240,7 @@ document.querySelector("#exportButton")?.addEventListener("click", () => {
 function renderAll() {
   ensureAccounting();
   fillPaymentMonthOptions();
+  renderMatchCard();
   renderCurrentAthletes();
   renderCertificates();
   renderAccounting();
