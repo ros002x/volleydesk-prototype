@@ -1,3 +1,11 @@
+function setDeviceLayoutClass() {
+  const width = window.innerWidth || document.documentElement.clientWidth;
+  const isTabletRange = width >= 700 && width <= 1366;
+  const looksLikeIPad = /iPad|Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1;
+  document.documentElement.classList.toggle("tablet-layout", isTabletRange || looksLikeIPad);
+}
+setDeviceLayoutClass();
+window.addEventListener("resize", setDeviceLayoutClass);
 const athletes = [
   {
     firstName: "Sara",
