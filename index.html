@@ -127,15 +127,29 @@
           <div class="data-list directory-scroll" id="athleteTable"></div>
         </section>
 
-        <section class="data-panel view directory-panel" id="certificates">
-          <div class="panel-title directory-toolbar">
+        <section class="data-panel view directory-panel certificates-panel" id="certificates">
+          <div class="panel-title directory-toolbar certificates-toolbar">
             <div>
               <span>Salute</span>
               <h2>Certificati</h2>
             </div>
-            <button class="soft-button nav-item-proxy" type="button" data-target="athletes">Seleziona atleta</button>
+            <div class="panel-actions certificate-actions">
+              <input id="certificateSearch" type="search" placeholder="Cerca atleta">
+              <select id="certificateFilter" aria-label="Filtra certificati">
+                <option value="all">Tutti</option>
+                <option value="valid">Validi</option>
+                <option value="expiring">In scadenza</option>
+                <option value="expired">Mancanti</option>
+              </select>
+              <button class="soft-button nav-item-proxy" type="button" data-target="athletes">Atleti</button>
+            </div>
           </div>
-          <div class="tile-grid directory-scroll" id="certificateGrid"></div>
+          <div class="certificate-summary" aria-label="Riepilogo certificati">
+            <article><span>Validi</span><strong id="certValidTotal">0</strong></article>
+            <article><span>In scadenza</span><strong id="certExpiringTotal">0</strong></article>
+            <article><span>Mancanti</span><strong id="certMissingTotal">0</strong></article>
+          </div>
+          <div class="certificate-list directory-scroll" id="certificateGrid"></div>
         </section>
 
         <section class="data-panel view" id="documents">

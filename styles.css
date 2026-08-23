@@ -2808,3 +2808,269 @@ pre { background: #ffffff; color: var(--ink); box-shadow: inset 0 0 0 1px rgba(2
     text-align: left !important;
   }
 }
+/* Area Certificati rifatta */
+.certificates-panel {
+  gap: 14px;
+}
+.certificates-toolbar .certificate-actions {
+  align-items: center;
+}
+.certificate-actions input,
+.certificate-actions select {
+  min-height: 42px;
+  border: 0;
+  border-radius: 16px;
+  padding: 0 13px;
+  background: #f8faff;
+  color: #263858;
+  font-weight: 850;
+}
+.certificate-actions input {
+  min-width: 230px;
+}
+.certificate-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.certificate-summary article {
+  padding: 14px 16px;
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 14px 34px rgba(24,58,119,.052);
+}
+.certificate-summary span {
+  display: block;
+  color: #7a8aa6;
+  font-size: .7rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+.certificate-summary strong {
+  display: block;
+  margin-top: 6px;
+  color: #142e5b;
+  font-size: 1.28rem;
+  line-height: 1;
+}
+.certificate-list {
+  display: grid;
+  gap: 10px;
+}
+.certificate-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 12px minmax(180px, 1.1fr) minmax(180px, .95fr) minmax(140px, .7fr) minmax(160px, .8fr);
+  align-items: center;
+  gap: 14px;
+  min-height: 74px;
+  padding: 14px 16px;
+  border: 1px solid rgba(20,46,91,.065);
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 12px 30px rgba(24,58,119,.045);
+  cursor: pointer;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.certificate-row:hover,
+.certificate-row:focus-visible {
+  border-color: rgba(40,103,255,.18);
+  box-shadow: 0 18px 38px rgba(24,58,119,.075);
+  transform: translateY(-1px);
+  outline: 0;
+}
+.certificate-status-dot {
+  width: 10px;
+  height: 42px;
+  border-radius: 999px;
+  background: #94a3b8;
+}
+.certificate-valid .certificate-status-dot { background: rgba(40,103,255,.76); }
+.certificate-expiring .certificate-status-dot { background: rgba(245,158,11,.78); }
+.certificate-expired .certificate-status-dot { background: rgba(216,50,85,.72); }
+.certificate-main,
+.certificate-contact,
+.certificate-expiry {
+  min-width: 0;
+}
+.certificate-main strong,
+.certificate-main span,
+.certificate-contact span,
+.certificate-contact em,
+.certificate-expiry span,
+.certificate-expiry strong {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.certificate-main strong {
+  color: #081833;
+  font-size: .98rem;
+  font-weight: 950;
+}
+.certificate-main span,
+.certificate-contact span,
+.certificate-row p {
+  color: #6b7d99;
+  font-size: .8rem;
+  font-weight: 800;
+}
+.certificate-contact em {
+  width: fit-content;
+  margin-top: 5px;
+  min-height: 26px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(40,103,255,.075);
+  color: #2867ff;
+  font-size: .7rem;
+  font-style: normal;
+  font-weight: 950;
+}
+.certificate-expiry {
+  justify-self: end;
+  text-align: right;
+}
+.certificate-expiry span {
+  color: #7a8aa6;
+  font-size: .68rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+.certificate-expiry strong {
+  margin-top: 5px;
+  color: #142e5b;
+  font-size: .9rem;
+}
+.certificate-row p {
+  margin: 0;
+  text-align: right;
+}
+.certificate-empty {
+  padding: 24px;
+  border-radius: 22px;
+  background: #fff;
+  color: #7a8aa6;
+  text-align: center;
+  font-weight: 850;
+  box-shadow: 0 12px 30px rgba(24,58,119,.045);
+}
+
+@media (max-width: 1020px) {
+  .certificate-row {
+    grid-template-columns: 10px minmax(0, 1fr) auto;
+    gap: 9px 12px;
+  }
+  .certificate-contact {
+    grid-column: 2;
+  }
+  .certificate-expiry {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+  }
+  .certificate-row p {
+    grid-column: 2 / -1;
+    text-align: left;
+  }
+}
+
+@media (max-width: 699px) {
+  .certificates-panel {
+    max-height: calc(100dvh - 132px);
+  }
+  .certificates-toolbar {
+    gap: 10px;
+  }
+  .certificate-actions {
+    display: grid;
+    grid-template-columns: 1fr 118px;
+    width: 100%;
+    gap: 8px;
+  }
+  .certificate-actions input {
+    grid-column: 1 / -1;
+    min-width: 0;
+    width: 100%;
+  }
+  .certificate-actions select,
+  .certificate-actions .soft-button {
+    width: 100%;
+  }
+  .certificate-summary {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 7px;
+  }
+  .certificate-summary article {
+    padding: 11px 9px;
+    border-radius: 17px;
+  }
+  .certificate-summary span {
+    font-size: .58rem;
+    line-height: 1.1;
+  }
+  .certificate-summary strong {
+    font-size: 1.02rem;
+  }
+  .certificate-list.directory-scroll {
+    padding-right: 2px;
+  }
+  .certificate-row {
+    grid-template-columns: 5px minmax(0, 1fr) auto;
+    min-height: 82px;
+    padding: 12px 11px 12px 0;
+    border-radius: 18px;
+    gap: 6px 10px;
+  }
+  .certificate-status-dot {
+    grid-row: 1 / span 3;
+    align-self: stretch;
+    width: 5px;
+    height: auto;
+    border-radius: 18px 0 0 18px;
+  }
+  .certificate-main strong {
+    font-size: .92rem;
+  }
+  .certificate-main span,
+  .certificate-contact span,
+  .certificate-row p {
+    font-size: .72rem;
+  }
+  .certificate-contact {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    grid-column: 2;
+  }
+  .certificate-contact span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .certificate-contact em {
+    flex: 0 0 auto;
+    margin-top: 0;
+    min-height: 24px;
+    padding: 4px 8px;
+    font-size: .64rem;
+  }
+  .certificate-expiry {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+    max-width: 96px;
+  }
+  .certificate-expiry span {
+    font-size: .6rem;
+  }
+  .certificate-expiry strong {
+    font-size: .74rem;
+  }
+  .certificate-row p {
+    grid-column: 2 / -1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

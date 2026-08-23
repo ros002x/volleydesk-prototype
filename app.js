@@ -103,6 +103,11 @@ const navItems = document.querySelectorAll(".nav-item");
 const bottomNavItems = document.querySelectorAll(".bottom-nav-item, .bottom-nav-home");
 const athleteTable = document.querySelector("#athleteTable");
 const certificateGrid = document.querySelector("#certificateGrid");
+const certificateSearch = document.querySelector("#certificateSearch");
+const certificateFilter = document.querySelector("#certificateFilter");
+const certValidTotal = document.querySelector("#certValidTotal");
+const certExpiringTotal = document.querySelector("#certExpiringTotal");
+const certMissingTotal = document.querySelector("#certMissingTotal");
 const accountingBoard = document.querySelector("#accountingBoard");
 const documentList = document.querySelector("#documentList");
 const deadlineList = document.querySelector("#deadlineList");
@@ -272,20 +277,56 @@ function toggleAthleteSelection(index) {
   updateSelectionControls();
 }
 
+function certificateStatusMeta(value, index) {
+  if (value === "Valido") {
+    return { key: "valid", label: "Valido", date: `15/${String((index % 4) + 2).padStart(2, "0")}/2027`, note: "Idoneita sportiva completa" };
+  }
+  if (value === "Scade") {
+    return { key: "expiring", label: "In scadenza", date: `2${index}/09/2026`, note: "Rinnovo da programmare" };
+  }
+  return { key: "expired", label: "Mancante", date: "Da caricare", note: "Documento non presente" };
+}
+
+function currentCertificateList() {
+  const query = (certificateSearch?.value || "").trim().toLowerCase();
+  const filter = certificateFilter?.value || "all";
+
+  return athletes
+    .map((athlete, index) => ({ athlete, index, meta: certificateStatusMeta(athlete.certificate, index) }))
+    .filter(({ athlete }) => {
+      if (!query) return true;
+      return [athleteName(athlete), athlete.email, athlete.phone, athlete.category]
+        .some((value) => String(value || "").toLowerCase().includes(query));
+    })
+    .filter(({ meta }) => filter === "all" || meta.key === filter);
+}
+
 function renderCertificates() {
-  certificateGrid.innerHTML = athletes.map((athlete) => `
-    <article class="certificate-card person-card ${genderCardClass(athlete.gender)} ${certificateCardClass(athlete.certificate)}">
-      <header class="person-card-head">
+  if (!certificateGrid) return;
+  const all = athletes.map((athlete, index) => certificateStatusMeta(athlete.certificate, index));
+  if (certValidTotal) certValidTotal.textContent = all.filter((item) => item.key === "valid").length;
+  if (certExpiringTotal) certExpiringTotal.textContent = all.filter((item) => item.key === "expiring").length;
+  if (certMissingTotal) certMissingTotal.textContent = all.filter((item) => item.key === "expired").length;
+
+  const rows = currentCertificateList();
+  certificateGrid.innerHTML = rows.map(({ athlete, index, meta }) => `
+    <article class="certificate-row certificate-${meta.key}" data-index="${index}" tabindex="0" role="button" aria-label="Apri certificato ${athleteName(athlete)}">
+      <div class="certificate-status-dot" aria-hidden="true"></div>
+      <div class="certificate-main">
         <strong>${athleteName(athlete)}</strong>
-        <span>${athlete.category || "Categoria"}</span>
-      </header>
-      <div class="person-card-meta">
         <span>${athlete.email || "Email mancante"}</span>
-        <span>${athlete.phone || "Cellulare mancante"}</span>
-        <span>${athlete.certificate || "Stato"}</span>
       </div>
+      <div class="certificate-contact">
+        <span>${athlete.phone || "Cellulare mancante"}</span>
+        <em>${athlete.category || "Categoria"}</em>
+      </div>
+      <div class="certificate-expiry">
+        <span>${meta.label}</span>
+        <strong>${meta.date}</strong>
+      </div>
+      <p>${meta.note}</p>
     </article>
-  `).join("");
+  `).join("") || `<article class="certificate-empty">Nessun certificato trovato</article>`;
 }
 
 function currentAccountingList() {
@@ -759,6 +800,23 @@ deadlineList?.addEventListener("click", (event) => {
 
 searchInput.addEventListener("input", (event) => {
   renderCurrentAthletes();
+});
+
+certificateSearch?.addEventListener("input", renderCertificates);
+certificateFilter?.addEventListener("change", renderCertificates);
+certificateGrid?.addEventListener("click", (event) => {
+  const row = event.target.closest(".certificate-row");
+  if (!row) return;
+  showView("athletes");
+  openAthleteModal(Number(row.dataset.index));
+});
+certificateGrid?.addEventListener("keydown", (event) => {
+  if (event.key !== "Enter" && event.key !== " ") return;
+  const row = event.target.closest(".certificate-row");
+  if (!row) return;
+  event.preventDefault();
+  showView("athletes");
+  openAthleteModal(Number(row.dataset.index));
 });
 
 accountingSearch?.addEventListener("input", () => renderAccounting());
