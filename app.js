@@ -105,7 +105,82 @@ const athletes = [
       two: { firstName: "", lastName: "", email: "", phone: "" }
     },
     files: { certificate: [], documents: [] }
-  }
+  },
+    {
+      firstName: "Luca",
+      lastName: "Marino",
+      email: "luca.marino@example.com",
+      phone: "+39 333 555 1177",
+      gender: "M",
+      category: "U17",
+      certificate: "Valido",
+      balance: 0,
+      parents: {
+        one: { firstName: "Roberto", lastName: "Marino", email: "roberto.marino@example.com", phone: "+39 333 555 1180" },
+        two: { firstName: "Anna", lastName: "Greco", email: "anna.greco@example.com", phone: "+39 333 555 1181" }
+      },
+      files: { certificate: [], documents: [] }
+    },
+    {
+      firstName: "Matteo",
+      lastName: "Russo",
+      email: "matteo.russo@example.com",
+      phone: "+39 333 666 2244",
+      gender: "M",
+      category: "Serie C",
+      certificate: "Scade",
+      balance: 60,
+      parents: {
+        one: { firstName: "Carlo", lastName: "Russo", email: "", phone: "+39 333 666 2250" },
+        two: { firstName: "", lastName: "", email: "", phone: "" }
+      },
+      files: { certificate: [], documents: [] }
+    },
+    {
+      firstName: "Davide",
+      lastName: "Esposito",
+      email: "davide.esposito@example.com",
+      phone: "+39 333 777 3344",
+      gender: "M",
+      category: "U19",
+      certificate: "Valido",
+      balance: 0,
+      parents: {
+        one: { firstName: "Gianni", lastName: "Esposito", email: "gianni.esposito@example.com", phone: "+39 333 777 3350" },
+        two: { firstName: "Rosa", lastName: "Lombardi", email: "", phone: "+39 333 777 3351" }
+      },
+      files: { certificate: [], documents: [] }
+    },
+    {
+      firstName: "Alessandro",
+      lastName: "Bruno",
+      email: "alessandro.bruno@example.com",
+      phone: "+39 333 888 4411",
+      gender: "M",
+      category: "U15",
+      certificate: "Mancante",
+      balance: 90,
+      parents: {
+        one: { firstName: "Nicola", lastName: "Bruno", email: "", phone: "+39 333 888 4420" },
+        two: { firstName: "Francesca", lastName: "Leone", email: "francesca.leone@example.com", phone: "" }
+      },
+      files: { certificate: [], documents: [] }
+    },
+    {
+      firstName: "Marco",
+      lastName: "De Santis",
+      email: "marco.desantis@example.com",
+      phone: "+39 333 999 5522",
+      gender: "M",
+      category: "Serie D",
+      certificate: "Valido",
+      balance: 30,
+      parents: {
+        one: { firstName: "", lastName: "", email: "", phone: "" },
+        two: { firstName: "", lastName: "", email: "", phone: "" }
+      },
+      files: { certificate: [], documents: [] }
+    }
 ];
 
 const documents = [
