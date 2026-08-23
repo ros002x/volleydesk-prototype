@@ -4233,3 +4233,89 @@ body.modal-open {
     font-size: 1.05rem !important;
   }
 }
+/* Modal usability balance after background lock */
+@media (max-width: 1366px) {
+  dialog[open] {
+    width: min(820px, calc(100vw - 24px)) !important;
+    max-height: calc(100dvh - 18px) !important;
+  }
+  .modal-card {
+    max-height: calc(100dvh - 18px) !important;
+    padding: 0 !important;
+  }
+  .modal-head {
+    min-height: 72px !important;
+    padding: 16px 18px 12px !important;
+  }
+  .modal-head h2 {
+    font-size: 1.34rem !important;
+  }
+  .modal-head .micro {
+    font-size: .74rem !important;
+  }
+  .modal-card > .form-grid,
+  .modal-card > .form-section,
+  .modal-card > .drop-grid,
+  .modal-card > .modal-actions {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+  .modal-card > .form-grid:first-of-type {
+    padding-top: 18px !important;
+  }
+  .form-grid {
+    gap: 12px !important;
+  }
+  label {
+    gap: 7px !important;
+    font-size: .84rem !important;
+  }
+  input,
+  select,
+  textarea {
+    min-height: 46px !important;
+  }
+  .form-section {
+    margin-top: 16px !important;
+    padding-top: 16px !important;
+  }
+  .drop-grid {
+    margin-top: 16px !important;
+  }
+  .drop-zone {
+    min-height: 124px !important;
+    padding: 14px !important;
+  }
+  .modal-actions {
+    padding-top: 12px !important;
+  }
+}
+@media (max-width: 699px) {
+  dialog[open] {
+    width: calc(100vw - 10px) !important;
+    max-width: calc(100vw - 10px) !important;
+    max-height: calc(100dvh - 10px) !important;
+  }
+  .modal-card {
+    max-height: calc(100dvh - 10px) !important;
+  }
+  .modal-head {
+    min-height: 68px !important;
+    padding: 14px 14px 10px !important;
+  }
+  .modal-card > .form-grid,
+  .modal-card > .form-section,
+  .modal-card > .drop-grid,
+  .modal-card > .modal-actions {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+  .modal-head h2 {
+    font-size: 1.18rem !important;
+  }
+  input,
+  select,
+  textarea {
+    min-height: 44px !important;
+  }
+}
