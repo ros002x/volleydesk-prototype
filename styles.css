@@ -2291,6 +2291,23 @@ pre { background: #ffffff; color: var(--ink); box-shadow: inset 0 0 0 1px rgba(2
   box-shadow: inset 0 0 72px rgba(40,103,255,.045);
   pointer-events: none;
 }
+.splash-rive-canvas {
+  position: relative;
+  z-index: 3;
+  width: clamp(190px, 48vw, 360px);
+  height: clamp(190px, 48vw, 360px);
+  opacity: 0;
+  transition: opacity .28s ease;
+}
+.app-splash.rive-ready .splash-rive-canvas {
+  opacity: 1;
+}
+.app-splash.rive-ready .splash-fallback {
+  display: none;
+}
+.app-splash.use-fallback .splash-rive-canvas {
+  display: none;
+}
 .splash-stage {
   position: relative;
   z-index: 2;

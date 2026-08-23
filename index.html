@@ -11,7 +11,8 @@
 </head>
 <body>
   <div class="app-splash" id="appSplash" aria-label="Avvio NS Volley">
-    <div class="splash-stage" aria-hidden="true">
+    <canvas class="splash-rive-canvas" id="splashRiveCanvas" width="320" height="320" aria-hidden="true"></canvas>
+    <div class="splash-stage splash-fallback" aria-hidden="true">
       <span class="splash-halo"></span>
       <svg class="splash-volley" viewBox="0 0 160 160" role="img" aria-label="Pallone NS Volley">
         <defs>
@@ -343,6 +344,7 @@
     </form>
   </dialog>
 
+  <script src="https://unpkg.com/@rive-app/canvas-lite"></script>
   <script src="app.js"></script>
 </body>
 </html>

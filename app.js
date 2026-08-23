@@ -91,6 +91,7 @@ const payments = [
 ];
 
 const appSplash = document.querySelector("#appSplash");
+const splashRiveCanvas = document.querySelector("#splashRiveCanvas");
 const views = document.querySelectorAll(".view");
 const navItems = document.querySelectorAll(".nav-item");
 const bottomNavItems = document.querySelectorAll(".bottom-nav-item, .bottom-nav-home");
@@ -131,11 +132,32 @@ let activeAccountingIndex = null;
 let activeAccountingMonth = "sep";
 let paymentBulkMode = false;
 
-function runAppSplash() {
+const splashAsset = "assets/ns-volley-launch.riv";
+let splashRiveInstance = null;
+let splashFallbackStarted = false;
+
+function finishAppSplash(delay = 0) {
   if (!appSplash) return;
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reduceMotion || !appSplash.animate) {
+  window.setTimeout(() => {
+    appSplash.animate([
+      { opacity: 1, transform: "scale(1)", filter: "blur(0)" },
+      { opacity: 0, transform: "scale(1.018)", filter: "blur(6px)" }
+    ], { duration: 500, easing: "cubic-bezier(.4,0,.2,1)", fill: "forwards" });
+    document.body.classList.remove("app-is-loading");
+    document.body.classList.add("app-is-ready");
+  }, delay);
+
+  window.setTimeout(() => {
     appSplash.hidden = true;
+    splashRiveInstance?.cleanup?.();
+  }, delay + 560);
+}
+
+function runFallbackSplash() {
+  if (splashFallbackStarted) return;
+  splashFallbackStarted = true;
+  if (!appSplash?.animate) {
+    if (appSplash) appSplash.hidden = true;
     return;
   }
 
@@ -148,25 +170,21 @@ function runAppSplash() {
   const glint = appSplash.querySelector(".splash-ball-glint");
   const easeOut = "cubic-bezier(.16,1,.3,1)";
 
-  document.body.classList.add("app-is-loading");
-
+  appSplash.classList.add("use-fallback");
   stage?.animate([
     { transform: "translateY(12px) scale(.98)", opacity: .98 },
     { transform: "translateY(0) scale(1)", opacity: 1 }
   ], { duration: 720, easing: easeOut, fill: "both" });
-
   halo?.animate([
     { transform: "translate(-50%, -50%) scale(.62)", opacity: 0 },
     { transform: "translate(-50%, -50%) scale(1)", opacity: .72, offset: .45 },
     { transform: "translate(-50%, -50%) scale(1.18)", opacity: .18 }
   ], { duration: 1180, easing: easeOut, fill: "both" });
-
   ball?.animate([
     { transform: "translateY(18px) scale(.86) rotate(-10deg)", opacity: 0, filter: "blur(8px)" },
     { transform: "translateY(-5px) scale(1.035) rotate(3deg)", opacity: 1, filter: "blur(0)", offset: .62 },
     { transform: "translateY(0) scale(1) rotate(0deg)", opacity: 1, filter: "blur(0)" }
   ], { duration: 980, easing: easeOut, fill: "both" });
-
   ballLines.forEach((line, index) => {
     line.animate([
       { strokeDashoffset: "180", opacity: 0 },
@@ -174,36 +192,65 @@ function runAppSplash() {
       { strokeDashoffset: "0", opacity: 1 }
     ], { duration: 700, delay: 230 + index * 58, easing: easeOut, fill: "both" });
   });
-
   glint?.animate([
     { transform: "scale(.2)", opacity: 0 },
     { transform: "scale(1.22)", opacity: .9 },
     { transform: "scale(1)", opacity: .72 }
   ], { duration: 560, delay: 500, easing: easeOut, fill: "both" });
-
   title?.animate([
     { transform: "translateY(14px)", opacity: 0, filter: "blur(8px)" },
     { transform: "translateY(0)", opacity: 1, filter: "blur(0)" }
   ], { duration: 620, delay: 610, easing: easeOut, fill: "both" });
-
   progress?.animate([
     { transform: "scaleX(0)", opacity: .55 },
     { transform: "scaleX(.58)", opacity: 1, offset: .58 },
     { transform: "scaleX(1)", opacity: 1 }
   ], { duration: 760, delay: 780, easing: easeOut, fill: "both" });
+  finishAppSplash(1560);
+}
+
+function runRiveSplash() {
+  if (!appSplash || !splashRiveCanvas || !window.rive?.Rive) return false;
+
+  let loaded = false;
+  try {
+    splashRiveInstance = new rive.Rive({
+      src: splashAsset,
+      canvas: splashRiveCanvas,
+      autoplay: true,
+      stateMachines: "Launch",
+      onLoad: () => {
+        loaded = true;
+        appSplash.classList.add("rive-ready");
+        splashRiveInstance.resizeDrawingSurfaceToCanvas();
+        window.addEventListener("resize", () => splashRiveInstance?.resizeDrawingSurfaceToCanvas(), { passive: true });
+        finishAppSplash(2200);
+      },
+      onLoadError: () => {
+        if (!loaded) runFallbackSplash();
+      }
+    });
+  } catch (error) {
+    runFallbackSplash();
+    return true;
+  }
 
   window.setTimeout(() => {
-    appSplash.animate([
-      { opacity: 1, transform: "scale(1)", filter: "blur(0)" },
-      { opacity: 0, transform: "scale(1.018)", filter: "blur(6px)" }
-    ], { duration: 500, easing: "cubic-bezier(.4,0,.2,1)", fill: "forwards" });
-    document.body.classList.remove("app-is-loading");
-    document.body.classList.add("app-is-ready");
-  }, 1560);
+    if (!loaded) runFallbackSplash();
+  }, 900);
+  return true;
+}
 
-  window.setTimeout(() => {
+function runAppSplash() {
+  if (!appSplash) return;
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduceMotion) {
     appSplash.hidden = true;
-  }, 2120);
+    return;
+  }
+
+  document.body.classList.add("app-is-loading");
+  if (!runRiveSplash()) runFallbackSplash();
 }
 
 runAppSplash();
