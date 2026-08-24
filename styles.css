@@ -6296,3 +6296,42 @@ body.modal-open {
     max-width: none !important;
   }
 }
+
+/* Prima nota mobile toolbar final layout */
+@media (max-width: 699px) {
+  .prima-nota-toolbar {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  .prima-nota-search {
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+  }
+
+  .prima-nota-actions {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+
+  .prima-nota-actions #primaNotaType {
+    grid-column: 1 !important;
+  }
+
+  .prima-nota-actions .prima-nota-date-field {
+    grid-column: 2 !important;
+  }
+
+  .prima-nota-actions #addPrimaNotaButton {
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 44px !important;
+    min-height: 44px !important;
+  }
+}
