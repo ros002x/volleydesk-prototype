@@ -612,7 +612,7 @@ function renderAccounting() {
       <details class="accounting-mobile-card accounting-athlete-toggle ${selected ? "accounting-row-selected" : ""}" data-index="${index}">
         <summary data-index="${index}">
           <strong>${athleteName(athlete)}</strong>
-          <span aria-hidden="true">+</span>
+          <span class="accounting-expand-control" aria-hidden="true">+</span>
         </summary>
         <div class="accounting-month-list" aria-label="Stato quote ${athleteName(athlete)}">
           ${visibleMonths.map((month) => {
@@ -1155,6 +1155,7 @@ accountingBoard?.addEventListener("click", (event) => {
 
   const mobileSummary = event.target.closest(".accounting-athlete-toggle > summary");
   if (mobileSummary && accountingSelectionMode) {
+    if (event.target.closest(".accounting-expand-control")) return;
     event.preventDefault();
     const index = Number(mobileSummary.dataset.index);
     if (selectedAccountingRows.has(index)) {

@@ -5845,3 +5845,25 @@ body.modal-open {
     white-space: nowrap !important;
   }
 }
+
+/* Mobile Scadenziario card expand control */
+@media (max-width: 699px) {
+  .accounting-athlete-toggle summary .accounting-expand-control {
+    display: grid !important;
+    place-items: center !important;
+    width: 34px !important;
+    height: 34px !important;
+    margin: -6px -4px -6px 8px !important;
+    border-radius: 999px !important;
+    color: #2867ff !important;
+    font-size: 1.08rem !important;
+    font-weight: 950 !important;
+    line-height: 1 !important;
+    transition: transform .18s ease, background .18s ease !important;
+  }
+
+  .accounting-athlete-toggle summary .accounting-expand-control:active {
+    background: rgba(40,103,255,.08) !important;
+    transform: scale(.94) !important;
+  }
+}
