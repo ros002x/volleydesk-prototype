@@ -6406,3 +6406,50 @@ body.modal-open {
     grid-template-columns: minmax(220px, 1fr) 112px 150px 150px 46px 104px 104px auto !important;
   }
 }
+
+/* Scadenziario desktop toolbar final fix: explicit columns for every control */
+@media (min-width: 1180px) {
+  .deadlines-panel .accounting-actions {
+    display: grid !important;
+    grid-template-columns: minmax(260px, 1fr) 112px 150px 150px 46px 104px 104px auto !important;
+    align-items: center !important;
+    gap: 8px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .deadlines-panel .accounting-actions #accountingSearch,
+  .deadlines-panel .accounting-actions #accountingFilter,
+  .deadlines-panel .accounting-actions #accountingStartDate,
+  .deadlines-panel .accounting-actions #accountingEndDate,
+  .deadlines-panel .accounting-actions #addAccountingMonthsButton,
+  .deadlines-panel .accounting-actions #selectAccountingButton,
+  .deadlines-panel .accounting-actions #editAccountingButton,
+  .deadlines-panel .accounting-actions #deleteAccountingButton {
+    position: static !important;
+    grid-row: 1 !important;
+    margin: 0 !important;
+    transform: none !important;
+    min-width: 0 !important;
+  }
+
+  .deadlines-panel .accounting-actions #accountingSearch { grid-column: 1 !important; width: 100% !important; }
+  .deadlines-panel .accounting-actions #accountingFilter { grid-column: 2 !important; width: 100% !important; }
+  .deadlines-panel .accounting-actions #accountingStartDate { grid-column: 3 !important; width: 100% !important; }
+  .deadlines-panel .accounting-actions #accountingEndDate { grid-column: 4 !important; width: 100% !important; }
+  .deadlines-panel .accounting-actions #addAccountingMonthsButton {
+    grid-column: 5 !important;
+    width: 46px !important;
+    min-width: 46px !important;
+    max-width: 46px !important;
+    padding: 0 !important;
+  }
+  .deadlines-panel .accounting-actions #selectAccountingButton { grid-column: 6 !important; width: 104px !important; }
+  .deadlines-panel .accounting-actions #editAccountingButton { grid-column: 7 !important; width: 104px !important; }
+  .deadlines-panel .accounting-actions #deleteAccountingButton { grid-column: 8 !important; width: auto !important; }
+
+  .deadlines-panel .accounting-actions #editAccountingButton:disabled,
+  .deadlines-panel .accounting-actions #deleteAccountingButton[hidden] {
+    display: none !important;
+  }
+}
