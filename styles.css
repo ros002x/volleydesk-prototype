@@ -5190,3 +5190,59 @@ body.modal-open {
     transform: translateY(var(--toast-drag-y)) !important;
   }
 }
+
+/* Sidebar toggle: refined line chevron */
+@media (min-width: 1180px) {
+  .sidebar-toggle {
+    width: 22px !important;
+    height: 52px !important;
+    border: 0 !important;
+    background: transparent !important;
+    color: rgba(113,128,155,.70) !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+  }
+  .sidebar-toggle:hover {
+    color: #2867ff !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: translateY(-50%) !important;
+  }
+  .sidebar-toggle span {
+    position: relative !important;
+    display: block !important;
+    width: 12px !important;
+    height: 18px !important;
+    font-size: 0 !important;
+    line-height: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    transform: none !important;
+  }
+  .sidebar-toggle span::before,
+  .sidebar-toggle span::after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    width: 2px;
+    height: 11px;
+    border-radius: 999px;
+    background: currentColor;
+    transform-origin: center;
+    transition: transform .22s ease, background .18s ease;
+  }
+  .sidebar-toggle span::before {
+    top: 0;
+    transform: rotate(-42deg);
+  }
+  .sidebar-toggle span::after {
+    bottom: 0;
+    transform: rotate(42deg);
+  }
+  .product-shell.sidebar-collapsed .sidebar-toggle span::before {
+    transform: rotate(42deg);
+  }
+  .product-shell.sidebar-collapsed .sidebar-toggle span::after {
+    transform: rotate(-42deg);
+  }
+}
