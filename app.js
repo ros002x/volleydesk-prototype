@@ -371,8 +371,8 @@ function updateSidebarTogglePosition() {
   const shellRect = productShell.getBoundingClientRect();
   const collapsed = productShell.classList.contains("sidebar-collapsed");
   const sidebarWidth = Math.max(220, sideNav.offsetWidth || sideNav.getBoundingClientRect().width || 264);
-  const expandedLeft = shellRect.left + sidebarWidth - 20;
-  const collapsedLeft = shellRect.left + 12;
+  const expandedLeft = shellRect.left + sidebarWidth - 6;
+  const collapsedLeft = shellRect.left + 6;
   const left = collapsed ? collapsedLeft : expandedLeft;
   sidebarToggle.style.setProperty("--sidebar-toggle-left", `${Math.max(12, left)}px`);
 }

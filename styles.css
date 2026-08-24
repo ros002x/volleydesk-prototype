@@ -4937,3 +4937,42 @@ body.modal-open {
     box-shadow: 0 8px 22px rgba(24,58,119,.08) !important;
   }
 }
+
+/* Desktop sidebar toggle: symbol only */
+@media (min-width: 1180px) {
+  .sidebar-toggle {
+    width: 32px !important;
+    height: 48px !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: rgba(20,46,91,.34) !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+  }
+  .sidebar-toggle::before {
+    content: none !important;
+  }
+  .sidebar-toggle:hover {
+    background: transparent !important;
+    color: #2867ff !important;
+    box-shadow: none !important;
+    transform: translateY(-50%) !important;
+  }
+  .sidebar-toggle:active {
+    transform: translateY(-50%) scale(.94) !important;
+  }
+  .sidebar-toggle span {
+    display: block !important;
+    width: auto !important;
+    height: auto !important;
+    background: transparent !important;
+    color: inherit !important;
+    font-size: 1.28rem !important;
+    line-height: 1 !important;
+    font-weight: 950 !important;
+  }
+  .product-shell.sidebar-collapsed .sidebar-toggle {
+    box-shadow: none !important;
+  }
+}
