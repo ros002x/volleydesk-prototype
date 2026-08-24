@@ -260,6 +260,7 @@ const accountingSearch = document.querySelector("#accountingSearch");
 const accountingFilter = document.querySelector("#accountingFilter");
 const accountingStartDate = document.querySelector("#accountingStartDate");
 const accountingEndDate = document.querySelector("#accountingEndDate");
+const accountingEndDateMobile = document.querySelector("#accountingEndDateMobile");
 const editAccountingButton = document.querySelector("#editAccountingButton");
 const addAccountingMonthsButton = document.querySelector("#addAccountingMonthsButton");
 const selectAccountingButton = document.querySelector("#selectAccountingButton");
@@ -1147,7 +1148,14 @@ certificateGrid?.addEventListener("keydown", (event) => {
 accountingSearch?.addEventListener("input", () => renderAccounting());
 accountingFilter?.addEventListener("change", () => renderAccounting());
 accountingStartDate?.addEventListener("change", () => renderAccounting());
-accountingEndDate?.addEventListener("change", () => renderAccounting());
+accountingEndDate?.addEventListener("change", () => {
+  if (accountingEndDateMobile) accountingEndDateMobile.value = accountingEndDate.value;
+  renderAccounting();
+});
+accountingEndDateMobile?.addEventListener("change", () => {
+  if (accountingEndDate) accountingEndDate.value = accountingEndDateMobile.value;
+  renderAccounting();
+});
 primaNotaSearch?.addEventListener("input", renderPrimaNota);
 primaNotaType?.addEventListener("change", renderPrimaNota);
 primaNotaDate?.addEventListener("change", () => {

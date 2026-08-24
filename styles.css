@@ -6681,3 +6681,42 @@ body.modal-open {
     grid-row: 2 !important;
   }
 }
+/* Scadenziario mobile/tablet uses a dedicated synced end-date field */
+.accounting-end-date-mobile {
+  display: none !important;
+}
+
+@media (max-width: 1179px) {
+  body .screen .product-shell .content .deadlines-panel.data-panel .accounting-actions #accountingEndDate {
+    display: none !important;
+  }
+
+  body .screen .product-shell .content .deadlines-panel.data-panel .accounting-actions #accountingEndDateMobile {
+    display: inline-grid !important;
+    grid-column: 3 / -1 !important;
+    grid-row: 2 !important;
+    position: static !important;
+    margin: 0 !important;
+    transform: none !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    padding: 0 10px !important;
+    border: 0 !important;
+    border-radius: 16px !important;
+    background: #f8faff !important;
+    color: #071630 !important;
+    box-shadow: inset 0 0 0 1px rgba(20,46,91,.055) !important;
+    font-size: 16px !important;
+    line-height: 1 !important;
+    text-align: center !important;
+  }
+}
+
+@media (min-width: 1180px) {
+  body .screen .product-shell .content .deadlines-panel.data-panel .accounting-actions #accountingEndDateMobile {
+    display: none !important;
+  }
+}
