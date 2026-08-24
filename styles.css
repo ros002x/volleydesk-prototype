@@ -6335,3 +6335,35 @@ body.modal-open {
     min-height: 44px !important;
   }
 }
+
+/* Scadenziario sticky legend */
+.deadlines-panel .deadline-legend {
+  position: sticky !important;
+  top: 126px !important;
+  z-index: 5 !important;
+  padding: 6px 0 8px !important;
+  background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.88)) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+}
+
+@media (min-width: 1180px) {
+  .deadlines-panel .deadline-legend {
+    top: 122px !important;
+  }
+}
+
+@media (min-width: 700px) and (max-width: 1179px) {
+  .deadlines-panel .deadline-legend {
+    top: 150px !important;
+  }
+}
+
+@media (max-width: 699px) {
+  .deadlines-panel .deadline-legend {
+    top: 174px !important;
+    z-index: 5 !important;
+    padding: 5px 0 7px !important;
+    background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.90)) !important;
+  }
+}
