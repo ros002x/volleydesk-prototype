@@ -5138,3 +5138,55 @@ body.modal-open {
     to { transform: translateY(-132%); opacity: 0; }
   }
 }
+
+/* Final white translucent notification behavior */
+.notification-toast {
+  background: rgba(255, 255, 255, .78) !important;
+  color: #071630 !important;
+  box-shadow: 0 16px 36px rgba(20,46,91,.14), inset 0 0 0 1px rgba(255,255,255,.58) !important;
+  backdrop-filter: blur(24px) saturate(165%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(165%) !important;
+  transition: transform .34s cubic-bezier(.18,.94,.24,1), opacity .22s ease !important;
+}
+.notification-meta {
+  color: rgba(7, 22, 48, .48) !important;
+}
+.notification-app-icon {
+  background: rgba(255,255,255,.82) !important;
+  box-shadow: inset 0 0 0 1px rgba(20,46,91,.08), 0 1px 2px rgba(20,46,91,.08) !important;
+}
+.notification-toast strong {
+  color: #071630 !important;
+}
+.notification-toast p {
+  color: rgba(7,22,48,.72) !important;
+}
+.notification-toast.show {
+  animation: none !important;
+  transform: translate(-50%, 0) !important;
+  opacity: 1 !important;
+}
+.notification-toast.hide {
+  animation: none !important;
+  transform: translate(-50%, -132%) !important;
+  opacity: 0 !important;
+}
+.notification-toast.dragging {
+  animation: none !important;
+  transform: translate(-50%, var(--toast-drag-y)) !important;
+  opacity: var(--toast-drag-opacity) !important;
+  transition: none !important;
+}
+@media (min-width: 1180px) {
+  .notification-toast.show {
+    transform: translateY(0) !important;
+    opacity: 1 !important;
+  }
+  .notification-toast.hide {
+    transform: translateY(-132%) !important;
+    opacity: 0 !important;
+  }
+  .notification-toast.dragging {
+    transform: translateY(var(--toast-drag-y)) !important;
+  }
+}
