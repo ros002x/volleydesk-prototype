@@ -5867,3 +5867,21 @@ body.modal-open {
     transform: scale(.94) !important;
   }
 }
+
+/* Mobile Scadenziario: no toolbar selection mode */
+@media (max-width: 699px) {
+  .deadlines-panel .accounting-actions {
+    grid-template-columns: 1fr !important;
+  }
+
+  .deadlines-panel .accounting-actions #selectAccountingButton,
+  .deadlines-panel .accounting-actions #editAccountingButton,
+  .deadlines-panel .accounting-actions #deleteAccountingButton {
+    display: none !important;
+  }
+
+  .deadlines-panel .accounting-actions #accountingSearch,
+  .deadlines-panel .accounting-actions #accountingFilter {
+    grid-column: 1 !important;
+  }
+}

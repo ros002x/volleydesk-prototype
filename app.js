@@ -1154,18 +1154,11 @@ accountingBoard?.addEventListener("click", (event) => {
   }
 
   const mobileSummary = event.target.closest(".accounting-athlete-toggle > summary");
-  if (mobileSummary && accountingSelectionMode) {
-    if (event.target.closest(".accounting-expand-control")) return;
-    event.preventDefault();
-    const index = Number(mobileSummary.dataset.index);
-    if (selectedAccountingRows.has(index)) {
-      selectedAccountingRows.delete(index);
-      if (activeAccountingIndex === index) activeAccountingIndex = null;
-    } else {
-      selectedAccountingRows.add(index);
-      activeAccountingIndex = index;
-    }
-    renderAccounting();
+  if (mobileSummary && window.matchMedia("(max-width: 699px)").matches) {
+    accountingSelectionMode = false;
+    selectedAccountingRows.clear();
+    activeAccountingIndex = null;
+    updateAccountingControls();
     return;
   }
 
