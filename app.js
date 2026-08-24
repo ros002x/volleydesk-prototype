@@ -261,6 +261,7 @@ const accountingFilter = document.querySelector("#accountingFilter");
 const accountingStartDate = document.querySelector("#accountingStartDate");
 const accountingEndDate = document.querySelector("#accountingEndDate");
 const editAccountingButton = document.querySelector("#editAccountingButton");
+const addAccountingMonthsButton = document.querySelector("#addAccountingMonthsButton");
 const selectAccountingButton = document.querySelector("#selectAccountingButton");
 const deleteAccountingButton = document.querySelector("#deleteAccountingButton");
 const primaNotaSearch = document.querySelector("#primaNotaSearch");
@@ -1226,6 +1227,23 @@ editAccountingButton?.addEventListener("click", () => {
   const index = selectedAccountingRows.size ? [...selectedAccountingRows][0] : activeAccountingIndex;
   if (index === null || index === undefined) return;
   openPaymentModal(index, activeAccountingMonth, true);
+});
+
+addAccountingMonthsButton?.addEventListener("click", () => {
+  const targets = selectedAccountingTargets();
+  if (!targets.length) {
+    showNotification("Scadenziario", "Seleziona un atleta prima di aggiungere le mensilita.");
+    return;
+  }
+
+  const index = targets[0];
+  activeAccountingIndex = index;
+  activeAccountingMonth = "sep";
+  selectedAccountingRows.clear();
+  targets.forEach((target) => selectedAccountingRows.add(target));
+  openPaymentModal(index, "sep", true);
+  paymentStartMonth.value = "sep";
+  paymentEndMonth.value = "aug";
 });
 
 deleteAccountingButton?.addEventListener("click", () => {
