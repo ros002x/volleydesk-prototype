@@ -5309,3 +5309,114 @@ body.modal-open {
     top: 50% !important;
   }
 }
+
+/* Final mobile Prima nota toolbar cleanup */
+@media (max-width: 699px) {
+  .prima-nota-toolbar {
+    position: sticky !important;
+    top: 0 !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+    margin: 0 !important;
+    padding: 8px !important;
+    border: 1px solid rgba(20,46,91,.055) !important;
+    border-radius: 20px !important;
+    background: rgba(255,255,255,.82) !important;
+    box-shadow: 0 10px 26px rgba(24,58,119,.05) !important;
+    backdrop-filter: blur(18px) !important;
+    -webkit-backdrop-filter: blur(18px) !important;
+  }
+  .prima-nota-search {
+    width: 100% !important;
+    height: 42px !important;
+    min-height: 42px !important;
+    padding: 0 12px !important;
+    gap: 8px !important;
+    border-radius: 15px !important;
+    background: #f8faff !important;
+    box-shadow: inset 0 0 0 1px rgba(20,46,91,.055) !important;
+  }
+  .prima-nota-search > span {
+    display: grid !important;
+    place-items: center !important;
+    width: 16px !important;
+    height: 16px !important;
+    overflow: hidden !important;
+    color: transparent !important;
+  }
+  .prima-nota-search > span::before {
+    content: "";
+    width: 11px;
+    height: 11px;
+    border: 2px solid #91a0b8;
+    border-radius: 999px;
+    box-shadow: 5px 5px 0 -3px #91a0b8;
+    transform: rotate(-12deg);
+  }
+  .prima-nota-search input {
+    min-height: 42px !important;
+    font-size: 16px !important;
+    font-weight: 850 !important;
+  }
+  .prima-nota-search input::placeholder {
+    color: rgba(113,128,155,.72) !important;
+    opacity: 1 !important;
+  }
+  .prima-nota-actions {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 44px !important;
+    gap: 7px !important;
+    width: 100% !important;
+  }
+  .prima-nota-actions select,
+  .prima-nota-actions input,
+  .prima-nota-date-field,
+  .prima-nota-actions .prima-nota-tool.primary {
+    height: 42px !important;
+    min-height: 42px !important;
+    border-radius: 15px !important;
+  }
+  .prima-nota-actions select,
+  .prima-nota-actions input {
+    padding: 0 9px !important;
+    background: #f8faff !important;
+    box-shadow: inset 0 0 0 1px rgba(20,46,91,.045) !important;
+    font-size: 16px !important;
+    font-weight: 850 !important;
+  }
+  .prima-nota-date-field {
+    position: relative !important;
+    width: 100% !important;
+    overflow: hidden !important;
+    background: #f8faff !important;
+    box-shadow: inset 0 0 0 1px rgba(20,46,91,.045) !important;
+  }
+  .prima-nota-date-field::before {
+    left: 10px !important;
+    color: rgba(113,128,155,.86) !important;
+    font-size: .82rem !important;
+    font-weight: 900 !important;
+  }
+  .prima-nota-date-field input {
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+  .prima-nota-actions .prima-nota-tool.primary {
+    grid-column: auto !important;
+    width: 44px !important;
+    min-width: 44px !important;
+    padding: 0 !important;
+    border-radius: 15px !important;
+    box-shadow: 0 10px 22px rgba(40,103,255,.16) !important;
+  }
+  .prima-nota-actions .prima-nota-tool.primary::before {
+    font-size: 1.24rem !important;
+  }
+  .prima-nota-kpis {
+    gap: 6px !important;
+  }
+  .prima-nota-table-scroll {
+    max-height: calc(100dvh - 258px) !important;
+  }
+}
