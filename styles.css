@@ -5302,3 +5302,10 @@ body.modal-open {
     top: var(--sidebar-toggle-top, 300px) !important;
   }
 }
+
+/* Sidebar toggle vertical reset, slight inward offset handled in JS */
+@media (min-width: 1180px) {
+  .sidebar-toggle {
+    top: 50% !important;
+  }
+}

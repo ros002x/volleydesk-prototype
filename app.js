@@ -376,12 +376,9 @@ function updateSidebarTogglePosition() {
   const fallbackWidth = document.documentElement.classList.contains("tablet-layout") ? 220 : 264;
   const sidebarWidth = Math.max(0, measuredTrack || sideNav.offsetWidth || fallbackWidth);
   const sidebarEdge = collapsed ? shellRect.left : shellRect.left + sidebarWidth;
-  const left = collapsed ? sidebarEdge + 2 : sidebarEdge - 16;
-  const menuRect = sidebarMenu?.getBoundingClientRect();
-  const fallbackTop = shellRect.top + Math.min(360, Math.max(220, window.innerHeight * .32));
-  const top = menuRect && menuRect.height ? menuRect.top + (menuRect.height / 2) : fallbackTop;
-  sidebarToggle.style.setProperty("--sidebar-toggle-left", `${Math.max(8, left)}px`);
-  sidebarToggle.style.setProperty("--sidebar-toggle-top", `${Math.max(120, top)}px`);
+  const left = collapsed ? sidebarEdge + 14 : sidebarEdge - 28;
+  sidebarToggle.style.setProperty("--sidebar-toggle-left", `${Math.max(12, left)}px`);
+  sidebarToggle.style.removeProperty("--sidebar-toggle-top");
 }
 
 function queueSidebarTogglePositionUpdates() {
