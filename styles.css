@@ -6453,3 +6453,123 @@ body.modal-open {
     display: none !important;
   }
 }
+/* Scadenziario toolbar order: desktop and mobile */
+@media (min-width: 1180px) {
+  .deadlines-panel .accounting-actions {
+    grid-template-columns: minmax(260px, 1fr) 46px 112px 150px 150px 104px 104px auto !important;
+  }
+
+  .deadlines-panel .accounting-actions #accountingSearch { grid-column: 1 !important; }
+  .deadlines-panel .accounting-actions #addAccountingMonthsButton { grid-column: 2 !important; }
+  .deadlines-panel .accounting-actions #accountingFilter { grid-column: 3 !important; }
+  .deadlines-panel .accounting-actions #accountingStartDate { grid-column: 4 !important; }
+  .deadlines-panel .accounting-actions #accountingEndDate { grid-column: 5 !important; }
+  .deadlines-panel .accounting-actions #selectAccountingButton { grid-column: 6 !important; }
+  .deadlines-panel .accounting-actions #editAccountingButton { grid-column: 7 !important; }
+  .deadlines-panel .accounting-actions #deleteAccountingButton { grid-column: 8 !important; }
+}
+
+@media (max-width: 699px) {
+  .deadlines-panel .accounting-actions {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 48px !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+
+  .deadlines-panel .accounting-actions #accountingSearch,
+  .deadlines-panel .accounting-actions #addAccountingMonthsButton,
+  .deadlines-panel .accounting-actions #accountingStartDate,
+  .deadlines-panel .accounting-actions #accountingEndDate,
+  .deadlines-panel .accounting-actions #selectAccountingButton,
+  .deadlines-panel .accounting-actions #accountingFilter {
+    display: inline-grid !important;
+    position: static !important;
+    margin: 0 !important;
+    transform: none !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 44px !important;
+    min-height: 44px !important;
+  }
+
+  .deadlines-panel .accounting-actions #accountingSearch {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+  }
+
+  .deadlines-panel .accounting-actions #addAccountingMonthsButton {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    max-width: none !important;
+    border-radius: 16px !important;
+    padding: 0 !important;
+  }
+
+  .deadlines-panel .accounting-actions #accountingStartDate {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+  }
+
+  .deadlines-panel .accounting-actions #accountingEndDate {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+  }
+
+  .deadlines-panel .accounting-actions #selectAccountingButton {
+    grid-column: 1 !important;
+    grid-row: 3 !important;
+    background: #2867ff !important;
+    color: #fff !important;
+    box-shadow: 0 10px 22px rgba(40,103,255,.16) !important;
+  }
+
+  .deadlines-panel .accounting-actions #accountingFilter {
+    grid-column: 2 !important;
+    grid-row: 3 !important;
+  }
+
+  .deadlines-panel .accounting-actions #editAccountingButton,
+  .deadlines-panel .accounting-actions #deleteAccountingButton,
+  .deadlines-panel .accounting-actions #deleteAccountingButton[hidden] {
+    display: none !important;
+  }
+}
+/* Scadenziario mobile toolbar final sizing */
+@media (max-width: 699px) {
+  .deadlines-panel .accounting-actions {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+
+  .deadlines-panel .accounting-actions #accountingSearch {
+    grid-column: 1 / 4 !important;
+    grid-row: 1 !important;
+  }
+
+  .deadlines-panel .accounting-actions #addAccountingMonthsButton {
+    grid-column: 4 !important;
+    grid-row: 1 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+  }
+
+  .deadlines-panel .accounting-actions #accountingStartDate {
+    grid-column: 1 / -1 !important;
+    grid-row: 2 !important;
+  }
+
+  .deadlines-panel .accounting-actions #accountingEndDate {
+    display: none !important;
+  }
+
+  .deadlines-panel .accounting-actions #selectAccountingButton {
+    grid-column: 1 / 3 !important;
+    grid-row: 3 !important;
+  }
+
+  .deadlines-panel .accounting-actions #accountingFilter {
+    grid-column: 3 / -1 !important;
+    grid-row: 3 !important;
+  }
+}
