@@ -5025,174 +5025,171 @@ body.modal-open {
   }
 }
 
-/* iOS notification cards */
+/* iOS liquid-glass notification */
 .notification-toast {
   --toast-drag-y: 0px;
   --toast-drag-opacity: 1;
   position: fixed !important;
-  top: max(10px, calc(env(safe-area-inset-top) + 8px)) !important;
+  top: max(12px, calc(env(safe-area-inset-top) + 10px)) !important;
   left: 50% !important;
   right: auto !important;
   z-index: 120 !important;
   display: block !important;
-  width: min(calc(100% - 28px), 390px) !important;
-  max-width: 390px !important;
+  width: min(calc(100% - 24px), 430px) !important;
+  max-width: 430px !important;
+  min-height: 82px !important;
   padding: 0 !important;
-  border: 0 !important;
-  border-radius: 10px !important;
-  color: #1d2040 !important;
-  background: rgba(190, 180, 255, .92) !important;
-  box-shadow: 0 14px 30px rgba(78, 65, 178, .20), 0 2px 0 rgba(255,255,255,.16) inset !important;
-  backdrop-filter: blur(22px) saturate(145%) !important;
+  border: 1px solid rgba(255,255,255,.62) !important;
+  border-radius: 26px !important;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.78), rgba(255,255,255,.46) 52%, rgba(238,246,255,.58)),
+    rgba(255,255,255,.58) !important;
+  color: #071630 !important;
+  box-shadow:
+    0 22px 55px rgba(20,46,91,.18),
+    0 8px 18px rgba(40,103,255,.08),
+    inset 0 1px 0 rgba(255,255,255,.86),
+    inset 0 -1px 0 rgba(255,255,255,.42) !important;
+  backdrop-filter: blur(34px) saturate(190%) contrast(1.04) !important;
+  -webkit-backdrop-filter: blur(34px) saturate(190%) contrast(1.04) !important;
   transform: translate(-50%, calc(-132% + var(--toast-drag-y))) !important;
   opacity: 0 !important;
   touch-action: none !important;
   user-select: none !important;
   overflow: hidden !important;
+  transition: transform .34s cubic-bezier(.18,.94,.24,1), opacity .22s ease !important;
 }
+
+.notification-toast::before {
+  content: "";
+  position: absolute;
+  inset: 1px 1px auto 1px;
+  height: 52%;
+  border-radius: 25px 25px 18px 18px;
+  background: linear-gradient(180deg, rgba(255,255,255,.72), rgba(255,255,255,0));
+  pointer-events: none;
+}
+
+.notification-toast::after {
+  content: "";
+  position: absolute;
+  inset: auto 14% 7px 14%;
+  height: 1px;
+  background: rgba(255,255,255,.58);
+  pointer-events: none;
+}
+
 .notification-content {
+  position: relative;
+  z-index: 1;
   display: grid;
-  gap: 4px;
-  padding: 9px 10px 10px !important;
+  gap: 5px;
+  padding: 13px 15px 14px !important;
 }
+
 .notification-meta {
   display: grid;
-  grid-template-columns: 15px auto 1fr;
+  grid-template-columns: 17px auto 1fr;
   align-items: center;
-  gap: 5px;
-  color: rgba(47, 48, 95, .54);
-  font-size: .62rem;
+  gap: 6px;
+  color: rgba(7,22,48,.48) !important;
+  font-size: .68rem;
   line-height: 1;
   font-weight: 850;
+  letter-spacing: 0;
 }
+
 .notification-meta time {
   justify-self: end;
-  font-size: .58rem;
-  font-weight: 750;
+  font-size: .64rem;
+  font-weight: 760;
 }
+
 .notification-app-icon {
-  width: 13px;
-  height: 13px;
-  border-radius: 4px;
-  background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(235,239,255,.94));
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.7), 0 1px 2px rgba(31,42,95,.10);
+  width: 15px;
+  height: 15px;
+  border-radius: 5px;
+  background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(226,237,255,.80)) !important;
+  box-shadow: inset 0 0 0 1px rgba(20,46,91,.08), 0 1px 3px rgba(20,46,91,.10) !important;
 }
+
 .notification-toast strong,
 .notification-toast p {
   display: block;
   margin: 0;
 }
+
 .notification-toast strong {
-  color: #171936;
-  font-size: .82rem;
+  color: #071630 !important;
+  font-size: .98rem;
   line-height: 1.12;
-  font-weight: 900;
-}
-.notification-toast p {
-  margin-top: 2px;
-  color: rgba(29,32,64,.82);
-  font-size: .72rem;
-  line-height: 1.24;
-  font-weight: 650;
-}
-.notification-toast.show {
-  animation: iosToastIn .34s cubic-bezier(.18,.94,.24,1) forwards !important;
-}
-.notification-toast.hide {
-  animation: iosToastOut .22s ease forwards !important;
-}
-.notification-toast.dragging {
-  animation: none !important;
-  transform: translate(-50%, var(--toast-drag-y)) !important;
-  opacity: var(--toast-drag-opacity) !important;
-  transition: none !important;
-}
-.toast-close {
-  display: none !important;
-}
-@keyframes iosToastIn {
-  from { transform: translate(-50%, -132%); opacity: 0; }
-  to { transform: translate(-50%, 0); opacity: 1; }
-}
-@keyframes iosToastOut {
-  from { transform: translate(-50%, var(--toast-drag-y)); opacity: var(--toast-drag-opacity); }
-  to { transform: translate(-50%, -132%); opacity: 0; }
-}
-@media (min-width: 1180px) {
-  .notification-toast {
-    top: 18px !important;
-    left: auto !important;
-    right: 24px !important;
-    width: 360px !important;
-    transform: translateY(calc(-132% + var(--toast-drag-y))) !important;
-  }
-  .notification-toast.show { animation-name: iosToastInDesktop !important; }
-  .notification-toast.hide { animation-name: iosToastOutDesktop !important; }
-  .notification-toast.dragging {
-    transform: translateY(var(--toast-drag-y)) !important;
-  }
-  @keyframes iosToastInDesktop {
-    from { transform: translateY(-132%); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-  }
-  @keyframes iosToastOutDesktop {
-    from { transform: translateY(var(--toast-drag-y)); opacity: var(--toast-drag-opacity); }
-    to { transform: translateY(-132%); opacity: 0; }
-  }
+  font-weight: 920;
 }
 
-/* Final white translucent notification behavior */
-.notification-toast {
-  background: rgba(255, 255, 255, .78) !important;
-  color: #071630 !important;
-  box-shadow: 0 16px 36px rgba(20,46,91,.14), inset 0 0 0 1px rgba(255,255,255,.58) !important;
-  backdrop-filter: blur(24px) saturate(165%) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(165%) !important;
-  transition: transform .34s cubic-bezier(.18,.94,.24,1), opacity .22s ease !important;
-}
-.notification-meta {
-  color: rgba(7, 22, 48, .48) !important;
-}
-.notification-app-icon {
-  background: rgba(255,255,255,.82) !important;
-  box-shadow: inset 0 0 0 1px rgba(20,46,91,.08), 0 1px 2px rgba(20,46,91,.08) !important;
-}
-.notification-toast strong {
-  color: #071630 !important;
-}
 .notification-toast p {
-  color: rgba(7,22,48,.72) !important;
+  margin-top: 3px;
+  color: rgba(7,22,48,.74) !important;
+  font-size: .84rem;
+  line-height: 1.32;
+  font-weight: 680;
 }
+
 .notification-toast.show {
   animation: none !important;
   transform: translate(-50%, 0) !important;
   opacity: 1 !important;
 }
+
 .notification-toast.hide {
   animation: none !important;
   transform: translate(-50%, -132%) !important;
   opacity: 0 !important;
 }
+
 .notification-toast.dragging {
   animation: none !important;
   transform: translate(-50%, var(--toast-drag-y)) !important;
   opacity: var(--toast-drag-opacity) !important;
   transition: none !important;
 }
+
+.toast-close {
+  display: none !important;
+}
+
+.top-notification.active {
+  color: var(--accent);
+  background: rgba(40,103,255,.09);
+}
+
+.top-notification.active::after {
+  background: var(--accent);
+  box-shadow: 0 0 0 3px rgba(40,103,255,.12);
+}
+
 @media (min-width: 1180px) {
+  .notification-toast {
+    top: 18px !important;
+    left: auto !important;
+    right: 24px !important;
+    width: 390px !important;
+    transform: translateY(calc(-132% + var(--toast-drag-y))) !important;
+  }
+
   .notification-toast.show {
     transform: translateY(0) !important;
     opacity: 1 !important;
   }
+
   .notification-toast.hide {
     transform: translateY(-132%) !important;
     opacity: 0 !important;
   }
+
   .notification-toast.dragging {
     transform: translateY(var(--toast-drag-y)) !important;
   }
 }
-
 /* Sidebar toggle: refined line chevron */
 @media (min-width: 1180px) {
   .sidebar-toggle {
