@@ -555,7 +555,8 @@ function updateAccountingControls() {
   const count = selectedAccountingRows.size;
   const activeCount = count || (activeAccountingIndex === null ? 0 : 1);
   if (!selectAccountingButton || !deleteAccountingButton || !editAccountingButton) return;
-  selectAccountingButton.textContent = accountingSelectionMode ? `Annulla (${count})` : "Seleziona";
+  const compactAccountingToolbar = window.matchMedia("(max-width: 699px)").matches;
+  selectAccountingButton.textContent = accountingSelectionMode ? (compactAccountingToolbar ? `Fine ${count}` : `Annulla (${count})`) : "Seleziona";
   deleteAccountingButton.hidden = activeCount === 0;
   deleteAccountingButton.textContent = `Elimina ${activeCount}`;
   editAccountingButton.disabled = activeAccountingIndex === null && selectedAccountingRows.size !== 1;
@@ -608,8 +609,8 @@ function renderAccounting() {
   const mobileCards = rows.map(({ athlete, index }) => {
     const selected = selectedAccountingRows.has(index) || activeAccountingIndex === index;
     return `
-      <details class="accounting-mobile-card accounting-athlete-toggle ${selected ? "accounting-row-selected" : ""}">
-        <summary>
+      <details class="accounting-mobile-card accounting-athlete-toggle ${selected ? "accounting-row-selected" : ""}" data-index="${index}">
+        <summary data-index="${index}">
           <strong>${athleteName(athlete)}</strong>
           <span aria-hidden="true">+</span>
         </summary>
@@ -1152,6 +1153,21 @@ accountingBoard?.addEventListener("click", (event) => {
     return;
   }
 
+  const mobileSummary = event.target.closest(".accounting-athlete-toggle > summary");
+  if (mobileSummary && accountingSelectionMode) {
+    event.preventDefault();
+    const index = Number(mobileSummary.dataset.index);
+    if (selectedAccountingRows.has(index)) {
+      selectedAccountingRows.delete(index);
+      if (activeAccountingIndex === index) activeAccountingIndex = null;
+    } else {
+      selectedAccountingRows.add(index);
+      activeAccountingIndex = index;
+    }
+    renderAccounting();
+    return;
+  }
+
   const paymentChip = event.target.closest(".mobile-payment-chip");
   if (paymentChip) {
     const index = Number(paymentChip.dataset.index);
@@ -1202,8 +1218,12 @@ accountingBoard?.addEventListener("dblclick", (event) => {
 
 selectAccountingButton?.addEventListener("click", () => {
   accountingSelectionMode = !accountingSelectionMode;
-  if (!accountingSelectionMode) {
+  if (accountingSelectionMode) {
+    activeAccountingIndex = null;
     selectedAccountingRows.clear();
+  } else {
+    selectedAccountingRows.clear();
+    activeAccountingIndex = null;
   }
   renderAccounting();
 });
