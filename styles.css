@@ -6573,3 +6573,82 @@ body.modal-open {
     grid-row: 3 !important;
   }
 }
+/* Scadenziario compact toolbar: force visible controls on every non-desktop device */
+@media (max-width: 1179px) {
+  body .screen .product-shell .content .deadlines-panel.data-panel .accounting-actions {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+
+  body .screen .product-shell .content .deadlines-panel.data-panel .accounting-actions #accountingSearch,
+  body .screen .product-shell .content .deadlines-panel.data-panel .accounting-actions #addAccountingMonthsButton,
+  body .screen .product-shell .content .deadlines-panel.data-panel .accounting-actions #accountingStartDate,
+  body .screen .product-shell .content .deadlines-panel.data-panel .accounting-actions #selectAccountingButton,
+  body .screen .product-shell .content .deadlines-panel.data-panel .accounting-actions #accountingFilter {
+    display: inline-grid !important;
+    position: static !important;
+    margin: 0 !important;
+    transform: none !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    padding: 0 12px !important;
+    border-radius: 16px !important;
+    font-size: 16px !important;
+    line-height: 1 !important;
+    place-items: center !important;
+  }
+
+  body .screen .product-shell .content .deadlines-panel.data-panel .accounting-actions #accountingSearch {
+    grid-column: 1 / 4 !important;
+    grid-row: 1 !important;
+    text-align: left !important;
+    place-items: center start !important;
+    padding-inline: 14px !important;
+  }
+
+  body .screen .product-shell .content .deadlines-panel.data-panel .accounting-actions #addAccountingMonthsButton {
+    grid-column: 4 !important;
+    grid-row: 1 !important;
+    padding: 0 !important;
+    font-size: 1.2rem !important;
+    font-weight: 950 !important;
+    background: #2867ff !important;
+    color: #fff !important;
+    box-shadow: 0 10px 22px rgba(40,103,255,.16) !important;
+  }
+
+  body .screen .product-shell .content .deadlines-panel.data-panel .accounting-actions #accountingStartDate {
+    grid-column: 1 / -1 !important;
+    grid-row: 2 !important;
+    text-align: center !important;
+  }
+
+  body .screen .product-shell .content .deadlines-panel.data-panel .accounting-actions #accountingEndDate {
+    display: none !important;
+  }
+
+  body .screen .product-shell .content .deadlines-panel.data-panel .accounting-actions #selectAccountingButton {
+    grid-column: 1 / 3 !important;
+    grid-row: 3 !important;
+    background: #2867ff !important;
+    color: #fff !important;
+    box-shadow: 0 10px 22px rgba(40,103,255,.16) !important;
+  }
+
+  body .screen .product-shell .content .deadlines-panel.data-panel .accounting-actions #accountingFilter {
+    grid-column: 3 / -1 !important;
+    grid-row: 3 !important;
+    text-align: center !important;
+  }
+
+  body .screen .product-shell .content .deadlines-panel.data-panel .accounting-actions #editAccountingButton,
+  body .screen .product-shell .content .deadlines-panel.data-panel .accounting-actions #deleteAccountingButton,
+  body .screen .product-shell .content .deadlines-panel.data-panel .accounting-actions #deleteAccountingButton[hidden] {
+    display: none !important;
+  }
+}
