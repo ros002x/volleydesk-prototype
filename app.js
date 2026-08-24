@@ -226,6 +226,13 @@ const athleteTable = document.querySelector("#athleteTable");
 const certificateGrid = document.querySelector("#certificateGrid");
 const certificateSearch = document.querySelector("#certificateSearch");
 const certificateFilter = document.querySelector("#certificateFilter");
+const openCertificateUploadButton = document.querySelector("#openCertificateUploadButton");
+const certificateUploadModal = document.querySelector("#certificateUploadModal");
+const certificateUploadForm = document.querySelector("#certificateUploadForm");
+const certificateUploadAthlete = document.querySelector("#certificateUploadAthlete");
+const certificateUploadZone = document.querySelector("#certificateUploadZone");
+const certificateUploadFile = document.querySelector("#certificateUploadFile");
+const certificateUploadFiles = document.querySelector("#certificateUploadFiles");
 const certValidTotal = document.querySelector("#certValidTotal");
 const certExpiringTotal = document.querySelector("#certExpiringTotal");
 const certMissingTotal = document.querySelector("#certMissingTotal");
@@ -285,6 +292,7 @@ const selectedAccountingRows = new Set();
 let activeAccountingIndex = null;
 let activeAccountingMonth = "sep";
 let paymentBulkMode = false;
+let pendingCertificateFiles = [];
 
 const seasonMonths = [
   { key: "sep", label: "Set" },
@@ -477,14 +485,15 @@ function toggleAthleteSelection(index) {
   updateSelectionControls();
 }
 
-function certificateStatusMeta(value, index) {
+function certificateStatusMeta(value, index, athlete = null) {
+  const expiry = athlete?.certificateExpiry ? formatDateIt(athlete.certificateExpiry) : "";
   if (value === "Valido") {
-    return { key: "valid", label: "Valido", date: `15/${String((index % 4) + 2).padStart(2, "0")}/2027`, note: "Idoneita sportiva completa" };
+    return { key: "valid", label: "Valido", date: expiry || `15/${String((index % 4) + 2).padStart(2, "0")}/2027`, note: athlete?.files?.certificate?.length ? "Certificato caricato" : "Idoneita sportiva completa" };
   }
   if (value === "Scade") {
-    return { key: "expiring", label: "In scadenza", date: `2${index}/09/2026`, note: "Rinnovo da programmare" };
+    return { key: "expiring", label: "In scadenza", date: expiry || `2${index}/09/2026`, note: "Rinnovo da programmare" };
   }
-  return { key: "expired", label: "Mancante", date: "Da caricare", note: "Documento non presente" };
+  return { key: "expired", label: "Mancante", date: expiry || "Da caricare", note: "Documento non presente" };
 }
 
 function currentCertificateList() {
@@ -492,7 +501,7 @@ function currentCertificateList() {
   const filter = certificateFilter?.value || "all";
 
   return athletes
-    .map((athlete, index) => ({ athlete, index, meta: certificateStatusMeta(athlete.certificate, index) }))
+    .map((athlete, index) => ({ athlete, index, meta: certificateStatusMeta(athlete.certificate, index, athlete) }))
     .filter(({ athlete }) => {
       if (!query) return true;
       return [athleteName(athlete), athlete.email, athlete.phone, athlete.category]
@@ -503,7 +512,7 @@ function currentCertificateList() {
 
 function renderCertificates() {
   if (!certificateGrid) return;
-  const all = athletes.map((athlete, index) => certificateStatusMeta(athlete.certificate, index));
+  const all = athletes.map((athlete, index) => certificateStatusMeta(athlete.certificate, index, athlete));
   if (certValidTotal) certValidTotal.textContent = all.filter((item) => item.key === "valid").length;
   if (certExpiringTotal) certExpiringTotal.textContent = all.filter((item) => item.key === "expiring").length;
   if (certMissingTotal) certMissingTotal.textContent = all.filter((item) => item.key === "expired").length;
@@ -1052,6 +1061,7 @@ searchInput.addEventListener("input", (event) => {
 
 certificateSearch?.addEventListener("input", renderCertificates);
 certificateFilter?.addEventListener("change", renderCertificates);
+openCertificateUploadButton?.addEventListener("click", openCertificateUploadModal);
 function isMobileCertificateView() {
   return window.matchMedia("(max-width: 699px)").matches;
 }
@@ -1063,6 +1073,39 @@ function toggleCertificateMobileCard(row) {
   });
   row.classList.toggle("cert-expanded");
 }
+function renderCertificateUploadFiles() {
+  if (!certificateUploadFiles) return;
+  certificateUploadFiles.innerHTML = pendingCertificateFiles
+    .map((file) => `<li>${file.name}</li>`)
+    .join("");
+}
+
+function addCertificateUploadFiles(fileList) {
+  pendingCertificateFiles = Array.from(fileList || []).map((file) => ({
+    name: file.name,
+    size: file.size,
+    type: file.type || "file"
+  }));
+  renderCertificateUploadFiles();
+}
+
+function populateCertificateUploadAthletes() {
+  if (!certificateUploadAthlete) return;
+  certificateUploadAthlete.innerHTML = athletes
+    .map((athlete, index) => `<option value="${index}">${athleteName(athlete)} - ${athlete.category || "Categoria"}</option>`)
+    .join("");
+}
+
+function openCertificateUploadModal() {
+  if (!certificateUploadForm) return;
+  populateCertificateUploadAthletes();
+  pendingCertificateFiles = [];
+  renderCertificateUploadFiles();
+  certificateUploadForm.elements.status.value = "Valido";
+  certificateUploadForm.elements.expiry.value = "";
+  openLockedDialog(certificateUploadModal);
+}
+
 
 certificateGrid?.addEventListener("click", (event) => {
   const row = event.target.closest(".certificate-row");
@@ -1262,7 +1305,7 @@ function createAthleteFromUi() {
 document.querySelector("#addAthleteButton").addEventListener("click", createAthleteFromUi);
 document.querySelector("#mobileAddButton")?.addEventListener("click", createAthleteFromUi);
 
-[modal, paymentModal, matchModal, primaNotaModal].forEach((dialog) => {
+[modal, paymentModal, matchModal, primaNotaModal, certificateUploadModal].forEach((dialog) => {
   dialog?.addEventListener("close", () => window.setTimeout(unlockDocumentScroll, 0));
   dialog?.addEventListener("cancel", () => window.setTimeout(unlockDocumentScroll, 0));
 });
@@ -1276,6 +1319,8 @@ document.querySelector("#closeMatchButton")?.addEventListener("click", () => mat
 document.querySelector("#cancelMatchButton")?.addEventListener("click", () => matchModal.close());
 document.querySelector("#closePrimaNotaButton")?.addEventListener("click", () => primaNotaModal.close());
 document.querySelector("#cancelPrimaNotaButton")?.addEventListener("click", () => primaNotaModal.close());
+document.querySelector("#closeCertificateUploadButton")?.addEventListener("click", () => certificateUploadModal.close());
+document.querySelector("#cancelCertificateUploadButton")?.addEventListener("click", () => certificateUploadModal.close());
 matchForm?.addEventListener("submit", (event) => {
   event.preventDefault();
   const form = new FormData(matchForm);
@@ -1305,6 +1350,40 @@ primaNotaForm?.addEventListener("submit", (event) => {
   renderPrimaNota();
   primaNotaModal.close();
   showNotificationToast("Movimento aggiunto", "Prima nota aggiornata con i dati inseriti.");
+});
+certificateUploadForm?.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const form = new FormData(certificateUploadForm);
+  const index = Number(form.get("athlete"));
+  const athlete = athletes[index];
+  if (!athlete) return;
+  athlete.certificate = String(form.get("status") || "Valido");
+  athlete.certificateExpiry = String(form.get("expiry") || "");
+  if (pendingCertificateFiles.length) {
+    athlete.files.certificate.push(...pendingCertificateFiles);
+    if (athlete.certificate === "Mancante") athlete.certificate = "Valido";
+  }
+  pendingCertificateFiles = [];
+  renderAll();
+  certificateUploadModal.close();
+  showNotificationToast("Certificato salvato", `${athleteName(athlete)} aggiornato nell'area certificati.`);
+});
+
+certificateUploadZone?.addEventListener("dragover", (event) => {
+  event.preventDefault();
+  certificateUploadZone.classList.add("drag-over");
+});
+certificateUploadZone?.addEventListener("dragleave", () => {
+  certificateUploadZone.classList.remove("drag-over");
+});
+certificateUploadZone?.addEventListener("drop", (event) => {
+  event.preventDefault();
+  certificateUploadZone.classList.remove("drag-over");
+  addCertificateUploadFiles(event.dataTransfer.files);
+});
+certificateUploadFile?.addEventListener("change", () => {
+  addCertificateUploadFiles(certificateUploadFile.files);
+  certificateUploadFile.value = "";
 });
 document.querySelector("#closeModalButton").addEventListener("click", () => modal.close());
 document.querySelector("#cancelModalButton").addEventListener("click", () => modal.close());

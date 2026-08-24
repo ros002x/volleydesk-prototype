@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260824-1330">
+  <link rel="stylesheet" href="styles.css?v=20260824-1354">
 </head>
 <body>
   <main class="screen">
@@ -150,7 +150,7 @@
                 <option value="expiring">In scadenza</option>
                 <option value="expired">Mancanti</option>
               </select>
-              <button class="soft-button nav-item-proxy" type="button" data-target="athletes">Atleti</button>
+              <button class="soft-button" id="openCertificateUploadButton" type="button">+ Certificato</button>
             </div>
           </div>
           <div class="certificate-summary" aria-label="Riepilogo certificati">
@@ -446,6 +446,42 @@
       </footer>
     </form>
   </dialog>
-  <script src="app.js?v=20260824-1308"></script>
+
+  <dialog class="certificate-upload-modal" id="certificateUploadModal">
+    <form class="modal-card certificate-upload-card" id="certificateUploadForm" method="dialog">
+      <header class="modal-head">
+        <div>
+          <span class="micro">Certificati</span>
+          <h2>Nuovo certificato</h2>
+        </div>
+        <button class="modal-close" id="closeCertificateUploadButton" type="button" aria-label="Chiudi">x</button>
+      </header>
+
+      <div class="form-grid">
+        <label>Atleta <select name="athlete" id="certificateUploadAthlete" required></select></label>
+        <label>Stato
+          <select name="status" required>
+            <option value="Valido">Valido</option>
+            <option value="Scade">In scadenza</option>
+            <option value="Mancante">Mancante</option>
+          </select>
+        </label>
+        <label>Scadenza <input name="expiry" type="date"></label>
+      </div>
+
+      <section class="certificate-upload-zone" id="certificateUploadZone">
+        <strong>Carica certificato</strong>
+        <span>Trascina qui il file oppure clicca per selezionarlo</span>
+        <input type="file" id="certificateUploadFile" accept=".pdf,.jpg,.jpeg,.png" multiple>
+        <ul id="certificateUploadFiles"></ul>
+      </section>
+
+      <footer class="modal-actions">
+        <button class="soft-button" id="cancelCertificateUploadButton" type="button">Annulla</button>
+        <button class="primary-action inline" type="submit">Salva certificato</button>
+      </footer>
+    </form>
+  </dialog>
+  <script src="app.js?v=20260824-1354"></script>
 </body>
 </html>

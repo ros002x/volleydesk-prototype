@@ -5519,3 +5519,75 @@ body.modal-open {
     padding: 0 2px 92px 0 !important;
   }
 }
+
+/* Certificate upload modal and toolbar action */
+.certificate-upload-card {
+  width: min(680px, calc(100vw - 24px));
+  margin: 0 auto;
+}
+.certificate-upload-zone {
+  position: relative;
+  min-height: 150px;
+  margin: 18px;
+  padding: 18px;
+  border: 1px dashed rgba(40,103,255,.30);
+  border-radius: 22px;
+  background: #f8faff;
+  transition: background .18s ease, border-color .18s ease;
+}
+.certificate-upload-zone strong,
+.certificate-upload-zone span {
+  display: block;
+}
+.certificate-upload-zone strong {
+  color: #071630;
+  font-size: 1rem;
+  font-weight: 950;
+}
+.certificate-upload-zone span {
+  margin-top: 6px;
+  color: #71809b;
+  font-size: .86rem;
+  font-weight: 800;
+}
+.certificate-upload-zone input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.certificate-upload-zone.drag-over {
+  border-color: #2867ff;
+  background: rgba(40,103,255,.07);
+}
+.certificate-upload-zone ul {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 5px;
+  margin: 12px 0 0;
+  padding-left: 18px;
+  color: #263858;
+  font-size: .82rem;
+  font-weight: 800;
+}
+@media (max-width: 699px) {
+  .certificates-toolbar .certificate-actions #openCertificateUploadButton {
+    font-size: 0 !important;
+    background: #2867ff !important;
+    color: #fff !important;
+    box-shadow: 0 10px 22px rgba(40,103,255,.16) !important;
+  }
+  .certificates-toolbar .certificate-actions #openCertificateUploadButton::before {
+    content: "+";
+    font-size: 1.24rem;
+    line-height: 1;
+    font-weight: 950;
+  }
+  .certificate-upload-zone {
+    min-height: 132px !important;
+    margin: 14px !important;
+    padding: 15px !important;
+    border-radius: 20px !important;
+  }
+}
