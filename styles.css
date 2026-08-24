@@ -5022,3 +5022,119 @@ body.modal-open {
     box-shadow: none !important;
   }
 }
+
+/* iOS notification cards */
+.notification-toast {
+  --toast-drag-y: 0px;
+  --toast-drag-opacity: 1;
+  position: fixed !important;
+  top: max(10px, calc(env(safe-area-inset-top) + 8px)) !important;
+  left: 50% !important;
+  right: auto !important;
+  z-index: 120 !important;
+  display: block !important;
+  width: min(calc(100% - 28px), 390px) !important;
+  max-width: 390px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  color: #1d2040 !important;
+  background: rgba(190, 180, 255, .92) !important;
+  box-shadow: 0 14px 30px rgba(78, 65, 178, .20), 0 2px 0 rgba(255,255,255,.16) inset !important;
+  backdrop-filter: blur(22px) saturate(145%) !important;
+  transform: translate(-50%, calc(-132% + var(--toast-drag-y))) !important;
+  opacity: 0 !important;
+  touch-action: none !important;
+  user-select: none !important;
+  overflow: hidden !important;
+}
+.notification-content {
+  display: grid;
+  gap: 4px;
+  padding: 9px 10px 10px !important;
+}
+.notification-meta {
+  display: grid;
+  grid-template-columns: 15px auto 1fr;
+  align-items: center;
+  gap: 5px;
+  color: rgba(47, 48, 95, .54);
+  font-size: .62rem;
+  line-height: 1;
+  font-weight: 850;
+}
+.notification-meta time {
+  justify-self: end;
+  font-size: .58rem;
+  font-weight: 750;
+}
+.notification-app-icon {
+  width: 13px;
+  height: 13px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(235,239,255,.94));
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.7), 0 1px 2px rgba(31,42,95,.10);
+}
+.notification-toast strong,
+.notification-toast p {
+  display: block;
+  margin: 0;
+}
+.notification-toast strong {
+  color: #171936;
+  font-size: .82rem;
+  line-height: 1.12;
+  font-weight: 900;
+}
+.notification-toast p {
+  margin-top: 2px;
+  color: rgba(29,32,64,.82);
+  font-size: .72rem;
+  line-height: 1.24;
+  font-weight: 650;
+}
+.notification-toast.show {
+  animation: iosToastIn .34s cubic-bezier(.18,.94,.24,1) forwards !important;
+}
+.notification-toast.hide {
+  animation: iosToastOut .22s ease forwards !important;
+}
+.notification-toast.dragging {
+  animation: none !important;
+  transform: translate(-50%, var(--toast-drag-y)) !important;
+  opacity: var(--toast-drag-opacity) !important;
+  transition: none !important;
+}
+.toast-close {
+  display: none !important;
+}
+@keyframes iosToastIn {
+  from { transform: translate(-50%, -132%); opacity: 0; }
+  to { transform: translate(-50%, 0); opacity: 1; }
+}
+@keyframes iosToastOut {
+  from { transform: translate(-50%, var(--toast-drag-y)); opacity: var(--toast-drag-opacity); }
+  to { transform: translate(-50%, -132%); opacity: 0; }
+}
+@media (min-width: 1180px) {
+  .notification-toast {
+    top: 18px !important;
+    left: auto !important;
+    right: 24px !important;
+    width: 360px !important;
+    transform: translateY(calc(-132% + var(--toast-drag-y))) !important;
+  }
+  .notification-toast.show { animation-name: iosToastInDesktop !important; }
+  .notification-toast.hide { animation-name: iosToastOutDesktop !important; }
+  .notification-toast.dragging {
+    transform: translateY(var(--toast-drag-y)) !important;
+  }
+  @keyframes iosToastInDesktop {
+    from { transform: translateY(-132%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  @keyframes iosToastOutDesktop {
+    from { transform: translateY(var(--toast-drag-y)); opacity: var(--toast-drag-opacity); }
+    to { transform: translateY(-132%); opacity: 0; }
+  }
+}

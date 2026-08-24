@@ -916,10 +916,20 @@ bottomNavItems.forEach((item) => {
 });
 let notificationTimer;
 let notificationStartY = null;
+let notificationLastDeltaY = 0;
+
+function resetNotificationDrag() {
+  if (!notificationPanel) return;
+  notificationPanel.classList.remove("dragging");
+  notificationPanel.style.removeProperty("--toast-drag-y");
+  notificationPanel.style.removeProperty("--toast-drag-opacity");
+  notificationStartY = null;
+  notificationLastDeltaY = 0;
+}
 
 function hideNotificationToast() {
   if (!notificationPanel) return;
-  notificationPanel.classList.remove("show");
+  notificationPanel.classList.remove("show", "dragging");
   notificationPanel.classList.add("hide");
   notificationToggle?.classList.remove("active");
   notificationToggle?.setAttribute("aria-expanded", "false");
@@ -927,6 +937,7 @@ function hideNotificationToast() {
   window.setTimeout(() => {
     notificationPanel.hidden = true;
     notificationPanel.classList.remove("hide");
+    resetNotificationDrag();
   }, 260);
 }
 
@@ -937,6 +948,7 @@ function showNotificationToast(title = "Notifiche attive", message = "Avvisi att
   if (titleEl) titleEl.textContent = title;
   if (messageEl) messageEl.textContent = message;
   window.clearTimeout(notificationTimer);
+  resetNotificationDrag();
   notificationPanel.hidden = false;
   notificationPanel.classList.remove("hide");
   notificationPanel.classList.add("show");
@@ -1006,13 +1018,25 @@ calendarCta?.addEventListener("click", () => {
 notificationClose?.addEventListener("click", hideNotificationToast);
 notificationPanel?.addEventListener("pointerdown", (event) => {
   notificationStartY = event.clientY;
+  notificationLastDeltaY = 0;
+  notificationPanel.classList.add("dragging");
+  notificationPanel.setPointerCapture?.(event.pointerId);
 });
-notificationPanel?.addEventListener("pointerup", (event) => {
+notificationPanel?.addEventListener("pointermove", (event) => {
   if (notificationStartY === null) return;
-  const deltaY = event.clientY - notificationStartY;
-  notificationStartY = null;
-  if (deltaY < -24) hideNotificationToast();
+  notificationLastDeltaY = Math.min(0, event.clientY - notificationStartY);
+  notificationPanel.style.setProperty("--toast-drag-y", `${notificationLastDeltaY}px`);
+  notificationPanel.style.setProperty("--toast-drag-opacity", String(Math.max(.35, 1 + notificationLastDeltaY / 95)));
 });
+notificationPanel?.addEventListener("pointerup", () => {
+  if (notificationStartY === null) return;
+  if (notificationLastDeltaY < -34) {
+    hideNotificationToast();
+    return;
+  }
+  resetNotificationDrag();
+});
+notificationPanel?.addEventListener("pointercancel", resetNotificationDrag);
 deadlineList?.addEventListener("click", (event) => {
   const chip = event.target.closest(".season-month");
   if (!chip) return;
