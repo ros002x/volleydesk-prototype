@@ -369,10 +369,12 @@ function isDesktopSidebar() {
 function updateSidebarTogglePosition() {
   if (!productShell || !sideNav || !sidebarToggle || !isDesktopSidebar()) return;
   const shellRect = productShell.getBoundingClientRect();
-  const navRect = sideNav.getBoundingClientRect();
   const collapsed = productShell.classList.contains("sidebar-collapsed");
-  const left = collapsed ? shellRect.left + 10 : navRect.right - 18;
-  sidebarToggle.style.setProperty("--sidebar-toggle-left", `${Math.max(10, left)}px`);
+  const sidebarWidth = Math.max(220, sideNav.offsetWidth || sideNav.getBoundingClientRect().width || 264);
+  const expandedLeft = shellRect.left + sidebarWidth - 20;
+  const collapsedLeft = shellRect.left + 12;
+  const left = collapsed ? collapsedLeft : expandedLeft;
+  sidebarToggle.style.setProperty("--sidebar-toggle-left", `${Math.max(12, left)}px`);
 }
 
 function setSidebarCollapsed(collapsed, persist = true) {
