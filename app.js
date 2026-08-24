@@ -1155,13 +1155,14 @@ accountingBoard?.addEventListener("click", (event) => {
   const paymentChip = event.target.closest(".mobile-payment-chip");
   if (paymentChip) {
     const index = Number(paymentChip.dataset.index);
-    activeAccountingIndex = index;
     activeAccountingMonth = paymentChip.dataset.month;
     if (accountingSelectionMode) {
       if (selectedAccountingRows.has(index)) {
         selectedAccountingRows.delete(index);
+        if (activeAccountingIndex === index) activeAccountingIndex = null;
       } else {
         selectedAccountingRows.add(index);
+        activeAccountingIndex = index;
       }
       renderAccounting();
       return;
@@ -1174,7 +1175,6 @@ accountingBoard?.addEventListener("click", (event) => {
   if (!cell) return;
 
   const index = Number(cell.dataset.index);
-  activeAccountingIndex = index;
   if (cell.dataset.month) {
     activeAccountingMonth = cell.dataset.month;
   }
@@ -1182,9 +1182,13 @@ accountingBoard?.addEventListener("click", (event) => {
   if (accountingSelectionMode) {
     if (selectedAccountingRows.has(index)) {
       selectedAccountingRows.delete(index);
+      if (activeAccountingIndex === index) activeAccountingIndex = null;
     } else {
       selectedAccountingRows.add(index);
+      activeAccountingIndex = index;
     }
+  } else {
+    activeAccountingIndex = activeAccountingIndex === index ? null : index;
   }
 
   renderAccounting();
