@@ -5295,3 +5295,10 @@ body.modal-open {
     transform: translateY(-50%) scale(.94) !important;
   }
 }
+
+/* Sidebar toggle vertical position follows menu block */
+@media (min-width: 1180px) {
+  .sidebar-toggle {
+    top: var(--sidebar-toggle-top, 300px) !important;
+  }
+}

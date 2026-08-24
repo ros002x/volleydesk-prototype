@@ -218,6 +218,7 @@ const matchData = {
 const productShell = document.querySelector(".product-shell");
 const sideNav = document.querySelector(".side-nav");
 const sidebarToggle = document.querySelector("#sidebarToggle");
+const sidebarMenu = document.querySelector(".pill-nav");
 const views = document.querySelectorAll(".view");
 const navItems = document.querySelectorAll(".nav-item");
 const bottomNavItems = document.querySelectorAll(".bottom-nav-item, .bottom-nav-home");
@@ -376,7 +377,11 @@ function updateSidebarTogglePosition() {
   const sidebarWidth = Math.max(0, measuredTrack || sideNav.offsetWidth || fallbackWidth);
   const sidebarEdge = collapsed ? shellRect.left : shellRect.left + sidebarWidth;
   const left = collapsed ? sidebarEdge + 2 : sidebarEdge - 16;
+  const menuRect = sidebarMenu?.getBoundingClientRect();
+  const fallbackTop = shellRect.top + Math.min(360, Math.max(220, window.innerHeight * .32));
+  const top = menuRect && menuRect.height ? menuRect.top + (menuRect.height / 2) : fallbackTop;
   sidebarToggle.style.setProperty("--sidebar-toggle-left", `${Math.max(8, left)}px`);
+  sidebarToggle.style.setProperty("--sidebar-toggle-top", `${Math.max(120, top)}px`);
 }
 
 function queueSidebarTogglePositionUpdates() {
