@@ -283,6 +283,8 @@ const paymentModalTitle = document.querySelector("#paymentModalTitle");
 const paymentMonth = document.querySelector("#paymentMonth");
 const paymentStartMonth = document.querySelector("#paymentStartMonth");
 const paymentEndMonth = document.querySelector("#paymentEndMonth");
+const paymentAthleteField = document.querySelector("#paymentAthleteField");
+const paymentAthlete = document.querySelector("#paymentAthlete");
 const selectAthletesButton = document.querySelector("#selectAthletesButton");
 const deleteSelectedButton = document.querySelector("#deleteSelectedButton");
 let activeAthleteIndex = null;
@@ -293,6 +295,7 @@ const selectedAccountingRows = new Set();
 let activeAccountingIndex = null;
 let activeAccountingMonth = "sep";
 let paymentBulkMode = false;
+let paymentChooseAthleteMode = false;
 let pendingCertificateFiles = [];
 
 const seasonMonths = [
@@ -842,6 +845,13 @@ function openAthleteModal(index) {
   openLockedDialog(modal);
 }
 
+function fillPaymentAthleteOptions() {
+  if (!paymentAthlete) return;
+  paymentAthlete.innerHTML = athletes
+    .map((athlete, index) => `<option value="${index}">${athleteName(athlete)} - ${athlete.category || "Categoria"}</option>`)
+    .join("");
+}
+
 function fillPaymentMonthOptions() {
   const options = seasonMonths
     .map((month) => `<option value="${month.key}">${month.label}</option>`)
@@ -872,6 +882,8 @@ function openPaymentModal(index, monthKey = activeAccountingMonth, bulk = true) 
   const payment = athlete.accounting[monthKey];
   const targetCount = selectedAccountingTargets().length || 1;
 
+  paymentChooseAthleteMode = false;
+  if (paymentAthleteField) paymentAthleteField.hidden = true;
   paymentModalTitle.textContent = bulk && targetCount > 1 ? `${targetCount} atleti` : athleteName(athlete);
   paymentStartMonth.parentElement.hidden = !bulk;
   paymentEndMonth.parentElement.hidden = !bulk;
@@ -1230,20 +1242,26 @@ editAccountingButton?.addEventListener("click", () => {
 });
 
 addAccountingMonthsButton?.addEventListener("click", () => {
-  const targets = selectedAccountingTargets();
-  if (!targets.length) {
-    showNotification("Scadenziario", "Seleziona un atleta prima di aggiungere le mensilita.");
-    return;
-  }
-
-  const index = targets[0];
+  fillPaymentAthleteOptions();
+  const index = activeAccountingIndex ?? 0;
   activeAccountingIndex = index;
   activeAccountingMonth = "sep";
+  paymentBulkMode = true;
+  paymentChooseAthleteMode = true;
   selectedAccountingRows.clear();
-  targets.forEach((target) => selectedAccountingRows.add(target));
-  openPaymentModal(index, "sep", true);
+  paymentModalTitle.textContent = "Nuove mensilita";
+  if (paymentAthleteField) paymentAthleteField.hidden = false;
+  if (paymentAthlete) paymentAthlete.value = String(index);
+  paymentStartMonth.parentElement.hidden = false;
+  paymentEndMonth.parentElement.hidden = false;
+  paymentMonth.parentElement.hidden = true;
   paymentStartMonth.value = "sep";
   paymentEndMonth.value = "aug";
+  paymentForm.elements.month.value = "sep";
+  paymentForm.elements.expected.value = 30;
+  paymentForm.elements.paid.value = 0;
+  paymentForm.elements.days.value = 2;
+  openLockedDialog(paymentModal);
 });
 
 deleteAccountingButton?.addEventListener("click", () => {
@@ -1457,14 +1475,17 @@ athleteForm.addEventListener("submit", (event) => {
 
 paymentForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  if (activeAccountingIndex === null) return;
+  if (activeAccountingIndex === null && !paymentChooseAthleteMode) return;
 
   const form = new FormData(paymentForm);
   const monthKeys = paymentBulkMode ? monthRange(form.get("startMonth"), form.get("endMonth")) : [form.get("month")];
-  const targets = paymentBulkMode ? selectedAccountingTargets() : [activeAccountingIndex];
+  const targets = (paymentChooseAthleteMode ? [Number(form.get("athleteIndex"))] : paymentBulkMode ? selectedAccountingTargets() : [activeAccountingIndex])
+    .filter((index) => Number.isInteger(index) && athletes[index]);
   const expected = Number(form.get("expected")) || 0;
   const paid = Number(form.get("paid")) || 0;
   const days = Number(form.get("days")) || 0;
+
+  if (!targets.length) return;
 
   targets.forEach((index) => {
     monthKeys.forEach((monthKey) => {
@@ -1472,7 +1493,9 @@ paymentForm.addEventListener("submit", (event) => {
     });
   });
 
+  activeAccountingIndex = targets[0];
   activeAccountingMonth = monthKeys[0];
+  paymentChooseAthleteMode = false;
 
   renderAll();
   paymentModal.close();
@@ -1511,6 +1534,7 @@ document.querySelector("#exportButton")?.addEventListener("click", () => {
 function renderAll() {
   ensureAccounting();
   fillPaymentMonthOptions();
+  fillPaymentAthleteOptions();
   renderMatchCard();
   renderCurrentAthletes();
   renderCertificates();

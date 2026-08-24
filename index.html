@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260824-1608">
+  <link rel="stylesheet" href="styles.css?v=20260824-1620">
 </head>
 <body>
   <main class="screen">
@@ -189,7 +189,7 @@
               </select>
               <input id="accountingStartDate" type="date" value="2026-09-01" aria-label="Data inizio">
               <input id="accountingEndDate" type="date" value="2027-08-31" aria-label="Data fine">
-              <button class="soft-button accounting-months-button" id="addAccountingMonthsButton" type="button">+ Mensilità</button>
+              <button class="soft-button accounting-months-button" id="addAccountingMonthsButton" type="button" aria-label="Aggiungi mensilita">+</button>
               <button class="soft-button" id="selectAccountingButton" type="button">Seleziona</button>
               <button class="soft-button" id="editAccountingButton" type="button" disabled>Modifica</button>
               <button class="danger-button" id="deleteAccountingButton" type="button" hidden>Elimina 0</button>
@@ -401,6 +401,7 @@
       </header>
 
       <div class="form-grid">
+        <label id="paymentAthleteField" hidden>Atleta <select name="athleteIndex" id="paymentAthlete"></select></label>
         <label>Da mese <select name="startMonth" id="paymentStartMonth"></select></label>
         <label>A mese <select name="endMonth" id="paymentEndMonth"></select></label>
         <label>Mese <select name="month" id="paymentMonth"></select></label>
@@ -483,6 +484,6 @@
       </footer>
     </form>
   </dialog>
-  <script src="app.js?v=20260824-1608"></script>
+  <script src="app.js?v=20260824-1620"></script>
 </body>
 </html>

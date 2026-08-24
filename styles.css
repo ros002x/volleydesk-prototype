@@ -6389,3 +6389,20 @@ body.modal-open {
     display: none !important;
   }
 }
+
+/* Scadenziario compact plus action */
+.deadlines-panel .accounting-actions #addAccountingMonthsButton {
+  width: 46px !important;
+  min-width: 46px !important;
+  padding: 0 !important;
+  border-radius: 16px !important;
+  font-size: 1.22rem !important;
+  line-height: 1 !important;
+  font-weight: 950 !important;
+}
+
+@media (min-width: 1180px) {
+  .deadlines-panel .accounting-actions {
+    grid-template-columns: minmax(220px, 1fr) 112px 150px 150px 46px 104px 104px auto !important;
+  }
+}
