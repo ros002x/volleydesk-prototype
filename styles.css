@@ -6178,3 +6178,121 @@ body.modal-open {
     grid-template-columns: minmax(220px, 1fr) 112px 150px 150px auto auto auto !important;
   }
 }
+
+/* Final toolbar separation for Scadenziario and Prima nota */
+@media (min-width: 1180px) {
+  .deadlines-panel .accounting-title {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    align-items: stretch !important;
+    margin: -2px -2px 12px !important;
+    padding: 2px 2px 12px !important;
+  }
+
+  .deadlines-panel .accounting-title > div:first-child {
+    display: block !important;
+    min-width: 0 !important;
+  }
+
+  .deadlines-panel .accounting-title h2 {
+    margin: 0 !important;
+    font-size: clamp(1.8rem, 2.15vw, 2.25rem) !important;
+    line-height: 1.05 !important;
+    white-space: normal !important;
+  }
+
+  .deadlines-panel .accounting-actions {
+    display: grid !important;
+    grid-template-columns: minmax(240px, 1fr) 112px 154px 154px 104px 104px auto !important;
+    align-items: center !important;
+    gap: 8px !important;
+    width: 100% !important;
+    justify-content: stretch !important;
+  }
+
+  .deadlines-panel .accounting-actions #accountingSearch,
+  .deadlines-panel .accounting-actions #accountingFilter,
+  .deadlines-panel .accounting-actions #accountingStartDate,
+  .deadlines-panel .accounting-actions #accountingEndDate,
+  .deadlines-panel .accounting-actions #selectAccountingButton,
+  .deadlines-panel .accounting-actions #editAccountingButton,
+  .deadlines-panel .accounting-actions #deleteAccountingButton {
+    position: static !important;
+    grid-row: 1 !important;
+    margin: 0 !important;
+    transform: none !important;
+  }
+
+  .deadlines-panel .accounting-actions #editAccountingButton:disabled,
+  .deadlines-panel .accounting-actions #deleteAccountingButton[hidden] {
+    display: none !important;
+  }
+
+  .prima-nota-toolbar {
+    display: grid !important;
+    grid-template-columns: minmax(260px, 1fr) auto !important;
+    align-items: center !important;
+    gap: 10px !important;
+    margin: -2px -2px 12px !important;
+    padding: 2px 2px 12px !important;
+  }
+
+  .prima-nota-search {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    flex: none !important;
+  }
+
+  .prima-nota-actions {
+    display: grid !important;
+    grid-template-columns: 112px 154px auto !important;
+    align-items: center !important;
+    gap: 8px !important;
+    width: auto !important;
+    justify-content: end !important;
+  }
+
+  .prima-nota-actions select,
+  .prima-nota-date-field,
+  .prima-nota-actions .prima-nota-tool.primary {
+    width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+  }
+
+  .prima-nota-actions .prima-nota-tool.primary {
+    white-space: nowrap !important;
+  }
+}
+
+@media (max-width: 1179px) {
+  .deadlines-panel .accounting-title,
+  .prima-nota-toolbar {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+    align-items: stretch !important;
+  }
+
+  .deadlines-panel .accounting-title > div:first-child {
+    display: block !important;
+  }
+
+  .deadlines-panel .accounting-actions,
+  .prima-nota-actions {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+
+  .deadlines-panel .accounting-actions #accountingSearch,
+  .prima-nota-search {
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+  }
+}
