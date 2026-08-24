@@ -370,11 +370,20 @@ function updateSidebarTogglePosition() {
   if (!productShell || !sideNav || !sidebarToggle || !isDesktopSidebar()) return;
   const shellRect = productShell.getBoundingClientRect();
   const collapsed = productShell.classList.contains("sidebar-collapsed");
-  const sidebarWidth = Math.max(220, sideNav.offsetWidth || sideNav.getBoundingClientRect().width || 264);
-  const expandedLeft = shellRect.left + sidebarWidth - 6;
-  const collapsedLeft = shellRect.left + 6;
-  const left = collapsed ? collapsedLeft : expandedLeft;
-  sidebarToggle.style.setProperty("--sidebar-toggle-left", `${Math.max(12, left)}px`);
+  const gridColumns = window.getComputedStyle(productShell).gridTemplateColumns.split(" ");
+  const measuredTrack = Number.parseFloat(gridColumns[0]);
+  const fallbackWidth = document.documentElement.classList.contains("tablet-layout") ? 220 : 264;
+  const sidebarWidth = Math.max(0, measuredTrack || sideNav.offsetWidth || fallbackWidth);
+  const sidebarEdge = collapsed ? shellRect.left : shellRect.left + sidebarWidth;
+  const left = collapsed ? sidebarEdge + 2 : sidebarEdge - 16;
+  sidebarToggle.style.setProperty("--sidebar-toggle-left", `${Math.max(8, left)}px`);
+}
+
+function queueSidebarTogglePositionUpdates() {
+  updateSidebarTogglePosition();
+  window.requestAnimationFrame(updateSidebarTogglePosition);
+  window.setTimeout(updateSidebarTogglePosition, 120);
+  window.setTimeout(updateSidebarTogglePosition, 340);
 }
 
 function setSidebarCollapsed(collapsed, persist = true) {
@@ -382,10 +391,8 @@ function setSidebarCollapsed(collapsed, persist = true) {
   productShell.classList.toggle("sidebar-collapsed", collapsed);
   sidebarToggle.setAttribute("aria-expanded", String(!collapsed));
   sidebarToggle.setAttribute("aria-label", collapsed ? "Mostra sidebar" : "Nascondi sidebar");
-  const icon = sidebarToggle.querySelector("span");
-  if (icon) icon.textContent = collapsed ? ">" : "<";
   if (persist) localStorage.setItem("nsVolleySidebarCollapsed", collapsed ? "1" : "0");
-  window.requestAnimationFrame(updateSidebarTogglePosition);
+  queueSidebarTogglePositionUpdates();
 }
 function showView(viewId) {
   views.forEach((view) => view.classList.toggle("active", view.id === viewId));
@@ -886,8 +893,10 @@ if (productShell && sidebarToggle) {
   sidebarToggle.addEventListener("click", () => {
     setSidebarCollapsed(!productShell.classList.contains("sidebar-collapsed"));
   });
-  window.addEventListener("resize", updateSidebarTogglePosition);
+  productShell.addEventListener("transitionend", queueSidebarTogglePositionUpdates);
+  window.addEventListener("resize", queueSidebarTogglePositionUpdates);
   window.addEventListener("scroll", updateSidebarTogglePosition, { passive: true });
+  window.addEventListener("load", queueSidebarTogglePositionUpdates);
 }
 
 navItems.forEach((item) => {

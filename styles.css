@@ -4976,3 +4976,49 @@ body.modal-open {
     box-shadow: none !important;
   }
 }
+
+/* Desktop sidebar toggle: precise minimal chevron */
+@media (min-width: 1180px) {
+  .sidebar-toggle {
+    width: 28px !important;
+    height: 48px !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: rgba(20,46,91,.38) !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    transition: left .32s ease, color .18s ease, transform .18s ease !important;
+  }
+  .sidebar-toggle::before {
+    content: none !important;
+  }
+  .sidebar-toggle:hover {
+    background: transparent !important;
+    color: #2867ff !important;
+    box-shadow: none !important;
+    transform: translateY(-50%) !important;
+  }
+  .sidebar-toggle:active {
+    transform: translateY(-50%) scale(.92) !important;
+  }
+  .sidebar-toggle span {
+    display: block !important;
+    width: 10px !important;
+    height: 10px !important;
+    border-top: 2px solid currentColor !important;
+    border-right: 2px solid currentColor !important;
+    background: transparent !important;
+    border-radius: 1px !important;
+    font-size: 0 !important;
+    line-height: 0 !important;
+    transform: rotate(225deg) !important;
+    transition: transform .24s ease, color .18s ease !important;
+  }
+  .product-shell.sidebar-collapsed .sidebar-toggle span {
+    transform: rotate(45deg) !important;
+  }
+  .product-shell.sidebar-collapsed .sidebar-toggle {
+    box-shadow: none !important;
+  }
+}
