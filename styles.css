@@ -5885,3 +5885,23 @@ body.modal-open {
     grid-column: 1 !important;
   }
 }
+
+/* Prima nota date placeholder: keep only custom Data label when empty */
+.prima-nota-date-field:not(.date-has-value)::before,
+.prima-nota-date-field:focus-within:not(.date-has-value)::before {
+  opacity: 1 !important;
+}
+
+.prima-nota-date-field.date-has-value::before {
+  opacity: 0 !important;
+}
+
+.prima-nota-date-field:not(.date-has-value) input,
+.prima-nota-date-field:not(.date-has-value) input::-webkit-datetime-edit {
+  color: transparent !important;
+}
+
+.prima-nota-date-field.date-has-value input,
+.prima-nota-date-field.date-has-value input::-webkit-datetime-edit {
+  color: #263858 !important;
+}
