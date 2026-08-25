@@ -5792,12 +5792,12 @@ body.modal-open {
   }
 }
 
-/* Final toolbar separation for Scadenziario and Prima nota */
+/* Toolbar layout: Scadenziario and Prima nota */
 @media (min-width: 1180px) {
   .deadlines-panel .accounting-title {
     display: grid !important;
     grid-template-columns: 1fr !important;
-    gap: 12px !important;
+    gap: 14px !important;
     align-items: stretch !important;
     margin: -2px -2px 12px !important;
     padding: 2px 2px 12px !important;
@@ -5810,36 +5810,108 @@ body.modal-open {
 
   .deadlines-panel .accounting-title h2 {
     margin: 0 !important;
-    font-size: clamp(1.8rem, 2.15vw, 2.25rem) !important;
+    font-size: clamp(1.9rem, 2.2vw, 2.32rem) !important;
     line-height: 1.05 !important;
     white-space: normal !important;
   }
 
   .deadlines-panel .accounting-actions {
-    display: grid !important;
-    grid-template-columns: minmax(240px, 1fr) 112px 154px 154px 104px 104px auto !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;
     align-items: center !important;
-    gap: 8px !important;
+    justify-content: flex-start !important;
+    gap: 10px !important;
     width: 100% !important;
-    justify-content: stretch !important;
+    min-width: 0 !important;
   }
 
-  .deadlines-panel .accounting-actions #accountingSearch,
-  .deadlines-panel .accounting-actions #accountingFilter,
-  .deadlines-panel .accounting-actions #accountingStartDate,
-  .deadlines-panel .accounting-actions #accountingEndDate,
-  .deadlines-panel .accounting-actions #selectAccountingButton,
-  .deadlines-panel .accounting-actions #editAccountingButton,
-  .deadlines-panel .accounting-actions #deleteAccountingButton {
+  .deadlines-panel .accounting-actions > * {
     position: static !important;
-    grid-row: 1 !important;
+    flex: 0 0 auto !important;
+    grid-row: auto !important;
+    grid-column: auto !important;
     margin: 0 !important;
     transform: none !important;
+    box-sizing: border-box !important;
+  }
+
+  .deadlines-panel .accounting-actions #accountingSearch {
+    width: 280px !important;
+    min-width: 240px !important;
+    max-width: 280px !important;
+    padding-inline: 14px !important;
+  }
+
+  .deadlines-panel .accounting-actions #addAccountingMonthsButton {
+    width: 46px !important;
+    min-width: 46px !important;
+    padding: 0 !important;
+    display: inline-grid !important;
+    place-items: center !important;
+    background: #2867ff !important;
+    color: #fff !important;
+    box-shadow: 0 10px 22px rgba(40,103,255,.16) !important;
+    font-size: 1.22rem !important;
+    line-height: 1 !important;
+    font-weight: 950 !important;
+  }
+
+  .deadlines-panel .accounting-actions #accountingFilter {
+    width: 112px !important;
+    min-width: 112px !important;
+  }
+
+  .deadlines-panel .accounting-actions #accountingStartDate,
+  .deadlines-panel .accounting-actions #accountingEndDate {
+    width: 166px !important;
+    min-width: 166px !important;
+    padding-inline: 14px 12px !important;
+    display: block !important;
+    cursor: pointer !important;
+  }
+
+  .deadlines-panel .accounting-actions input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 1 !important;
+    cursor: pointer !important;
+  }
+
+  .deadlines-panel .accounting-actions #resetAccountingFiltersButton {
+    width: 46px !important;
+    min-width: 46px !important;
+    display: inline-grid !important;
+    place-items: center !important;
+    padding: 0 !important;
+    background: #d83255 !important;
+    color: #fff !important;
+    box-shadow: 0 10px 22px rgba(216,50,85,.16) !important;
+    font-size: 1.08rem !important;
+    line-height: 1 !important;
+  }
+
+  .deadlines-panel .accounting-actions #selectAccountingButton {
+    width: 126px !important;
+    min-width: 126px !important;
+  }
+
+  .deadlines-panel .accounting-actions #editAccountingButton,
+  .deadlines-panel .accounting-actions #deleteAccountingButton {
+    width: 112px !important;
+    min-width: 112px !important;
   }
 
   .deadlines-panel .accounting-actions #editAccountingButton:disabled,
   .deadlines-panel .accounting-actions #deleteAccountingButton[hidden] {
     display: none !important;
+  }
+
+  .deadlines-panel .deadline-legend {
+    position: sticky !important;
+    top: 122px !important;
+    z-index: 5 !important;
+    padding: 6px 0 8px !important;
+    background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.88)) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
   }
 
   .prima-nota-toolbar {
@@ -5880,13 +5952,15 @@ body.modal-open {
   }
 }
 
-@media (max-width: 1179px) {
+@media (min-width: 700px) and (max-width: 1179px) {
   .deadlines-panel .accounting-title,
   .prima-nota-toolbar {
     display: grid !important;
     grid-template-columns: 1fr !important;
     gap: 8px !important;
     align-items: stretch !important;
+    margin: -2px -2px 10px !important;
+    padding: 2px 2px 10px !important;
   }
 
   .deadlines-panel .accounting-title > div:first-child {
@@ -5896,7 +5970,7 @@ body.modal-open {
   .deadlines-panel .accounting-actions,
   .prima-nota-actions {
     display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
     gap: 8px !important;
     width: 100% !important;
   }
@@ -5907,6 +5981,16 @@ body.modal-open {
     width: 100% !important;
     min-width: 0 !important;
     max-width: none !important;
+  }
+
+  .deadlines-panel .deadline-legend {
+    position: sticky !important;
+    top: 150px !important;
+    z-index: 5 !important;
+    padding: 6px 0 8px !important;
+    background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.88)) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
   }
 }
 
@@ -5947,106 +6031,7 @@ body.modal-open {
     height: 44px !important;
     min-height: 44px !important;
   }
-}
 
-/* Scadenziario sticky legend */
-.deadlines-panel .deadline-legend {
-  position: sticky !important;
-  top: 126px !important;
-  z-index: 5 !important;
-  padding: 6px 0 8px !important;
-  background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.88)) !important;
-  backdrop-filter: blur(14px) !important;
-  -webkit-backdrop-filter: blur(14px) !important;
-}
-
-@media (min-width: 1180px) {
-  .deadlines-panel .deadline-legend {
-    top: 122px !important;
-  }
-}
-
-@media (min-width: 700px) and (max-width: 1179px) {
-  .deadlines-panel .deadline-legend {
-    top: 150px !important;
-  }
-}
-
-@media (max-width: 699px) {
-  .deadlines-panel .deadline-legend {
-    top: 174px !important;
-    z-index: 5 !important;
-    padding: 5px 0 7px !important;
-    background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.90)) !important;
-  }
-}
-
-/* Scadenziario toolbar clean */
-.deadlines-panel .accounting-actions #addAccountingMonthsButton {
-  display: inline-grid;
-  place-items: center;
-  background: #2867ff;
-  color: #fff;
-  box-shadow: 0 10px 22px rgba(40,103,255,.16);
-  width: 46px;
-  min-width: 46px;
-  padding: 0;
-  border-radius: 16px;
-  font-size: 1.22rem;
-  line-height: 1;
-  font-weight: 950;
-  white-space: nowrap;
-}
-
-@media (min-width: 1180px) {
-  .deadlines-panel .accounting-title {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    gap: 12px !important;
-    align-items: stretch !important;
-    margin: -2px -2px 12px !important;
-    padding: 2px 2px 12px !important;
-  }
-
-  .deadlines-panel .accounting-title > div:first-child {
-    display: block !important;
-  }
-
-  .deadlines-panel .accounting-actions {
-    display: grid !important;
-    grid-template-columns: 360px 46px 112px 172px 172px 46px 126px auto !important;
-    align-items: center !important;
-    gap: 8px !important;
-    width: 100% !important;
-  }
-
-  .deadlines-panel .accounting-actions > * {
-    position: static !important;
-    grid-row: 1 !important;
-    margin: 0 !important;
-    transform: none !important;
-    min-width: 0 !important;
-    width: 100% !important;
-  }
-
-  .deadlines-panel .accounting-actions #accountingSearch { grid-column: 1 !important; max-width: 360px !important; }
-  .deadlines-panel .accounting-actions #addAccountingMonthsButton { grid-column: 2 !important; width: 46px !important; min-width: 46px !important; }
-  .deadlines-panel .accounting-actions #accountingFilter { grid-column: 3 !important; }
-  .deadlines-panel .accounting-actions #accountingStartDate { grid-column: 4 !important; display: block !important; cursor: pointer !important; }
-  .deadlines-panel .accounting-actions #accountingEndDate { grid-column: 5 !important; display: block !important; cursor: pointer !important; }
-  .deadlines-panel .accounting-actions input[type="date"]::-webkit-calendar-picker-indicator {
-    opacity: 1 !important;
-    cursor: pointer !important;
-  }
-  .deadlines-panel .accounting-actions #resetAccountingFiltersButton { grid-column: 6 !important; width: 46px !important; min-width: 46px !important; display: inline-grid !important; place-items: center !important; padding: 0 !important; background: #d83255 !important; color: #fff !important; box-shadow: 0 10px 22px rgba(216,50,85,.16) !important; font-size: 1.08rem !important; line-height: 1 !important; }
-  .deadlines-panel .accounting-actions #selectAccountingButton { grid-column: 7 !important; width: 126px !important; min-width: 126px !important; }
-  .deadlines-panel .accounting-actions #editAccountingButton { grid-column: 8 !important; width: auto !important; min-width: 112px !important; }
-  .deadlines-panel .accounting-actions #deleteAccountingButton { grid-column: 8 !important; width: auto !important; min-width: 112px !important; }
-  .deadlines-panel .accounting-actions #editAccountingButton:disabled,
-  .deadlines-panel .accounting-actions #deleteAccountingButton[hidden] { display: none !important; }
-}
-
-@media (max-width: 1179px) {
   .deadlines-panel .accounting-title {
     position: sticky !important;
     top: 0 !important;
@@ -6178,7 +6163,6 @@ body.modal-open {
     white-space: nowrap !important;
   }
 }
-
 @media (max-width: 699px) {
   .accounting-athlete-toggle summary .accounting-expand-control {
     display: grid !important;
