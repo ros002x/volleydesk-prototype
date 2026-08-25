@@ -5780,8 +5780,9 @@ body.modal-open {
 
   .certificates-toolbar .certificate-actions #openCertificateUploadButton {
     font-size: 0 !important;
-    background: rgba(40,103,255,.08) !important;
-    color: #2867ff !important;
+    background: #2867ff !important;
+    color: #fff !important;
+    box-shadow: 0 10px 22px rgba(40,103,255,.16) !important;
   }
 
   .certificates-toolbar .certificate-actions #openCertificateUploadButton::before {
@@ -5836,9 +5837,9 @@ body.modal-open {
   }
 
   .deadlines-panel .accounting-actions #accountingSearch {
-    width: 280px !important;
-    min-width: 240px !important;
-    max-width: 280px !important;
+    width: 340px !important;
+    min-width: 300px !important;
+    max-width: 340px !important;
     padding-inline: 14px !important;
   }
 
