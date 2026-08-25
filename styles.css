@@ -6199,3 +6199,29 @@ body.modal-open {
     transform: scale(.94) !important;
   }
 }
+/* Create actions: every add/new button is blue with white content */
+#addAthleteButton,
+#openCertificateUploadButton,
+#addAccountingMonthsButton,
+#addPrimaNotaButton {
+  background: #2867ff !important;
+  color: #fff !important;
+  border-color: transparent !important;
+  box-shadow: 0 10px 22px rgba(40,103,255,.16) !important;
+}
+
+#addAthleteButton:hover,
+#openCertificateUploadButton:hover,
+#addAccountingMonthsButton:hover,
+#addPrimaNotaButton:hover {
+  background: #1f58e5 !important;
+  color: #fff !important;
+}
+
+#addAthleteButton svg,
+#openCertificateUploadButton svg,
+#addAccountingMonthsButton svg,
+#addPrimaNotaButton svg {
+  color: inherit !important;
+  stroke: currentColor !important;
+}
