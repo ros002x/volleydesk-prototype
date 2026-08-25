@@ -6014,7 +6014,7 @@ body.modal-open {
 
   .deadlines-panel .accounting-actions {
     display: grid !important;
-    grid-template-columns: minmax(260px, 1fr) 46px 112px 150px 150px 104px 104px auto !important;
+    grid-template-columns: minmax(300px, 1fr) 46px 112px 168px 168px 126px auto !important;
     align-items: center !important;
     gap: 8px !important;
     width: 100% !important;
@@ -6034,9 +6034,9 @@ body.modal-open {
   .deadlines-panel .accounting-actions #accountingFilter { grid-column: 3 !important; }
   .deadlines-panel .accounting-actions #accountingStartDate { grid-column: 4 !important; display: block !important; }
   .deadlines-panel .accounting-actions #accountingEndDate { grid-column: 5 !important; display: block !important; }
-  .deadlines-panel .accounting-actions #selectAccountingButton { grid-column: 6 !important; width: 104px !important; }
-  .deadlines-panel .accounting-actions #editAccountingButton { grid-column: 7 !important; width: 104px !important; }
-  .deadlines-panel .accounting-actions #deleteAccountingButton { grid-column: 8 !important; width: auto !important; }
+  .deadlines-panel .accounting-actions #selectAccountingButton { grid-column: 6 !important; width: 126px !important; min-width: 126px !important; }
+  .deadlines-panel .accounting-actions #editAccountingButton { grid-column: 7 !important; width: auto !important; min-width: 112px !important; }
+  .deadlines-panel .accounting-actions #deleteAccountingButton { grid-column: 7 !important; width: auto !important; min-width: 112px !important; }
   .deadlines-panel .accounting-actions #editAccountingButton:disabled,
   .deadlines-panel .accounting-actions #deleteAccountingButton[hidden] { display: none !important; }
 }
