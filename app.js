@@ -263,6 +263,7 @@ const accountingEndDate = document.querySelector("#accountingEndDate");
 const editAccountingButton = document.querySelector("#editAccountingButton");
 const addAccountingMonthsButton = document.querySelector("#addAccountingMonthsButton");
 const selectAccountingButton = document.querySelector("#selectAccountingButton");
+const resetAccountingFiltersButton = document.querySelector("#resetAccountingFiltersButton");
 const deleteAccountingButton = document.querySelector("#deleteAccountingButton");
 const primaNotaSearch = document.querySelector("#primaNotaSearch");
 const primaNotaType = document.querySelector("#primaNotaType");
@@ -1148,6 +1149,13 @@ accountingSearch?.addEventListener("input", () => renderAccounting());
 accountingFilter?.addEventListener("change", () => renderAccounting());
 accountingStartDate?.addEventListener("change", () => renderAccounting());
 accountingEndDate?.addEventListener("change", () => renderAccounting());
+resetAccountingFiltersButton?.addEventListener("click", () => {
+  if (accountingSearch) accountingSearch.value = "";
+  if (accountingFilter) accountingFilter.value = "all";
+  if (accountingStartDate) accountingStartDate.value = "2026-09-01";
+  if (accountingEndDate) accountingEndDate.value = "2027-08-31";
+  renderAccounting();
+});
 primaNotaSearch?.addEventListener("input", renderPrimaNota);
 primaNotaType?.addEventListener("change", renderPrimaNota);
 primaNotaDate?.addEventListener("change", () => {
