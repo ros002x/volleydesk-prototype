@@ -6014,7 +6014,7 @@ body.modal-open {
 
   .deadlines-panel .accounting-actions {
     display: grid !important;
-    grid-template-columns: minmax(300px, 1fr) 46px 112px 168px 168px 126px auto !important;
+    grid-template-columns: minmax(320px, 440px) 46px 112px 156px 156px 126px auto !important;
     align-items: center !important;
     gap: 8px !important;
     width: 100% !important;
@@ -6029,7 +6029,7 @@ body.modal-open {
     width: 100% !important;
   }
 
-  .deadlines-panel .accounting-actions #accountingSearch { grid-column: 1 !important; }
+  .deadlines-panel .accounting-actions #accountingSearch { grid-column: 1 !important; max-width: 440px !important; }
   .deadlines-panel .accounting-actions #addAccountingMonthsButton { grid-column: 2 !important; width: 46px !important; min-width: 46px !important; }
   .deadlines-panel .accounting-actions #accountingFilter { grid-column: 3 !important; }
   .deadlines-panel .accounting-actions #accountingStartDate { grid-column: 4 !important; display: block !important; }
