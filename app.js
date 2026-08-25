@@ -1145,10 +1145,23 @@ certificateGrid?.addEventListener("keydown", (event) => {
   openAthleteModal(Number(row.dataset.index));
 });
 
+function openNativeDatePicker(input) {
+  if (!input) return;
+  if (typeof input.showPicker === "function") {
+    try { input.showPicker(); } catch (error) { input.focus(); }
+  } else {
+    input.focus();
+  }
+}
+
 accountingSearch?.addEventListener("input", () => renderAccounting());
 accountingFilter?.addEventListener("change", () => renderAccounting());
 accountingStartDate?.addEventListener("change", () => renderAccounting());
+accountingStartDate?.addEventListener("click", () => openNativeDatePicker(accountingStartDate));
+accountingStartDate?.addEventListener("focus", () => openNativeDatePicker(accountingStartDate));
 accountingEndDate?.addEventListener("change", () => renderAccounting());
+accountingEndDate?.addEventListener("click", () => openNativeDatePicker(accountingEndDate));
+accountingEndDate?.addEventListener("focus", () => openNativeDatePicker(accountingEndDate));
 resetAccountingFiltersButton?.addEventListener("click", () => {
   if (accountingSearch) accountingSearch.value = "";
   if (accountingFilter) accountingFilter.value = "all";
