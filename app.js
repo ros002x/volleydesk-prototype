@@ -235,14 +235,14 @@ const patchNotes = {
   }
 };
 const matchData = {
-  dateLabel: "Dom 26 Mag",
-  time: "18:00",
-  homeTeam: "BARI VOLLEY",
-  awayTeam: "MONZA VOLLEY",
-  days: 2,
-  hours: 14,
-  minutes: 35,
-  seconds: 48
+  dateLabel: "Dom 8 Feb",
+  time: "17:30",
+  homeTeam: "A.S.D. VOLLEY NOVA SIRI",
+  awayTeam: "VOLLEY MATERA",
+  days: 0,
+  hours: 0,
+  minutes: 0,
+  seconds: 0
 };
 
 const productShell = document.querySelector(".product-shell");
@@ -1039,9 +1039,9 @@ function isMobileCalendarDevice() {
 function openMobileCalendar() {
   const title = `${matchData.homeTeam} vs ${matchData.awayTeam}`;
   const description = "Prossima partita NS Volley";
-  const location = "Palazzetto";
-  const start = new Date(`2027-05-26T${matchData.time}:00+02:00`);
-  const end = new Date("2027-05-26T20:00:00+02:00");
+  const location = "Palestra Scuole Medie Luigi Settembrini - Nova Siri";
+  const start = new Date(`2026-02-08T${matchData.time}:00+01:00`);
+  const end = new Date("2026-02-08T19:30:00+01:00");
   const userAgent = navigator.userAgent || "";
 
   if (/Android/i.test(userAgent)) {
