@@ -204,6 +204,36 @@ const primaNotaMovements = [
   { date: "2026-09-18", method: "Bonifico", who: "Palazzetto", reason: "Affitto campo", type: "out", amount: 140 },
   { date: "2026-10-02", method: "Bonifico", who: "Giulia Ferri", reason: "Quota ottobre", type: "in", amount: 30 }
 ];
+
+const patchNotes = {
+  "beta-1": {
+    version: "Beta 1",
+    title: "Demo ufficiale",
+    sections: [
+      { title: "Stato progetto", items: ["Demo front-end pronta per revisione commerciale e test operativi.", "Navigazione principale consolidata tra home, atleti, certificati, documenti, classifiche, scadenziario, prima nota e comunicazioni.", "Interfaccia pronta per essere collegata al database definitivo."] },
+      { title: "Miglioramenti", items: ["Flussi principali ordinati per uso gestionale reale.", "Comandi di creazione evidenziati in blu per rendere immediata l'azione primaria.", "Patch notes dedicate agli aggiornamenti developer, separate dai contenuti operativi della societa."] },
+      { title: "Prossimi passi", items: ["Configurazione database.", "Persistenza dati reali.", "Preparazione lancio ufficiale."] }
+    ]
+  },
+  "layout-mobile": {
+    version: "Release",
+    title: "Layout Mobile",
+    sections: [
+      { title: "Miglioramenti", items: ["Esperienza adattiva per smartphone, tablet e desktop con layout dedicati per ogni formato.", "Scadenziario e certificati ottimizzati su mobile con card compatte e apertura progressiva dei dettagli.", "Prima nota riorganizzata per lettura rapida dei movimenti economici su schermi piccoli."] },
+      { title: "Interfaccia", items: ["Toolbar rese piu coerenti tra le aree operative.", "Bottom navigation mobile semplificata sulle sezioni principali.", "Modali adattati per evitare zoom indesiderato e contenuti tagliati su iOS/iPadOS."] },
+      { title: "Bug fix", items: ["Risolti problemi di sovrapposizione nei filtri dello scadenziario.", "Corretto lo scroll del contenuto dietro ai modali.", "Migliorata la leggibilita delle card su mobile."] }
+    ]
+  },
+  "alpha-1": {
+    version: "Update Alpha 1",
+    title: "Definizione struttura",
+    sections: [
+      { title: "Struttura", items: ["Definite le aree operative principali e il loro ruolo nel gestionale.", "Rimosse sezioni ridondanti per mantenere l'app piu pulita e focalizzata.", "Separata l'area Comunicazioni come spazio developer per note di rilascio e aggiornamenti."] },
+      { title: "Base dati", items: ["Impostati dati demo per atleti, certificati, quote mensili e prima nota.", "Preparata la logica di visualizzazione per stato certificati, scadenze e movimenti.", "Predisposte le basi per sostituire i dati statici con database reale."] },
+      { title: "Direzione prodotto", items: ["Design premium chiaro, senza dark mode e senza struttura da gestionale tradizionale.", "Priorita alla consultazione veloce da mobile e alla gestione completa da desktop."] }
+    ]
+  }
+};
 const matchData = {
   dateLabel: "Dom 26 Mag",
   time: "18:00",
@@ -252,6 +282,12 @@ const matchDays = document.querySelector("#matchDays");
 const matchHours = document.querySelector("#matchHours");
 const matchMinutes = document.querySelector("#matchMinutes");
 const matchSeconds = document.querySelector("#matchSeconds");
+const patchNoteButtons = document.querySelectorAll("[data-patch-note]");
+const patchNoteModal = document.querySelector("#patchNoteModal");
+const patchNoteVersion = document.querySelector("#patchNoteVersion");
+const patchNoteTitle = document.querySelector("#patchNoteTitle");
+const patchNoteBody = document.querySelector("#patchNoteBody");
+const closePatchNoteButton = document.querySelector("#closePatchNoteButton");
 const notificationToggle = document.querySelector("#notificationToggle");
 const notificationPanel = document.querySelector("#notificationPanel");
 const notificationClose = document.querySelector("#notificationClose");
@@ -967,6 +1003,19 @@ function hideNotificationToast() {
   }, 260);
 }
 
+function openPatchNoteModal(noteKey) {
+  const note = patchNotes[noteKey];
+  if (!note || !patchNoteModal) return;
+  patchNoteVersion.textContent = note.version;
+  patchNoteTitle.textContent = note.title;
+  patchNoteBody.innerHTML = note.sections.map((section) => `
+    <section>
+      <h3>${section.title}</h3>
+      <ul>${section.items.map((item) => `<li>${item}</li>`).join("")}</ul>
+    </section>
+  `).join("");
+  openLockedDialog(patchNoteModal);
+}
 function showNotificationToast(title = "Notifiche attive", message = "Avvisi attivati per scadenze, certificati e quote aperte.", activateBell = false) {
   if (!notificationPanel) return;
   const titleEl = notificationPanel.querySelector("strong");
@@ -1033,6 +1082,10 @@ function openMobileCalendar() {
   window.setTimeout(() => URL.revokeObjectURL(url), 1200);
 }
 
+patchNoteButtons.forEach((button) => {
+  button.addEventListener("click", () => openPatchNoteModal(button.dataset.patchNote));
+});
+closePatchNoteButton?.addEventListener("click", () => patchNoteModal?.close());
 notificationToggle?.addEventListener("click", () => showNotificationToast(undefined, undefined, true));
 calendarCta?.addEventListener("click", () => {
   if (isMobileCalendarDevice()) {
@@ -1380,7 +1433,7 @@ function createAthleteFromUi() {
 document.querySelector("#addAthleteButton").addEventListener("click", createAthleteFromUi);
 document.querySelector("#mobileAddButton")?.addEventListener("click", createAthleteFromUi);
 
-[modal, paymentModal, matchModal, primaNotaModal, certificateUploadModal].forEach((dialog) => {
+[modal, paymentModal, matchModal, primaNotaModal, certificateUploadModal, patchNoteModal].forEach((dialog) => {
   dialog?.addEventListener("close", () => window.setTimeout(unlockDocumentScroll, 0));
   dialog?.addEventListener("cancel", () => window.setTimeout(unlockDocumentScroll, 0));
 });

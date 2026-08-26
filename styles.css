@@ -6296,35 +6296,33 @@ body.modal-open {
 }
 
 .patch-note {
-  border-radius: 22px;
-  background: #fff;
-  box-shadow: inset 0 0 0 1px rgba(20,46,91,.055), 0 12px 32px rgba(24,58,119,.045);
-  overflow: hidden;
-  transition: box-shadow .2s ease, transform .2s ease;
-}
-
-.patch-note[open] {
-  box-shadow: inset 0 0 0 1px rgba(40,103,255,.10), 0 16px 38px rgba(24,58,119,.07);
-}
-
-.patch-note summary {
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 6px 14px;
+  gap: 7px 14px;
   align-items: center;
-  min-height: 82px;
-  padding: 18px 48px 18px 18px;
+  width: 100%;
+  min-height: 92px;
+  padding: 18px 50px 18px 18px;
+  border: 0;
+  border-radius: 22px;
+  background: #fff;
+  color: inherit;
+  text-align: left;
   cursor: pointer;
-  list-style: none;
+  box-shadow: inset 0 0 0 1px rgba(20,46,91,.055), 0 12px 32px rgba(24,58,119,.045);
+  transition: box-shadow .2s ease, transform .2s ease;
   touch-action: manipulation;
 }
 
-.patch-note summary::-webkit-details-marker {
-  display: none;
+.patch-note:hover,
+.patch-note:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: inset 0 0 0 1px rgba(40,103,255,.12), 0 16px 38px rgba(24,58,119,.07);
+  outline: none;
 }
 
-.patch-note summary::after {
+.patch-note::after {
   content: "+";
   position: absolute;
   right: 18px;
@@ -6337,18 +6335,11 @@ body.modal-open {
   color: #2867ff;
   background: rgba(40,103,255,.08);
   font-size: 1.05rem;
-  font-weight: 900;
+  font-weight: 950;
   transform: translateY(-50%);
-  transition: transform .18s ease, background .18s ease;
 }
 
-.patch-note[open] summary::after {
-  content: "-";
-  background: #2867ff;
-  color: #fff;
-}
-
-.patch-note summary span {
+.patch-note span {
   grid-column: 1 / -1;
   color: #2867ff;
   font-size: .7rem;
@@ -6357,7 +6348,7 @@ body.modal-open {
   text-transform: uppercase;
 }
 
-.patch-note summary strong {
+.patch-note strong {
   display: block;
   color: #061936;
   font-size: clamp(1.05rem, 2.2vw, 1.28rem);
@@ -6365,7 +6356,19 @@ body.modal-open {
   line-height: 1.08;
 }
 
-.patch-note summary time {
+.patch-note p {
+  grid-column: 1 / -1;
+  max-width: 680px;
+  margin: 0;
+  color: #5f6f8d;
+  font-size: .9rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.patch-note time {
+  grid-column: 2;
+  grid-row: 2;
   align-self: center;
   color: #7586a3;
   font-size: .78rem;
@@ -6373,29 +6376,62 @@ body.modal-open {
   white-space: nowrap;
 }
 
-.patch-note p {
-  margin: -4px 48px 18px 18px;
-  max-width: 760px;
+.patch-note-card {
+  max-width: 680px;
+}
+
+.patch-note-body {
+  display: grid;
+  gap: 16px;
+}
+
+.patch-note-body section {
+  padding: 16px;
+  border-radius: 18px;
+  background: #f8faff;
+  box-shadow: inset 0 0 0 1px rgba(20,46,91,.055);
+}
+
+.patch-note-body h3 {
+  margin: 0 0 10px;
+  color: #061936;
+  font-size: .98rem;
+  font-weight: 950;
+}
+
+.patch-note-body ul {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 18px;
   color: #5f6f8d;
-  font-size: .94rem;
-  font-weight: 650;
-  line-height: 1.55;
+  font-size: .9rem;
+  font-weight: 700;
+  line-height: 1.45;
 }
 
 @media (max-width: 699px) {
-  .patch-note summary {
+  .patch-note {
     grid-template-columns: 1fr;
-    min-height: 76px;
+    min-height: 92px;
     padding: 16px 46px 16px 16px;
   }
 
-  .patch-note summary time {
+  .patch-note time {
+    grid-column: 1;
+    grid-row: auto;
     font-size: .74rem;
   }
 
   .patch-note p {
-    margin: -2px 16px 16px;
-    font-size: .88rem;
-    line-height: 1.5;
+    font-size: .86rem;
+  }
+
+  .patch-note-card {
+    max-width: min(92vw, 430px);
+  }
+
+  .patch-note-body section {
+    padding: 14px;
   }
 }

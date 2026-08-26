@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260826-0910">
+  <link rel="stylesheet" href="styles.css?v=20260826-0942">
 </head>
 <body>
   <main class="screen">
@@ -275,30 +275,24 @@
 
           </div>
           <div class="comms-list patch-notes">
-            <details class="patch-note">
-              <summary>
-                <span>Beta 1</span>
-                <strong>Demo ufficiale</strong>
-                <time>Lavoro pronto</time>
-              </summary>
-              <p>La demo commerciale di NS Volley e pronta: le aree principali sono state organizzate, la navigazione e stata rifinita e il flusso di lavoro e ora utilizzabile per presentazione e test reali. Rimane da collegare e configurare il database definitivo; completato questo passaggio, il prodotto sara pronto per il lancio.</p>
-            </details>
-            <details class="patch-note">
-              <summary>
-                <span>Release</span>
-                <strong>Layout Mobile</strong>
-                <time>Interfaccia adattiva</time>
-              </summary>
-              <p>La UI e stata ripensata per funzionare in modo naturale su telefono, tablet e desktop. Le sezioni operative ora cambiano disposizione in base al dispositivo, con toolbar piu leggibili, card espandibili dove serve e contenuti ottimizzati per consultazione rapida senza perdere chiarezza sui dati.</p>
-            </details>
-            <details class="patch-note">
-              <summary>
-                <span>Update Alpha 1</span>
-                <strong>Definizione struttura</strong>
-                <time>Base applicativa</time>
-              </summary>
-              <p>Definita la struttura iniziale del gestionale: home, atleti, certificati, documenti, classifiche, scadenziario, prima nota e comunicazioni. Ogni area e stata impostata con un ruolo preciso, eliminando sezioni ridondanti e preparando una base ordinata per dati, funzioni e sviluppo successivo.</p>
-            </details>
+            <button class="patch-note" type="button" data-patch-note="beta-1">
+              <span>Beta 1</span>
+              <strong>Demo ufficiale</strong>
+              <p>Lavoro pronto: resta da collegare il database definitivo...</p>
+              <time>Pronta per configurazione</time>
+            </button>
+            <button class="patch-note" type="button" data-patch-note="layout-mobile">
+              <span>Release</span>
+              <strong>Layout Mobile</strong>
+              <p>Esperienza adattiva per telefono, tablet e desktop...</p>
+              <time>Interfaccia adattiva</time>
+            </button>
+            <button class="patch-note" type="button" data-patch-note="alpha-1">
+              <span>Update Alpha 1</span>
+              <strong>Definizione struttura</strong>
+              <p>Impostata l'architettura delle aree operative...</p>
+              <time>Base applicativa</time>
+            </button>
           </div>
         </section>
       </section>
@@ -318,6 +312,19 @@
   </main>
 
 
+
+  <dialog class="patch-note-modal" id="patchNoteModal">
+    <article class="modal-card patch-note-card">
+      <header class="modal-head">
+        <div>
+          <span class="micro" id="patchNoteVersion">Release</span>
+          <h2 id="patchNoteTitle">Aggiornamento</h2>
+        </div>
+        <button class="modal-close" id="closePatchNoteButton" type="button" aria-label="Chiudi">x</button>
+      </header>
+      <div class="patch-note-body" id="patchNoteBody"></div>
+    </article>
+  </dialog>
   <dialog class="match-modal" id="matchModal">
     <form class="modal-card match-editor-card" id="matchForm" method="dialog">
       <header class="modal-head">
@@ -507,6 +514,6 @@
       </footer>
     </form>
   </dialog>
-  <script src="app.js?v=20260825-0948"></script>
+  <script src="app.js?v=20260826-0942"></script>
 </body>
 </html>
