@@ -796,6 +796,14 @@ svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width:
   font-weight: 850;
 }
 .news-row {
+  width: 100%;
+  border-right: 0;
+  border-bottom: 0;
+  border-left: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 14px;
