@@ -235,14 +235,10 @@ const patchNotes = {
   }
 };
 const matchData = {
-  dateLabel: "Dom 8 Feb",
+  date: "2026-02-08",
   time: "17:30",
   homeTeam: "A.S.D. VOLLEY NOVA SIRI",
   awayTeam: "VOLLEY MATERA",
-  days: 0,
-  hours: 0,
-  minutes: 0,
-  seconds: 0
 };
 
 const productShell = document.querySelector(".product-shell");
@@ -354,27 +350,51 @@ function twoDigits(value) {
   return String(Math.max(0, Number(value) || 0)).padStart(2, "0");
 }
 
+function parseLocalDate(dateValue, timeValue = "00:00") {
+  const [year, month, day] = String(dateValue || "").split("-").map(Number);
+  const [hours, minutes] = String(timeValue || "00:00").split(":").map(Number);
+  if (!year || !month || !day) return null;
+  return new Date(year, month - 1, day, hours || 0, minutes || 0, 0, 0);
+}
+
+function formatMatchDateLabel(dateValue) {
+  const date = parseLocalDate(dateValue);
+  if (!date) return "Data da definire";
+  const day = new Intl.DateTimeFormat("it-IT", { weekday: "short" }).format(date).replace(".", "");
+  const month = new Intl.DateTimeFormat("it-IT", { month: "short" }).format(date).replace(".", "");
+  return `${day.charAt(0).toUpperCase()}${day.slice(1)} ${date.getDate()} ${month.charAt(0).toUpperCase()}${month.slice(1)}`;
+}
+
+function getMatchCountdown() {
+  const target = parseLocalDate(matchData.date, matchData.time);
+  const remaining = Math.max(0, target ? target.getTime() - Date.now() : 0);
+  const totalSeconds = Math.floor(remaining / 1000);
+  return {
+    days: Math.floor(totalSeconds / 86400),
+    hours: Math.floor((totalSeconds % 86400) / 3600),
+    minutes: Math.floor((totalSeconds % 3600) / 60),
+    seconds: totalSeconds % 60
+  };
+}
+
 function renderMatchCard() {
-  if (matchDateLabel) matchDateLabel.textContent = matchData.dateLabel;
+  const countdown = getMatchCountdown();
+  if (matchDateLabel) matchDateLabel.textContent = formatMatchDateLabel(matchData.date);
   if (matchTimeLabel) matchTimeLabel.textContent = matchData.time;
   if (matchHomeTeam) matchHomeTeam.textContent = matchData.homeTeam;
   if (matchAwayTeam) matchAwayTeam.textContent = matchData.awayTeam;
-  if (matchDays) matchDays.textContent = `${twoDigits(matchData.days)} GIORNI`;
-  if (matchHours) matchHours.textContent = `${twoDigits(matchData.hours)} ORE`;
-  if (matchMinutes) matchMinutes.textContent = `${twoDigits(matchData.minutes)} MIN`;
-  if (matchSeconds) matchSeconds.textContent = `${twoDigits(matchData.seconds)} SEC`;
+  if (matchDays) matchDays.textContent = `${twoDigits(countdown.days)} GIORNI`;
+  if (matchHours) matchHours.textContent = `${twoDigits(countdown.hours)} ORE`;
+  if (matchMinutes) matchMinutes.textContent = `${twoDigits(countdown.minutes)} MIN`;
+  if (matchSeconds) matchSeconds.textContent = `${twoDigits(countdown.seconds)} SEC`;
 }
 
 function fillMatchForm() {
   if (!matchForm) return;
-  matchForm.elements.dateLabel.value = matchData.dateLabel;
+  matchForm.elements.date.value = matchData.date;
   matchForm.elements.time.value = matchData.time;
   matchForm.elements.homeTeam.value = matchData.homeTeam;
   matchForm.elements.awayTeam.value = matchData.awayTeam;
-  matchForm.elements.days.value = matchData.days;
-  matchForm.elements.hours.value = matchData.hours;
-  matchForm.elements.minutes.value = matchData.minutes;
-  matchForm.elements.seconds.value = matchData.seconds;
 }
 
 function openMatchModal() {
@@ -1452,14 +1472,10 @@ document.querySelector("#cancelCertificateUploadButton")?.addEventListener("clic
 matchForm?.addEventListener("submit", (event) => {
   event.preventDefault();
   const form = new FormData(matchForm);
-  matchData.dateLabel = String(form.get("dateLabel") || "").trim() || matchData.dateLabel;
+  matchData.date = String(form.get("date") || matchData.date);
   matchData.time = String(form.get("time") || matchData.time);
   matchData.homeTeam = String(form.get("homeTeam") || "").trim().toUpperCase() || matchData.homeTeam;
   matchData.awayTeam = String(form.get("awayTeam") || "").trim().toUpperCase() || matchData.awayTeam;
-  matchData.days = Number(form.get("days")) || 0;
-  matchData.hours = Number(form.get("hours")) || 0;
-  matchData.minutes = Number(form.get("minutes")) || 0;
-  matchData.seconds = Number(form.get("seconds")) || 0;
   renderMatchCard();
   matchModal.close();
 });
@@ -1620,4 +1636,5 @@ function renderAll() {
 }
 
 renderAll();
+window.setInterval(renderMatchCard, 1000);
 updatePrimaNotaDateField();
