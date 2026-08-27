@@ -1271,16 +1271,21 @@ function showNotificationToast(title = "Notifiche attive", message = "Avvisi att
 }
 
 function isMobileCalendarDevice() {
-  return window.matchMedia("(max-width: 820px) and (pointer: coarse)").matches;
+  const userAgent = navigator.userAgent || "";
+  const isIOS = /iPhone|iPad|iPod/i.test(userAgent) || (/Macintosh/i.test(userAgent) && navigator.maxTouchPoints > 1);
+  const isAndroid = /Android/i.test(userAgent);
+  const isTouchTablet = window.matchMedia("(pointer: coarse) and (max-width: 1366px)").matches;
+  return isIOS || isAndroid || isTouchTablet;
 }
 
 function openMobileCalendar() {
   const title = `${matchData.homeTeam} vs ${matchData.awayTeam}`;
   const description = "Prossima partita NS Volley";
   const location = "Palestra Scuole Medie Luigi Settembrini - Nova Siri";
-  const start = new Date(`2026-02-08T${matchData.time}:00+01:00`);
-  const end = new Date("2026-02-08T19:30:00+01:00");
+  const start = parseLocalDate(matchData.date, matchData.time) || new Date();
+  const end = new Date(start.getTime() + (2 * 60 * 60 * 1000));
   const userAgent = navigator.userAgent || "";
+  const isIOS = /iPhone|iPad|iPod/i.test(userAgent) || (/Macintosh/i.test(userAgent) && navigator.maxTouchPoints > 1);
 
   if (/Android/i.test(userAgent)) {
     const params = new URLSearchParams({
@@ -1294,30 +1299,12 @@ function openMobileCalendar() {
     return;
   }
 
-  const ics = [
-    "BEGIN:VCALENDAR",
-    "VERSION:2.0",
-    "PRODID:-//NS Volley//Calendario//IT",
-    "BEGIN:VEVENT",
-    "UID:ns-volley-bari-monza@example.local",
-    "DTSTAMP:20260823T000000Z",
-    "DTSTART:20270526T160000Z",
-    "DTEND:20270526T180000Z",
-    `SUMMARY:${title}`,
-    `DESCRIPTION:${description}`,
-    `LOCATION:${location}`,
-    "END:VEVENT",
-    "END:VCALENDAR"
-  ].join("\r\n");
-  const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = "ns-volley-partita.ics";
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-  window.setTimeout(() => URL.revokeObjectURL(url), 1200);
+  if (isIOS) {
+    window.location.href = "calshow://";
+    return;
+  }
+
+  showNotificationToast("Feature Mobile", "Apri questa funzione da telefono o tablet per usare il calendario del dispositivo.");
 }
 
 patchNoteButtons.forEach((button) => {
