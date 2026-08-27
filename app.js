@@ -694,6 +694,8 @@ function setSidebarCollapsed(collapsed, persist = true) {
 }
 function showView(viewId) {
   views.forEach((view) => view.classList.toggle("active", view.id === viewId));
+  document.body.dataset.viewActive = viewId;
+  document.body.classList.toggle("data-view-open", viewId !== "home");
   navItems.forEach((item) => item.classList.toggle("active", item.dataset.view === viewId));
   bottomNavItems.forEach((item) => item.classList.toggle("active", item.dataset.view === viewId));
 }

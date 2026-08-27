@@ -6424,13 +6424,31 @@ body.modal-open {
     padding: 14px;
   }
 }
-/* Scroll system for data-heavy areas */
+/* Fixed data views with internal list scrolling */
+body.data-view-open {
+  height: 100dvh;
+  overflow: hidden;
+}
+
+body.data-view-open .screen {
+  height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
+}
+
+body.data-view-open .product-shell,
+body.data-view-open .workspace {
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
 .data-panel.view.active {
   display: flex;
   flex-direction: column;
   width: 100%;
   max-width: 100%;
-  height: calc(100dvh - 36px);
+  height: 100%;
   min-height: 0;
   overflow: hidden;
 }
@@ -6520,8 +6538,12 @@ body.modal-open {
 }
 
 @media (max-width: 699px) {
-  .data-panel.view.active {
-    height: calc(100dvh - 188px);
+  body.data-view-open .screen {
+    padding-bottom: calc(98px + env(safe-area-inset-bottom));
+  }
+
+  body.data-view-open .workspace {
+    height: calc(100dvh - 58px - 98px - env(safe-area-inset-bottom));
   }
 
   .data-panel.view.active > .data-list,
@@ -6553,7 +6575,7 @@ body.modal-open {
 }
 
 @media (min-width: 700px) and (max-width: 1179px) {
-  .data-panel.view.active {
-    height: calc(100dvh - 150px);
+  body.data-view-open .workspace {
+    height: calc(100dvh - 58px - 92px - max(12px, env(safe-area-inset-top)));
   }
 }
