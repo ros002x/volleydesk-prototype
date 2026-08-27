@@ -6462,7 +6462,7 @@ body.modal-open {
 
 #athleteTable.directory-scroll {
   gap: 8px;
-  max-height: min(100%, calc((54px * 15) + (8px * 14)));
+  max-height: min(100%, calc((54px * 17) + (8px * 16)));
 }
 
 #athleteTable .athlete-row.person-card {
