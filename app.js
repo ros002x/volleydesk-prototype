@@ -780,7 +780,7 @@ function currentPrimaNotaRows() {
       return [movement.date, movement.method, movement.who, movement.reason]
         .some((value) => String(value).toLowerCase().includes(query));
     })
-    .sort((a, b) => b.date.localeCompare(a.date));
+    .sort((a, b) => a.date.localeCompare(b.date) || a.who.localeCompare(b.who) || a.reason.localeCompare(b.reason));
 }
 
 function updatePrimaNotaDateField() {
