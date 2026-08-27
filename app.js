@@ -321,6 +321,7 @@ const paymentAthlete = document.querySelector("#paymentAthlete");
 const selectAthletesButton = document.querySelector("#selectAthletesButton");
 const deleteSelectedButton = document.querySelector("#deleteSelectedButton");
 let activeAthleteIndex = null;
+let activeAthleteDraft = null;
 let selectionMode = false;
 const selectedAthletes = new Set();
 let accountingSelectionMode = false;
@@ -403,6 +404,25 @@ function openMatchModal() {
 }
 function athleteName(athlete) {
   return `${athlete.firstName} ${athlete.lastName}`.trim();
+}
+
+function createEmptyAthlete(index = athletes.length) {
+  return {
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    gender: "",
+    category: "Da assegnare",
+    certificate: "Mancante",
+    balance: 0,
+    accounting: createDefaultAccounting(index),
+    parents: {
+      one: { firstName: "", lastName: "", email: "", phone: "" },
+      two: { firstName: "", lastName: "", email: "", phone: "" }
+    },
+    files: { certificate: [], documents: [] }
+  };
 }
 
 function createDefaultAccounting(index) {
@@ -898,7 +918,17 @@ function renderModalFiles(athlete) {
 
 function openAthleteModal(index) {
   activeAthleteIndex = index;
+  activeAthleteDraft = null;
   fillForm(athletes[index]);
+  openLockedDialog(modal);
+}
+
+function openNewAthleteModal() {
+  setSelectionMode(false);
+  activeAthleteIndex = null;
+  activeAthleteDraft = createEmptyAthlete(athletes.length);
+  fillForm(activeAthleteDraft);
+  showView("athletes");
   openLockedDialog(modal);
 }
 
@@ -955,19 +985,20 @@ function openPaymentModal(index, monthKey = activeAccountingMonth, bulk = true) 
 }
 
 function addFiles(fileType, fileList) {
-  if (activeAthleteIndex === null) return;
+  const athlete = activeAthleteIndex === null ? activeAthleteDraft : athletes[activeAthleteIndex];
+  if (!athlete) return;
 
-  const target = athletes[activeAthleteIndex].files[fileType];
+  const target = athlete.files[fileType];
   Array.from(fileList).forEach((file) => {
     target.push({ name: file.name, size: file.size, type: file.type || "file" });
   });
 
   if (fileType === "certificate" && target.length > 0) {
-    athletes[activeAthleteIndex].certificate = "Valido";
+    athlete.certificate = "Valido";
   }
 
-  renderModalFiles(athletes[activeAthleteIndex]);
-  renderAll();
+  renderModalFiles(athlete);
+  if (activeAthleteIndex !== null) renderAll();
 }
 
 if (productShell && sidebarToggle) {
@@ -1427,31 +1458,8 @@ deleteSelectedButton.addEventListener("click", () => {
   renderAll();
 });
 
-function createAthleteFromUi() {
-  setSelectionMode(false);
-  athletes.push({
-    firstName: "Nuovo",
-    lastName: `Atleta ${athletes.length + 1}`,
-    email: "",
-    phone: "",
-    gender: "",
-    category: "Da assegnare",
-    certificate: "Mancante",
-    balance: 0,
-    accounting: createDefaultAccounting(athletes.length),
-    parents: {
-      one: { firstName: "", lastName: "", email: "", phone: "" },
-      two: { firstName: "", lastName: "", email: "", phone: "" }
-    },
-    files: { certificate: [], documents: [] }
-  });
-  renderAll();
-  showView("athletes");
-  openAthleteModal(athletes.length - 1);
-}
-
-document.querySelector("#addAthleteButton").addEventListener("click", createAthleteFromUi);
-document.querySelector("#mobileAddButton")?.addEventListener("click", createAthleteFromUi);
+document.querySelector("#addAthleteButton").addEventListener("click", openNewAthleteModal);
+document.querySelector("#mobileAddButton")?.addEventListener("click", openNewAthleteModal);
 
 [modal, paymentModal, matchModal, primaNotaModal, certificateUploadModal, patchNoteModal].forEach((dialog) => {
   dialog?.addEventListener("close", () => window.setTimeout(unlockDocumentScroll, 0));
@@ -1536,10 +1544,10 @@ document.querySelector("#cancelPaymentButton").addEventListener("click", () => p
 
 athleteForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  if (activeAthleteIndex === null) return;
-
   const form = new FormData(athleteForm);
-  const athlete = athletes[activeAthleteIndex];
+  const isNewAthlete = activeAthleteIndex === null;
+  const athlete = isNewAthlete ? activeAthleteDraft : athletes[activeAthleteIndex];
+  if (!athlete) return;
   athlete.firstName = form.get("firstName").trim();
   athlete.lastName = form.get("lastName").trim();
   athlete.email = form.get("email").trim();
@@ -1558,6 +1566,11 @@ athleteForm.addEventListener("submit", (event) => {
     email: form.get("parentTwoEmail").trim(),
     phone: form.get("parentTwoPhone").trim()
   };
+  if (isNewAthlete) {
+    athletes.push(athlete);
+    activeAthleteIndex = athletes.length - 1;
+    activeAthleteDraft = null;
+  }
 
   renderAll();
   modal.close();
