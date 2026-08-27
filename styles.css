@@ -6424,3 +6424,94 @@ body.modal-open {
     padding: 14px;
   }
 }
+/* Scroll system for data-heavy areas */
+.data-panel.view.active {
+  display: flex;
+  flex-direction: column;
+  height: calc(100dvh - 36px);
+  min-height: 0;
+  overflow: hidden;
+}
+
+.data-panel.view.active > .panel-title,
+.directory-toolbar,
+.certificates-panel .certificate-summary,
+.deadlines-panel .deadline-legend,
+.prima-nota-toolbar,
+.prima-nota-kpis {
+  flex: 0 0 auto;
+}
+
+.data-panel.view.active > .data-list,
+.data-panel.view.active > .standings-list,
+.comms-list.patch-notes,
+#athleteTable.directory-scroll,
+#certificateGrid.directory-scroll,
+#documentList {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 4px;
+  scrollbar-width: thin;
+}
+
+.deadlines-panel .accounting-board {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+
+.prima-nota-shell {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.prima-nota-table-wrap {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.prima-nota-table-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 100%;
+  max-height: none;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+@media (max-width: 699px) {
+  .data-panel.view.active {
+    height: calc(100dvh - 132px);
+  }
+
+  .data-panel.view.active > .data-list,
+  .data-panel.view.active > .standings-list,
+  .comms-list.patch-notes,
+  #athleteTable.directory-scroll,
+  #certificateGrid.directory-scroll,
+  #documentList,
+  .deadlines-panel .accounting-board {
+    padding-right: 2px;
+  }
+
+  .prima-nota-table-scroll {
+    max-height: none !important;
+    overflow: auto;
+  }
+}
+
+@media (min-width: 700px) and (max-width: 1179px) {
+  .data-panel.view.active {
+    height: calc(100dvh - 34px);
+  }
+}
