@@ -6428,6 +6428,8 @@ body.modal-open {
 .data-panel.view.active {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: 100%;
   height: calc(100dvh - 36px);
   min-height: 0;
   overflow: hidden;
@@ -6450,6 +6452,7 @@ body.modal-open {
 #documentList {
   flex: 1 1 auto;
   min-height: 0;
+  max-width: 100%;
   overflow-y: auto;
   overscroll-behavior: contain;
   align-content: start;
@@ -6457,12 +6460,36 @@ body.modal-open {
   scrollbar-width: thin;
 }
 
+#athleteTable.directory-scroll {
+  gap: 8px;
+  max-height: min(100%, calc((54px * 15) + (8px * 14)));
+}
+
+#athleteTable .athlete-row.person-card {
+  min-height: 54px;
+  padding: 9px 14px 9px 20px;
+}
+
+#certificateGrid.directory-scroll {
+  max-height: min(100%, calc((110px * 11) + (10px * 10)));
+}
+
+#documentList {
+  max-height: min(100%, calc((76px * 11) + (10px * 10)));
+}
+
 .deadlines-panel .accounting-board {
   flex: 1 1 auto;
   min-height: 0;
+  max-width: 100%;
+  max-height: min(100%, calc(46px + (58px * 15)));
   overflow: auto;
   overscroll-behavior: contain;
   scrollbar-width: thin;
+}
+
+.deadlines-panel .accounting-desktop-grid {
+  max-width: 100%;
 }
 
 .prima-nota-shell {
@@ -6470,6 +6497,7 @@ body.modal-open {
   flex: 1 1 auto;
   flex-direction: column;
   min-height: 0;
+  max-width: 100%;
   overflow: hidden;
 }
 
@@ -6478,6 +6506,7 @@ body.modal-open {
   flex: 1 1 auto;
   flex-direction: column;
   min-height: 0;
+  max-width: 100%;
   overflow: hidden;
 }
 
@@ -6485,7 +6514,7 @@ body.modal-open {
   flex: 1 1 auto;
   min-height: 0;
   height: 100%;
-  max-height: none;
+  max-height: min(100%, calc(46px + (52px * 15)));
   overflow: auto;
   overscroll-behavior: contain;
 }
@@ -6505,8 +6534,20 @@ body.modal-open {
     padding-right: 2px;
   }
 
+  #athleteTable.directory-scroll,
+  #certificateGrid.directory-scroll,
+  #documentList,
+  .deadlines-panel .accounting-board,
   .prima-nota-table-scroll {
-    max-height: none !important;
+    max-height: 100%;
+  }
+
+  #athleteTable .athlete-row.person-card {
+    min-height: 72px !important;
+    padding: 12px 12px 12px 18px !important;
+  }
+
+  .prima-nota-table-scroll {
     overflow: auto;
   }
 }
