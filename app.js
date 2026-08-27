@@ -387,57 +387,35 @@ const patchNotes = {
     version: "Beta 1",
     title: "Demo ufficiale",
     sections: [
-      { title: "Stato progetto", items: ["Demo front-end pronta per revisione commerciale e test operativi.", "Navigazione principale consolidata tra home, atleti, certificati, documenti, classifiche, scadenziario, prima nota e comunicazioni.", "Interfaccia pronta per essere collegata al database definitivo."] },
-      { title: "Miglioramenti", items: ["Flussi principali ordinati per uso gestionale reale.", "Comandi di creazione evidenziati in blu per rendere immediata l'azione primaria.", "Patch notes dedicate agli aggiornamenti developer, separate dai contenuti operativi della societa."] },
-      { title: "Prossimi passi", items: ["Configurazione database.", "Persistenza dati reali.", "Preparazione lancio ufficiale."] }
+      { title: "Stato progetto", items: ["Demo front-end consolidata e pronta per validazione operativa su dati statici.", "Navigazione principale stabilizzata tra home, atleti, certificati, documenti, classifiche, scadenziario, prima nota e comunicazioni.", "Layout delle aree dati bloccato a viewport: la pagina non genera overflow verticale e lo scroll resta confinato ai contenitori lista/tabella."] },
+      { title: "Architettura interfaccia", items: ["Separazione tra shell applicativa, viste operative e componenti dati riutilizzabili.", "Stato di navigazione centralizzato con classe di layout dedicata per distinguere Home e viste gestionali.", "Cache degli asset aggiornata per ridurre problemi di visualizzazione dopo il deploy su GitHub Pages."] },
+      { title: "Preparazione lancio", items: ["Resta da collegare il database definitivo e sostituire i dataset demo con persistenza reale.", "Le strutture dati sono gia predisposte per atleti, certificati, quote mensili, documenti e movimenti contabili.", "Il prodotto e pronto per una demo ufficiale prima della configurazione backend."] }
     ]
   },
-  "layout-mobile": {
-    version: "Release",
-    title: "Layout Mobile",
+  "qa-data": {
+    version: "QA",
+    title: "Dataset demo esteso",
     sections: [
-      { title: "Miglioramenti", items: ["Esperienza adattiva per smartphone, tablet e desktop con layout dedicati per ogni formato.", "Scadenziario e certificati ottimizzati su mobile con card compatte e apertura progressiva dei dettagli.", "Prima nota riorganizzata per lettura rapida dei movimenti economici su schermi piccoli."] },
-      { title: "Interfaccia", items: ["Toolbar rese piu coerenti tra le aree operative.", "Bottom navigation mobile semplificata sulle sezioni principali.", "Modali adattati per evitare zoom indesiderato e contenuti tagliati su iOS/iPadOS."] },
-      { title: "Bug fix", items: ["Risolti problemi di sovrapposizione nei filtri dello scadenziario.", "Corretto lo scroll del contenuto dietro ai modali.", "Migliorata la leggibilita delle card su mobile."] }
+      { title: "Copertura dati", items: ["Roster demo portato a 20 atleti con categorie, sesso, recapiti, stato certificato e situazione quota.", "Documenti statici ampliati per testare liste lunghe e comportamento dei contenitori scrollabili.", "Prima nota popolata con 20 movimenti ordinabili e filtrabili su entrate, uscite, date e ricerca testuale."] },
+      { title: "Validazione liste", items: ["Atleti, certificati, documenti, scadenziario, prima nota e comunicazioni dispongono di abbastanza record per verificare overflow interno.", "I limiti visibili sono differenziati per area: piu righe negli elenchi compatti, meno righe nelle viste con contenuto piu alto.", "Le card mantengono altezza naturale e non vengono stirate quando il contenitore ha spazio residuo."] }
+    ]
+  },
+  "responsive-ui": {
+    version: "Release UI",
+    title: "Layout adattivo e mobile",
+    sections: [
+      { title: "Responsive system", items: ["Esperienza distinta per telefono, tablet e desktop, con toolbar e navigazione adattate al contesto.", "Bottom navigation mobile limitata alle sezioni principali e menu superiore dedicato alle voci secondarie.", "Home tablet riorganizzata con hero, prossima partita, azioni rapide e ultime notizie in composizione dedicata."] },
+      { title: "Componenti operativi", items: ["Card atleti e certificati rese compatte su mobile con apertura progressiva dove serve.", "Toolbar di atleti, certificati, scadenziario e prima nota allineate nello stile e nei touch target.", "Modali ridimensionati per evitare zoom indesiderato, contenuti tagliati e scroll del retro pagina su iOS/iPadOS."] },
+      { title: "Bug fix aggregati", items: ["Risolte sovrapposizioni dei filtri data nello scadenziario desktop/tablet.", "Corretto il comportamento dei controlli selezione su mobile nello scadenziario.", "Rimosse ridondanze visuali e azioni non pertinenti dalle aree operative."] }
     ]
   },
   "alpha-1": {
     version: "Update Alpha 1",
     title: "Definizione struttura",
     sections: [
-      { title: "Struttura", items: ["Definite le aree operative principali e il loro ruolo nel gestionale.", "Rimosse sezioni ridondanti per mantenere l'app piu pulita e focalizzata.", "Separata l'area Comunicazioni come spazio developer per note di rilascio e aggiornamenti."] },
-      { title: "Base dati", items: ["Impostati dati demo per atleti, certificati, quote mensili e prima nota.", "Preparata la logica di visualizzazione per stato certificati, scadenze e movimenti.", "Predisposte le basi per sostituire i dati statici con database reale."] },
-      { title: "Direzione prodotto", items: ["Design premium chiaro, senza dark mode e senza struttura da gestionale tradizionale.", "Priorita alla consultazione veloce da mobile e alla gestione completa da desktop."] }
-    ]
-  },
-  "data-test": {
-    version: "QA",
-    title: "Dataset demo esteso",
-    sections: [
-      { title: "Test dati", items: ["Portato il roster demo a 20 atleti per verificare liste lunghe e ricerca.", "Aumentati documenti, certificati derivati e quote stagionali per stressare le viste dati.", "Aggiunti movimenti di prima nota in piu date per controllare ordine cronologico e filtri."] },
-      { title: "Verifiche UI", items: ["Le liste operative devono scorrere internamente senza allungare la pagina.", "Le card devono mantenere altezza naturale anche con molti record.", "Il comportamento va provato su mobile, tablet e desktop."] }
-    ]
-  },
-  "scroll-lists": {
-    version: "Fix UI",
-    title: "Liste scrollabili",
-    sections: [
-      { title: "Miglioramenti", items: ["Bloccata l'altezza delle pagine operative.", "Reso scrollabile solo il contenitore dati di ogni area.", "Evitato lo stiramento verticale delle card con liste a griglia."] },
-      { title: "Aree coinvolte", items: ["Atleti, certificati, scadenziario, prima nota, comunicazioni, documenti e classifiche.", "Toolbar e riepiloghi restano disponibili mentre la lista interna scorre."] }
-    ]
-  },
-  "prima-nota-order": {
-    version: "Fix dati",
-    title: "Prima nota ordinata",
-    sections: [
-      { title: "Contabilita", items: ["Movimenti ordinati per data, intestatario e causale.", "Cifre dare e avere mantenute distinte cromaticamente senza indicatori laterali invasivi.", "Aggiunto un set piu ampio di movimenti demo per validare filtri e scroll."] }
-    ]
-  },
-  "certificates-flow": {
-    version: "Fix UI",
-    title: "Certificati mobile",
-    sections: [
-      { title: "Certificati", items: ["Card mobile compatte con stato leggibile a colpo d'occhio.", "Pulsante di inserimento evidenziato come azione primaria.", "Riepilogo separato dalla lista per evitare blocchi sticky non necessari."] }
+      { title: "Struttura prodotto", items: ["Definite le aree operative principali e rimosse sezioni ridondanti come dati, altro e contabilita separata.", "Prima nota e scadenziario separati in modo funzionale: registro movimenti da una parte, quote mensili per atleta dall'altra.", "Comunicazioni configurata come area developer per changelog, note tecniche e aggiornamenti di prodotto."] },
+      { title: "Dominio gestionale", items: ["Atleti, certificati, documenti, classifiche, scadenziario e prima nota sono mantenuti come aree autonome.", "Scadenziario impostato sulla stagione settembre-agosto con lettura mensile per atleta.", "Prima nota ordinata cronologicamente con separazione tra dare e avere e rimozione di indicatori laterali non necessari."] },
+      { title: "Direzione design", items: ["Impostato un linguaggio visivo premium, chiaro, mobile-first e senza dark mode.", "Ridotta la sensazione da dashboard classica evitando griglie di card ripetitive dove non servono.", "Priorita alla consultazione rapida da mobile e alla gestione completa da desktop."] }
     ]
   }
 };
