@@ -180,14 +180,176 @@ const athletes = [
         two: { firstName: "", lastName: "", email: "", phone: "" }
       },
       files: { certificate: [], documents: [] }
-    }
+    },
+  {
+    firstName: "Chiara",
+    lastName: "Lombardi",
+    email: "chiara.lombardi@example.com",
+    phone: "+39 333 101 4401",
+    gender: "F",
+    category: "U14",
+    certificate: "Valido",
+    balance: 0,
+    parents: {
+      one: { firstName: "Stefano", lastName: "Lombardi", email: "stefano.lombardi@example.com", phone: "+39 333 101 4411" },
+      two: { firstName: "Ilaria", lastName: "Moretti", email: "ilaria.moretti@example.com", phone: "+39 333 101 4412" }
+    },
+    files: { certificate: [], documents: [] }
+  },
+  {
+    firstName: "Federica",
+    lastName: "Greco",
+    email: "federica.greco@example.com",
+    phone: "+39 333 102 4402",
+    gender: "F",
+    category: "U16",
+    certificate: "Scade",
+    balance: 45,
+    parents: {
+      one: { firstName: "Luigi", lastName: "Greco", email: "", phone: "+39 333 102 4411" },
+      two: { firstName: "Daniela", lastName: "Rizzo", email: "daniela.rizzo@example.com", phone: "" }
+    },
+    files: { certificate: [], documents: [] }
+  },
+  {
+    firstName: "Arianna",
+    lastName: "Leone",
+    email: "arianna.leone@example.com",
+    phone: "+39 333 103 4403",
+    gender: "F",
+    category: "U18",
+    certificate: "Mancante",
+    balance: 90,
+    parents: {
+      one: { firstName: "Vito", lastName: "Leone", email: "", phone: "+39 333 103 4411" },
+      two: { firstName: "Serena", lastName: "Mancini", email: "", phone: "+39 333 103 4412" }
+    },
+    files: { certificate: [], documents: [] }
+  },
+  {
+    firstName: "Valentina",
+    lastName: "Mancini",
+    email: "valentina.mancini@example.com",
+    phone: "+39 333 104 4404",
+    gender: "F",
+    category: "Serie D",
+    certificate: "Valido",
+    balance: 0,
+    parents: {
+      one: { firstName: "", lastName: "", email: "", phone: "" },
+      two: { firstName: "", lastName: "", email: "", phone: "" }
+    },
+    files: { certificate: [], documents: [] }
+  },
+  {
+    firstName: "Francesca",
+    lastName: "Romano",
+    email: "francesca.romano@example.com",
+    phone: "+39 333 105 4405",
+    gender: "F",
+    category: "U15",
+    certificate: "Scade",
+    balance: 30,
+    parents: {
+      one: { firstName: "Antonio", lastName: "Romano", email: "antonio.romano@example.com", phone: "+39 333 105 4411" },
+      two: { firstName: "", lastName: "", email: "", phone: "" }
+    },
+    files: { certificate: [], documents: [] }
+  },
+  {
+    firstName: "Simone",
+    lastName: "Vitale",
+    email: "simone.vitale@example.com",
+    phone: "+39 333 201 5501",
+    gender: "M",
+    category: "U16",
+    certificate: "Valido",
+    balance: 0,
+    parents: {
+      one: { firstName: "Raffaele", lastName: "Vitale", email: "", phone: "+39 333 201 5511" },
+      two: { firstName: "Claudia", lastName: "Serra", email: "claudia.serra@example.com", phone: "" }
+    },
+    files: { certificate: [], documents: [] }
+  },
+  {
+    firstName: "Andrea",
+    lastName: "Gallo",
+    email: "andrea.gallo@example.com",
+    phone: "+39 333 202 5502",
+    gender: "M",
+    category: "U18",
+    certificate: "Mancante",
+    balance: 120,
+    parents: {
+      one: { firstName: "Pietro", lastName: "Gallo", email: "", phone: "+39 333 202 5511" },
+      two: { firstName: "Maria", lastName: "Ferrara", email: "", phone: "+39 333 202 5512" }
+    },
+    files: { certificate: [], documents: [] }
+  },
+  {
+    firstName: "Tommaso",
+    lastName: "Serra",
+    email: "tommaso.serra@example.com",
+    phone: "+39 333 203 5503",
+    gender: "M",
+    category: "U19",
+    certificate: "Valido",
+    balance: 0,
+    parents: {
+      one: { firstName: "", lastName: "", email: "", phone: "" },
+      two: { firstName: "", lastName: "", email: "", phone: "" }
+    },
+    files: { certificate: [], documents: [] }
+  },
+  {
+    firstName: "Nicolo",
+    lastName: "Ferrara",
+    email: "nicolo.ferrara@example.com",
+    phone: "+39 333 204 5504",
+    gender: "M",
+    category: "Serie C",
+    certificate: "Scade",
+    balance: 60,
+    parents: {
+      one: { firstName: "Domenico", lastName: "Ferrara", email: "domenico.ferrara@example.com", phone: "+39 333 204 5511" },
+      two: { firstName: "", lastName: "", email: "", phone: "" }
+    },
+    files: { certificate: [], documents: [] }
+  },
+  {
+    firstName: "Gabriele",
+    lastName: "Martino",
+    email: "gabriele.martino@example.com",
+    phone: "+39 333 205 5505",
+    gender: "M",
+    category: "U17",
+    certificate: "Valido",
+    balance: 0,
+    parents: {
+      one: { firstName: "Michele", lastName: "Martino", email: "", phone: "+39 333 205 5511" },
+      two: { firstName: "Teresa", lastName: "Caruso", email: "teresa.caruso@example.com", phone: "+39 333 205 5512" }
+    },
+    files: { certificate: [], documents: [] }
+  }
 ];
 
 const documents = [
   { title: "Documento identita", type: "PDF", owner: "Sara Conti" },
   { title: "Modulo iscrizione", type: "PDF", owner: "Marta Riva" },
   { title: "Privacy", type: "DOC", owner: "Giulia Ferri" },
-  { title: "Ricevuta quota", type: "PDF", owner: "Elena Costa" }
+  { title: "Ricevuta quota", type: "PDF", owner: "Elena Costa" },
+  { title: "Documento identita", type: "PDF", owner: "Luca Marino" },
+  { title: "Modulo iscrizione", type: "PDF", owner: "Matteo Russo" },
+  { title: "Liberatoria immagini", type: "PDF", owner: "Davide Esposito" },
+  { title: "Documento identita", type: "PDF", owner: "Chiara Lombardi" },
+  { title: "Certificato caricato", type: "CERT", owner: "Federica Greco" },
+  { title: "Privacy", type: "DOC", owner: "Arianna Leone" },
+  { title: "Ricevuta settembre", type: "PDF", owner: "Valentina Mancini" },
+  { title: "Documento identita", type: "PDF", owner: "Simone Vitale" },
+  { title: "Modulo iscrizione", type: "PDF", owner: "Andrea Gallo" },
+  { title: "Liberatoria trasferta", type: "PDF", owner: "Tommaso Serra" },
+  { title: "Ricevuta quota", type: "PDF", owner: "Nicolo Ferrara" },
+  { title: "Documento identita", type: "PDF", owner: "Gabriele Martino" }
 ];
 
 const payments = [
@@ -198,11 +360,26 @@ const payments = [
 ];
 
 const primaNotaMovements = [
+  { date: "2026-09-01", method: "Bonifico", who: "Sponsor locale", reason: "Acconto sponsorizzazione", type: "in", amount: 500 },
+  { date: "2026-09-03", method: "Carta", who: "FIPAV", reason: "Affiliazione stagione", type: "out", amount: 180 },
   { date: "2026-09-05", method: "Bonifico", who: "Sara Conti", reason: "Quota iscrizione U18", type: "in", amount: 120 },
+  { date: "2026-09-06", method: "Contanti", who: "Luca Marino", reason: "Quota iscrizione U17", type: "in", amount: 120 },
   { date: "2026-09-08", method: "Carta", who: "NS Volley", reason: "Materiale allenamento", type: "out", amount: 86 },
+  { date: "2026-09-10", method: "Bonifico", who: "Noemi Villa", reason: "Quota settembre", type: "in", amount: 30 },
   { date: "2026-09-12", method: "Contanti", who: "Marta Riva", reason: "Acconto quota mensile", type: "in", amount: 60 },
+  { date: "2026-09-14", method: "Bonifico", who: "Matteo Russo", reason: "Quota settembre", type: "in", amount: 30 },
+  { date: "2026-09-15", method: "Carta", who: "Farmacia", reason: "Kit primo soccorso", type: "out", amount: 48 },
   { date: "2026-09-18", method: "Bonifico", who: "Palazzetto", reason: "Affitto campo", type: "out", amount: 140 },
-  { date: "2026-10-02", method: "Bonifico", who: "Giulia Ferri", reason: "Quota ottobre", type: "in", amount: 30 }
+  { date: "2026-09-20", method: "Bonifico", who: "Chiara Lombardi", reason: "Quota settembre", type: "in", amount: 30 },
+  { date: "2026-09-22", method: "Contanti", who: "Andrea Gallo", reason: "Acconto quota", type: "in", amount: 45 },
+  { date: "2026-09-24", method: "Carta", who: "Fornitore divise", reason: "Anticipo completi gara", type: "out", amount: 260 },
+  { date: "2026-10-02", method: "Bonifico", who: "Giulia Ferri", reason: "Quota ottobre", type: "in", amount: 30 },
+  { date: "2026-10-03", method: "Bonifico", who: "Simone Vitale", reason: "Quota ottobre", type: "in", amount: 30 },
+  { date: "2026-10-05", method: "Contanti", who: "Valentina Mancini", reason: "Quota ottobre", type: "in", amount: 30 },
+  { date: "2026-10-07", method: "Carta", who: "Tipografia", reason: "Locandine partita", type: "out", amount: 72 },
+  { date: "2026-10-09", method: "Bonifico", who: "Tommaso Serra", reason: "Quota ottobre", type: "in", amount: 30 },
+  { date: "2026-10-11", method: "Bonifico", who: "Gabriele Martino", reason: "Quota ottobre", type: "in", amount: 30 },
+  { date: "2026-10-14", method: "Carta", who: "Arbitri", reason: "Rimborso gara interna", type: "out", amount: 95 }
 ];
 
 const patchNotes = {
@@ -231,6 +408,36 @@ const patchNotes = {
       { title: "Struttura", items: ["Definite le aree operative principali e il loro ruolo nel gestionale.", "Rimosse sezioni ridondanti per mantenere l'app piu pulita e focalizzata.", "Separata l'area Comunicazioni come spazio developer per note di rilascio e aggiornamenti."] },
       { title: "Base dati", items: ["Impostati dati demo per atleti, certificati, quote mensili e prima nota.", "Preparata la logica di visualizzazione per stato certificati, scadenze e movimenti.", "Predisposte le basi per sostituire i dati statici con database reale."] },
       { title: "Direzione prodotto", items: ["Design premium chiaro, senza dark mode e senza struttura da gestionale tradizionale.", "Priorita alla consultazione veloce da mobile e alla gestione completa da desktop."] }
+    ]
+  },
+  "data-test": {
+    version: "QA",
+    title: "Dataset demo esteso",
+    sections: [
+      { title: "Test dati", items: ["Portato il roster demo a 20 atleti per verificare liste lunghe e ricerca.", "Aumentati documenti, certificati derivati e quote stagionali per stressare le viste dati.", "Aggiunti movimenti di prima nota in piu date per controllare ordine cronologico e filtri."] },
+      { title: "Verifiche UI", items: ["Le liste operative devono scorrere internamente senza allungare la pagina.", "Le card devono mantenere altezza naturale anche con molti record.", "Il comportamento va provato su mobile, tablet e desktop."] }
+    ]
+  },
+  "scroll-lists": {
+    version: "Fix UI",
+    title: "Liste scrollabili",
+    sections: [
+      { title: "Miglioramenti", items: ["Bloccata l'altezza delle pagine operative.", "Reso scrollabile solo il contenitore dati di ogni area.", "Evitato lo stiramento verticale delle card con liste a griglia."] },
+      { title: "Aree coinvolte", items: ["Atleti, certificati, scadenziario, prima nota, comunicazioni, documenti e classifiche.", "Toolbar e riepiloghi restano disponibili mentre la lista interna scorre."] }
+    ]
+  },
+  "prima-nota-order": {
+    version: "Fix dati",
+    title: "Prima nota ordinata",
+    sections: [
+      { title: "Contabilita", items: ["Movimenti ordinati per data, intestatario e causale.", "Cifre dare e avere mantenute distinte cromaticamente senza indicatori laterali invasivi.", "Aggiunto un set piu ampio di movimenti demo per validare filtri e scroll."] }
+    ]
+  },
+  "certificates-flow": {
+    version: "Fix UI",
+    title: "Certificati mobile",
+    sections: [
+      { title: "Certificati", items: ["Card mobile compatte con stato leggibile a colpo d'occhio.", "Pulsante di inserimento evidenziato come azione primaria.", "Riepilogo separato dalla lista per evitare blocchi sticky non necessari."] }
     ]
   }
 };
