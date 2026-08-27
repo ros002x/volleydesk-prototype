@@ -6428,7 +6428,7 @@ body.modal-open {
 .data-panel.view.active {
   display: flex;
   flex-direction: column;
-  height: calc(100dvh - 36px);
+  max-height: calc(100dvh - 36px);
   min-height: 0;
   overflow: hidden;
 }
@@ -6452,6 +6452,7 @@ body.modal-open {
   min-height: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
+  align-content: start;
   padding-right: 4px;
   scrollbar-width: thin;
 }
@@ -6491,7 +6492,7 @@ body.modal-open {
 
 @media (max-width: 699px) {
   .data-panel.view.active {
-    height: calc(100dvh - 132px);
+    max-height: calc(100dvh - 132px);
   }
 
   .data-panel.view.active > .data-list,
@@ -6512,6 +6513,6 @@ body.modal-open {
 
 @media (min-width: 700px) and (max-width: 1179px) {
   .data-panel.view.active {
-    height: calc(100dvh - 34px);
+    max-height: calc(100dvh - 34px);
   }
 }
