@@ -5513,8 +5513,7 @@ body.modal-open {
     grid-template-areas:
       "search search search add"
       "start start end end"
-      "filter filter reset delete"
-      "edit edit edit edit";
+      "filter filter reset delete";
     gap: 8px;
     width: 100%;
   }
@@ -5541,11 +5540,11 @@ body.modal-open {
   .deadlines-panel .accounting-actions #deleteAccountingButton::before { content: "Elimina"; font-size: .72rem; line-height: 1; }
   .deadlines-panel .accounting-actions #deleteAccountingButton[hidden] { display: none !important; }
   .deadlines-panel .accounting-actions #selectAccountingButton { display: none; }
-  .deadlines-panel .accounting-actions #editAccountingButton { grid-area: edit; }
+  .deadlines-panel .accounting-actions #editAccountingButton { display: none; }
 
   .deadlines-panel .deadline-legend {
     position: sticky;
-    top: 218px;
+    top: 166px;
     z-index: 5;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
