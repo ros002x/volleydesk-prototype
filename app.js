@@ -664,11 +664,26 @@ function setSidebarCollapsed(collapsed, persist = true) {
   queueSidebarTogglePositionUpdates();
 }
 function showView(viewId) {
-  views.forEach((view) => view.classList.toggle("active", view.id === viewId));
-  document.body.dataset.viewActive = viewId;
-  document.body.classList.toggle("data-view-open", viewId !== "home");
-  navItems.forEach((item) => item.classList.toggle("active", item.dataset.view === viewId));
-  bottomNavItems.forEach((item) => item.classList.toggle("active", item.dataset.view === viewId));
+  const targetView = viewId || "overview";
+  const isHomeView = targetView === "overview";
+
+  views.forEach((view) => view.classList.toggle("active", view.id === targetView));
+  document.body.dataset.viewActive = targetView;
+  document.body.classList.toggle("data-view-open", !isHomeView);
+  navItems.forEach((item) => item.classList.toggle("active", item.dataset.view === targetView));
+  bottomNavItems.forEach((item) => item.classList.toggle("active", item.dataset.view === targetView));
+
+  if (isHomeView) {
+    document.documentElement.classList.remove("modal-open");
+    document.body.classList.remove("modal-open");
+    document.body.style.top = "";
+    document.body.style.position = "";
+    document.body.style.left = "";
+    document.body.style.right = "";
+    document.body.style.width = "";
+    document.body.style.overflow = "";
+    document.querySelector(".workspace")?.scrollTo(0, 0);
+  }
 }
 
 function badgeClass(value) {
