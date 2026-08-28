@@ -387,8 +387,8 @@ const patchNotes = {
     version: "QA",
     title: "Dataset demo esteso",
     sections: [
-      { title: "Copertura dati", items: ["Roster demo portato a 20 atleti con categorie, sesso, recapiti, stato certificato e situazione quota.", "Documenti statici ampliati per testare liste lunghe e comportamento dei contenitori scrollabili.", "Prima nota popolata con 20 movimenti ordinabili e filtrabili su entrate, uscite, date e ricerca testuale."] },
-      { title: "Validazione liste", items: ["Atleti, certificati, documenti, scadenziario, prima nota e comunicazioni dispongono di abbastanza record per verificare overflow interno.", "I limiti visibili sono differenziati per area: piu righe negli elenchi compatti, meno righe nelle viste con contenuto piu alto.", "Le card mantengono altezza naturale e non vengono stirate quando il contenitore ha spazio residuo."] }
+      { title: "Copertura dati", items: ["Roster demo portato a 20 atleti con categorie, sesso, recapiti, stato certificato e situazione quota.", "Area Documenti semplificata su un solo fac simile di iscrizione, con preview dedicata e azioni stampa/condivisione.", "Prima nota popolata con 20 movimenti ordinabili e filtrabili su entrate, uscite, date e ricerca testuale."] },
+      { title: "Validazione liste", items: ["Atleti, certificati, scadenziario, prima nota e comunicazioni dispongono di abbastanza record per verificare overflow interno; Documenti resta volutamente focalizzata sul modulo iscrizione.", "I limiti visibili sono differenziati per area: piu righe negli elenchi compatti, meno righe nelle viste con contenuto piu alto.", "Le card mantengono altezza naturale e non vengono stirate quando il contenitore ha spazio residuo."] }
     ]
   },
   "responsive-ui": {
@@ -1038,9 +1038,6 @@ function updateSummary() {
   const openDebts = athletes.filter((athlete) => athlete.balance > 0).length;
   const balance = athletes.reduce((total, athlete) => {
     return total + seasonMonths.reduce((monthTotal, month) => monthTotal + athlete.accounting[month.key].paid, 0);
-  }, 0);
-  const uploadedFileCount = athletes.reduce((total, athlete) => {
-    return total + athlete.files.certificate.length + athlete.files.documents.length;
   }, 0);
   const archive = { athletes, payments, documents };
   const json = JSON.stringify(archive, null, 2);

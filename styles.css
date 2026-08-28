@@ -6601,7 +6601,11 @@ body.modal-open {
     border-radius: 18px !important;
   }
 
-  .registration-preview header,
+  .registration-preview header {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+  }
+
   .registration-grid,
   .registration-consent div {
     grid-template-columns: 1fr !important;
