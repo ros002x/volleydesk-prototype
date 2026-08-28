@@ -475,6 +475,10 @@ const addAccountingMonthsButton = document.querySelector("#addAccountingMonthsBu
 const selectAccountingButton = document.querySelector("#selectAccountingButton");
 const resetAccountingFiltersButton = document.querySelector("#resetAccountingFiltersButton");
 const deleteAccountingButton = document.querySelector("#deleteAccountingButton");
+const confirmDeleteModal = document.querySelector("#confirmDeleteModal");
+const confirmDeleteTitle = document.querySelector("#confirmDeleteTitle");
+const confirmDeleteMessage = document.querySelector("#confirmDeleteMessage");
+const confirmDeleteWarning = document.querySelector("#confirmDeleteWarning");
 const primaNotaSearch = document.querySelector("#primaNotaSearch");
 const primaNotaType = document.querySelector("#primaNotaType");
 const primaNotaDate = document.querySelector("#primaNotaDate");
@@ -826,6 +830,18 @@ function updateAccountingControls() {
   deleteAccountingButton.hidden = activeCount === 0;
   deleteAccountingButton.textContent = `Elimina ${activeCount}`;
   editAccountingButton.disabled = activeAccountingIndex === null && selectedAccountingRows.size !== 1;
+}
+function requestDeleteConfirmation(subject) {
+  if (!confirmDeleteModal) return Promise.resolve(false);
+  if (confirmDeleteTitle) confirmDeleteTitle.textContent = "Eliminare definitivamente?";
+  if (confirmDeleteMessage) confirmDeleteMessage.textContent = `Sei sicuro di voler eliminare ${subject}?`;
+  if (confirmDeleteWarning) confirmDeleteWarning.textContent = "Questa azione rimuove anche quote, documenti e dati collegati.";
+  confirmDeleteModal.returnValue = "";
+
+  return new Promise((resolve) => {
+    confirmDeleteModal.addEventListener("close", () => resolve(confirmDeleteModal.returnValue === "confirm"), { once: true });
+    openLockedDialog(confirmDeleteModal);
+  });
 }
 
 function visibleAccountingMonths() {
@@ -1599,14 +1615,14 @@ addAccountingMonthsButton?.addEventListener("click", () => {
   openLockedDialog(paymentModal);
 });
 
-deleteAccountingButton?.addEventListener("click", () => {
+deleteAccountingButton?.addEventListener("click", async () => {
   const targets = selectedAccountingRows.size ? selectedAccountingRows : new Set([activeAccountingIndex]);
   const indexes = [...targets].filter((index) => index !== null && index !== undefined).sort((a, b) => b - a);
   if (!indexes.length) return;
 
   const names = indexes.map((index) => athleteName(athletes[index])).filter(Boolean);
   const subject = names.length === 1 ? names[0] : `${names.length} atleti selezionati`;
-  const confirmed = window.confirm(`Sei sicuro di voler eliminare ${subject}?\nQuesta azione rimuove anche quote, documenti e dati collegati.`);
+  const confirmed = await requestDeleteConfirmation(subject);
   if (!confirmed) return;
 
   indexes.forEach((index) => {
@@ -1678,7 +1694,7 @@ deleteSelectedButton.addEventListener("click", () => {
 document.querySelector("#addAthleteButton").addEventListener("click", openNewAthleteModal);
 document.querySelector("#mobileAddButton")?.addEventListener("click", openNewAthleteModal);
 
-[modal, paymentModal, matchModal, primaNotaModal, certificateUploadModal, patchNoteModal, documentPreviewModal].forEach((dialog) => {
+[modal, paymentModal, matchModal, primaNotaModal, certificateUploadModal, patchNoteModal, documentPreviewModal, confirmDeleteModal].forEach((dialog) => {
   dialog?.addEventListener("close", () => window.setTimeout(unlockDocumentScroll, 0));
   dialog?.addEventListener("cancel", () => window.setTimeout(unlockDocumentScroll, 0));
 });

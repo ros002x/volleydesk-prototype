@@ -6138,3 +6138,37 @@ body.data-view-open .workspace {
     height: calc(100dvh - 58px - 92px - max(12px, env(safe-area-inset-top)));
   }
 }
+
+.confirm-delete-card {
+  width: min(430px, calc(100vw - 28px));
+  margin: 0 auto;
+}
+
+.confirm-delete-body {
+  display: grid;
+  gap: 10px;
+  padding: 4px 0 2px;
+}
+
+.confirm-delete-body p {
+  color: #061936;
+  font-size: 1rem;
+  font-weight: 850;
+  line-height: 1.35;
+}
+
+.confirm-delete-body span {
+  display: block;
+  padding: 12px 14px;
+  border-radius: 16px;
+  color: #9f1d3d;
+  background: rgba(216,50,85,.09);
+  font-size: .86rem;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.confirm-delete-actions .danger-button {
+  background: #d83255;
+  color: #fff;
+}

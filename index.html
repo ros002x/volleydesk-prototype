@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260828-1055">
+  <link rel="stylesheet" href="styles.css?v=20260828-1125">
 </head>
 <body data-view-active="overview">
   <main class="screen">
@@ -559,6 +559,25 @@
       </footer>
     </form>
   </dialog>
-  <script src="app.js?v=20260828-1110"></script>
+  <dialog class="confirm-delete-modal" id="confirmDeleteModal">
+    <form class="modal-card confirm-delete-card" method="dialog">
+      <header class="modal-head">
+        <div>
+          <span class="micro">Conferma</span>
+          <h2 id="confirmDeleteTitle">Eliminare definitivamente?</h2>
+        </div>
+        <button class="modal-close" id="closeConfirmDeleteButton" type="submit" value="cancel" aria-label="Chiudi">x</button>
+      </header>
+      <div class="confirm-delete-body">
+        <p id="confirmDeleteMessage">Sei sicuro di voler eliminare questo elemento?</p>
+        <span id="confirmDeleteWarning">Questa azione rimuove anche i dati collegati.</span>
+      </div>
+      <footer class="modal-actions confirm-delete-actions">
+        <button class="soft-button" type="submit" value="cancel">Annulla</button>
+        <button class="danger-button" id="confirmDeleteButton" type="submit" value="confirm">Elimina</button>
+      </footer>
+    </form>
+  </dialog>
+  <script src="app.js?v=20260828-1125"></script>
 </body>
 </html>
