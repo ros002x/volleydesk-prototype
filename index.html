@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260827-1145">
+  <link rel="stylesheet" href="styles.css?v=20260828-0915">
 </head>
 <body>
   <main class="screen">
@@ -331,6 +331,48 @@
       <div class="patch-note-body" id="patchNoteBody"></div>
     </article>
   </dialog>
+  <dialog class="document-preview-modal" id="documentPreviewModal">
+    <article class="modal-card document-preview-card">
+      <header class="modal-head">
+        <div>
+          <span class="micro">Documenti</span>
+          <h2>Modulo iscrizione</h2>
+        </div>
+        <button class="modal-close" id="closeDocumentPreviewButton" type="button" aria-label="Chiudi">x</button>
+      </header>
+
+      <section class="registration-preview" aria-label="Fac simile modulo iscrizione">
+        <header>
+          <strong>NS Volley</strong>
+          <span>Modulo iscrizione atleta</span>
+        </header>
+        <div class="registration-grid">
+          <label>Nome atleta <span></span></label>
+          <label>Cognome atleta <span></span></label>
+          <label>Data di nascita <span></span></label>
+          <label>Luogo di nascita <span></span></label>
+          <label>Codice fiscale <span></span></label>
+          <label>Categoria <span></span></label>
+          <label>Email atleta <span></span></label>
+          <label>Cellulare atleta <span></span></label>
+          <label>Genitore 1 <span></span></label>
+          <label>Telefono genitore 1 <span></span></label>
+          <label>Genitore 2 <span></span></label>
+          <label>Telefono genitore 2 <span></span></label>
+        </div>
+        <div class="registration-consent">
+          <p>Il sottoscritto richiede l'iscrizione dell'atleta alla stagione sportiva indicata e dichiara di consegnare documenti, privacy e certificato medico sportivo ove richiesto.</p>
+          <div><span>Data</span><i></i></div>
+          <div><span>Firma</span><i></i></div>
+        </div>
+      </section>
+
+      <footer class="modal-actions">
+        <button class="soft-button" id="shareRegistrationFormButton" type="button">Condividi</button>
+        <button class="primary-action inline" id="printRegistrationFormButton" type="button">Stampa</button>
+      </footer>
+    </article>
+  </dialog>
   <dialog class="match-modal" id="matchModal">
     <form class="modal-card match-editor-card" id="matchForm" method="dialog">
       <header class="modal-head">
@@ -350,6 +392,7 @@
 
       <footer class="modal-actions">
         <button class="soft-button" id="cancelMatchButton" type="button">Annulla</button>
+        <button class="primary-action inline" id="addMatchToCalendarButton" type="button">Aggiungi a calendario</button>
         <button class="primary-action inline" type="submit">Salva partita</button>
       </footer>
     </form>
@@ -516,6 +559,6 @@
       </footer>
     </form>
   </dialog>
-  <script src="app.js?v=20260827-1220"></script>
+  <script src="app.js?v=20260828-0915"></script>
 </body>
 </html>

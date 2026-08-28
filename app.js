@@ -334,22 +334,13 @@ const athletes = [
 ];
 
 const documents = [
-  { title: "Documento identita", type: "PDF", owner: "Sara Conti" },
-  { title: "Modulo iscrizione", type: "PDF", owner: "Marta Riva" },
-  { title: "Privacy", type: "DOC", owner: "Giulia Ferri" },
-  { title: "Ricevuta quota", type: "PDF", owner: "Elena Costa" },
-  { title: "Documento identita", type: "PDF", owner: "Luca Marino" },
-  { title: "Modulo iscrizione", type: "PDF", owner: "Matteo Russo" },
-  { title: "Liberatoria immagini", type: "PDF", owner: "Davide Esposito" },
-  { title: "Documento identita", type: "PDF", owner: "Chiara Lombardi" },
-  { title: "Certificato caricato", type: "CERT", owner: "Federica Greco" },
-  { title: "Privacy", type: "DOC", owner: "Arianna Leone" },
-  { title: "Ricevuta settembre", type: "PDF", owner: "Valentina Mancini" },
-  { title: "Documento identita", type: "PDF", owner: "Simone Vitale" },
-  { title: "Modulo iscrizione", type: "PDF", owner: "Andrea Gallo" },
-  { title: "Liberatoria trasferta", type: "PDF", owner: "Tommaso Serra" },
-  { title: "Ricevuta quota", type: "PDF", owner: "Nicolo Ferrara" },
-  { title: "Documento identita", type: "PDF", owner: "Gabriele Martino" }
+  {
+    id: "registration-form",
+    title: "Modulo iscrizione",
+    type: "PDF",
+    owner: "NS Volley",
+    description: "Fac simile vuoto da compilare, stampare o condividere."
+  }
 ];
 
 const payments = [
@@ -389,7 +380,7 @@ const patchNotes = {
     sections: [
       { title: "Stato progetto", items: ["Demo front-end consolidata e pronta per validazione operativa su dati statici.", "Navigazione principale stabilizzata tra home, atleti, certificati, documenti, classifiche, scadenziario, prima nota e comunicazioni.", "Layout delle aree dati bloccato a viewport: la pagina non genera overflow verticale e lo scroll resta confinato ai contenitori lista/tabella."] },
       { title: "Architettura interfaccia", items: ["Separazione tra shell applicativa, viste operative e componenti dati riutilizzabili.", "Stato di navigazione centralizzato con classe di layout dedicata per distinguere Home e viste gestionali.", "Cache degli asset aggiornata per ridurre problemi di visualizzazione dopo il deploy su GitHub Pages."] },
-      { title: "Preparazione lancio", items: ["Resta da collegare il database definitivo e sostituire i dataset demo con persistenza reale.", "Le strutture dati sono gia predisposte per atleti, certificati, quote mensili, documenti e movimenti contabili.", "Il prodotto e pronto per una demo ufficiale prima della configurazione backend."] }
+      { title: "Preparazione lancio", items: ["Resta da collegare il database definitivo e sostituire i dataset demo con persistenza reale.", "Le strutture dati sono gia predisposte per atleti, certificati, quote mensili, documenti e movimenti contabili.", "Il prodotto e pronto per una demo ufficiale prima della configurazione backend.", "Le notifiche reali a schermo spento richiedono PWA installata, service worker e backend push con scheduler server-side."] }
     ]
   },
   "qa-data": {
@@ -449,12 +440,14 @@ const certExpiringTotal = document.querySelector("#certExpiringTotal");
 const certMissingTotal = document.querySelector("#certMissingTotal");
 const accountingBoard = document.querySelector("#accountingBoard");
 const documentList = document.querySelector("#documentList");
+const documentPreviewModal = document.querySelector("#documentPreviewModal");
 const deadlineList = document.querySelector("#deadlineList");
 const deadlineTotal = document.querySelector("#deadlineTotal");
 const calendarCta = document.querySelector("#calendarCta");
 const matchCard = document.querySelector("#matchCard");
 const matchModal = document.querySelector("#matchModal");
 const matchForm = document.querySelector("#matchForm");
+const addMatchToCalendarButton = document.querySelector("#addMatchToCalendarButton");
 const matchDateLabel = document.querySelector("#matchDateLabel");
 const matchTimeLabel = document.querySelector("#matchTimeLabel");
 const matchHomeTeam = document.querySelector("#matchHomeTeam");
@@ -1031,18 +1024,12 @@ function renderPrimaNota() {
   `;
 }
 function renderDocuments() {
-  const uploadedDocuments = athletes.flatMap((athlete) => [
-    ...athlete.files.certificate.map((file) => ({ title: file.name, type: "CERT", owner: athleteName(athlete) })),
-    ...athlete.files.documents.map((file) => ({ title: file.name, type: "FILE", owner: athleteName(athlete) }))
-  ]);
-  const archiveDocuments = [...documents, ...uploadedDocuments];
-
-  documentList.innerHTML = archiveDocuments.map((document) => `
-    <article class="doc-row">
+  documentList.innerHTML = documents.map((document) => `
+    <button class="doc-row document-preview-trigger" type="button" data-document-id="${document.id}">
       <strong>${document.title}</strong>
-      <span class="muted">${document.owner}</span>
+      <span class="muted">${document.description}</span>
       <span class="badge">${document.type}</span>
-    </article>
+    </button>
   `).join("");
 }
 
@@ -1061,7 +1048,7 @@ function updateSummary() {
   document.querySelector("#athleteCount").textContent = athletes.length;
   document.querySelector("#certificateCount").textContent = validCertificates;
   document.querySelector("#debtCount").textContent = openDebts;
-  document.querySelector("#documentCount").textContent = documents.length + uploadedFileCount;
+  document.querySelector("#documentCount").textContent = documents.length;
   document.querySelector("#seasonBalance").textContent = `\u20ac${balance}`;
   const storageSize = document.querySelector("#storageSize");
   const storageFill = document.querySelector("#storageFill");
@@ -1278,11 +1265,22 @@ function isMobileCalendarDevice() {
   return isIOS || isAndroid || isTouchTablet;
 }
 
-function openMobileCalendar() {
-  const title = `${matchData.homeTeam} vs ${matchData.awayTeam}`;
-  const description = "Prossima partita NS Volley";
+function getMatchPayloadFromForm() {
+  if (!matchForm) return { ...matchData };
+  const form = new FormData(matchForm);
+  return {
+    date: String(form.get("date") || matchData.date),
+    time: String(form.get("time") || matchData.time),
+    homeTeam: String(form.get("homeTeam") || matchData.homeTeam).trim().toUpperCase(),
+    awayTeam: String(form.get("awayTeam") || matchData.awayTeam).trim().toUpperCase()
+  };
+}
+
+function openMobileCalendar(match = matchData) {
+  const title = `${match.homeTeam} vs ${match.awayTeam}`;
+  const description = "Prossima partita NS Volley - promemoria consigliato 1 ora prima";
   const location = "Palestra Scuole Medie Luigi Settembrini - Nova Siri";
-  const start = parseLocalDate(matchData.date, matchData.time) || new Date();
+  const start = parseLocalDate(match.date, match.time) || new Date();
   const end = new Date(start.getTime() + (2 * 60 * 60 * 1000));
   const userAgent = navigator.userAgent || "";
   const isIOS = /iPhone|iPad|iPod/i.test(userAgent) || (/Macintosh/i.test(userAgent) && navigator.maxTouchPoints > 1);
@@ -1311,6 +1309,34 @@ patchNoteButtons.forEach((button) => {
   button.addEventListener("click", () => openPatchNoteModal(button.dataset.patchNote));
 });
 closePatchNoteButton?.addEventListener("click", () => patchNoteModal?.close());
+documentList?.addEventListener("click", (event) => {
+  const trigger = event.target.closest(".document-preview-trigger");
+  if (!trigger) return;
+  openLockedDialog(documentPreviewModal);
+});
+document.querySelector("#closeDocumentPreviewButton")?.addEventListener("click", () => documentPreviewModal?.close());
+document.querySelector("#printRegistrationFormButton")?.addEventListener("click", () => window.print());
+document.querySelector("#shareRegistrationFormButton")?.addEventListener("click", async () => {
+  const shareData = {
+    title: "Modulo iscrizione NS Volley",
+    text: "Fac simile modulo iscrizione NS Volley da compilare.",
+    url: window.location.href
+  };
+  try {
+    if (navigator.share) {
+      await navigator.share(shareData);
+      return;
+    }
+    if (navigator.clipboard) {
+      await navigator.clipboard.writeText(shareData.url);
+      showNotificationToast("Link copiato", "Il link al modulo iscrizione e stato copiato negli appunti.");
+    }
+  } catch (error) {
+    if (error?.name !== "AbortError") {
+      showNotificationToast("Condivisione non disponibile", "Usa il comando stampa o riprova dal browser del dispositivo.");
+    }
+  }
+});
 notificationToggle?.addEventListener("click", () => showNotificationToast(undefined, undefined, true));
 calendarCta?.addEventListener("click", () => {
   if (isMobileCalendarDevice()) {
@@ -1318,6 +1344,14 @@ calendarCta?.addEventListener("click", () => {
     return;
   }
   showNotificationToast("Feature Mobile", "Apri questa funzione dal telefono per aggiungere la partita al calendario.");
+});
+addMatchToCalendarButton?.addEventListener("click", () => {
+  const payload = getMatchPayloadFromForm();
+  if (isMobileCalendarDevice()) {
+    openMobileCalendar(payload);
+    return;
+  }
+  showNotificationToast("Feature Mobile", "Salva la partita e apri questa funzione da iPhone o iPad per creare l evento nel calendario.");
 });
 notificationClose?.addEventListener("click", hideNotificationToast);
 notificationPanel?.addEventListener("pointerdown", (event) => {
@@ -1635,7 +1669,7 @@ deleteSelectedButton.addEventListener("click", () => {
 document.querySelector("#addAthleteButton").addEventListener("click", openNewAthleteModal);
 document.querySelector("#mobileAddButton")?.addEventListener("click", openNewAthleteModal);
 
-[modal, paymentModal, matchModal, primaNotaModal, certificateUploadModal, patchNoteModal].forEach((dialog) => {
+[modal, paymentModal, matchModal, primaNotaModal, certificateUploadModal, patchNoteModal, documentPreviewModal].forEach((dialog) => {
   dialog?.addEventListener("close", () => window.setTimeout(unlockDocumentScroll, 0));
   dialog?.addEventListener("cancel", () => window.setTimeout(unlockDocumentScroll, 0));
 });

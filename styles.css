@@ -6424,6 +6424,220 @@ body.modal-open {
     padding: 14px;
   }
 }
+/* Mobile text containment and registration preview */
+.patch-note,
+.patch-note > *,
+.certificate-row,
+.certificate-row > * {
+  min-width: 0;
+}
+
+.patch-note p,
+.certificate-row p,
+.certificate-main span,
+.certificate-contact span,
+.certificate-expiry strong {
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+.document-preview-trigger {
+  color: inherit;
+  text-align: left;
+}
+
+.document-preview-card {
+  max-width: 760px;
+}
+
+.registration-preview {
+  display: grid;
+  gap: 18px;
+  padding: 22px;
+  border: 1px solid rgba(20,46,91,.09);
+  border-radius: 22px;
+  background: #fff;
+}
+
+.registration-preview header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(20,46,91,.10);
+}
+
+.registration-preview header strong {
+  color: #061936;
+  font-size: 1.2rem;
+  font-weight: 950;
+}
+
+.registration-preview header span {
+  color: #5f6f8d;
+  font-weight: 850;
+}
+
+.registration-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 14px;
+}
+
+.registration-grid label {
+  display: grid;
+  gap: 8px;
+  color: #5f6f8d;
+  font-size: .78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.registration-grid label span,
+.registration-consent i {
+  display: block;
+  min-height: 34px;
+  border-bottom: 1px solid rgba(20,46,91,.24);
+}
+
+.registration-consent {
+  display: grid;
+  gap: 14px;
+  color: #5f6f8d;
+  font-size: .9rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.registration-consent div {
+  display: grid;
+  grid-template-columns: 80px minmax(0, 1fr);
+  align-items: end;
+  gap: 14px;
+}
+
+.registration-consent span {
+  color: #061936;
+  font-weight: 900;
+}
+
+@media (max-width: 699px) {
+  .patch-note {
+    grid-template-columns: minmax(0, 1fr) 30px !important;
+    align-items: start !important;
+    gap: 5px 10px !important;
+    min-height: auto !important;
+    padding: 15px 44px 15px 15px !important;
+  }
+
+  .patch-note span,
+  .patch-note strong,
+  .patch-note p,
+  .patch-note time {
+    grid-column: 1 !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .patch-note strong {
+    line-height: 1.12 !important;
+  }
+
+  .patch-note p {
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden !important;
+    font-size: .82rem !important;
+    line-height: 1.28 !important;
+  }
+
+  .patch-note time {
+    white-space: normal !important;
+    font-size: .7rem !important;
+    line-height: 1.2 !important;
+  }
+
+  .certificate-row.cert-expanded {
+    grid-template-columns: 5px minmax(0, 1fr) 28px !important;
+    min-height: auto !important;
+    overflow: hidden !important;
+  }
+
+  .certificate-row.cert-expanded .certificate-main span {
+    white-space: normal !important;
+    line-height: 1.2 !important;
+  }
+
+  .certificate-row.cert-expanded .certificate-contact {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 5px !important;
+  }
+
+  .certificate-row.cert-expanded .certificate-contact span {
+    white-space: normal !important;
+    line-height: 1.2 !important;
+  }
+
+  .certificate-row.cert-expanded .certificate-expiry {
+    flex-wrap: wrap !important;
+    gap: 5px 10px !important;
+  }
+
+  .certificate-row.cert-expanded p {
+    grid-column: 2 / 4 !important;
+    max-width: 100% !important;
+    font-size: .78rem !important;
+    line-height: 1.28 !important;
+  }
+
+  .document-preview-card {
+    max-width: min(94vw, 430px) !important;
+  }
+
+  .registration-preview {
+    padding: 16px !important;
+    border-radius: 18px !important;
+  }
+
+  .registration-preview header,
+  .registration-grid,
+  .registration-consent div {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media print {
+  body * {
+    visibility: hidden !important;
+  }
+
+  .document-preview-modal[open],
+  .document-preview-modal[open] * {
+    visibility: visible !important;
+  }
+
+  .document-preview-modal[open] {
+    position: static !important;
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    background: #fff !important;
+  }
+
+  .document-preview-card {
+    width: 100% !important;
+    max-width: none !important;
+    box-shadow: none !important;
+    border: 0 !important;
+  }
+
+  .document-preview-card .modal-head,
+  .document-preview-card .modal-actions {
+    display: none !important;
+  }
+}
 /* Fixed data views with internal list scrolling */
 body.data-view-open {
   height: 100dvh;
