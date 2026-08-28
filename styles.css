@@ -6797,3 +6797,89 @@ body.data-view-open .workspace {
     height: calc(100dvh - 58px - 92px - max(12px, env(safe-area-inset-top)));
   }
 }
+
+/* Definitive iPad/narrow desktop deadlines toolbar */
+@media (min-width: 1180px) and (max-width: 1366px) {
+  .deadlines-panel .accounting-title {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+    align-items: stretch !important;
+    margin: -2px -2px 12px !important;
+    padding: 2px 2px 12px !important;
+  }
+
+  .deadlines-panel .accounting-actions {
+    display: grid !important;
+    grid-template-columns: minmax(320px, 1fr) 154px 154px 48px 122px !important;
+    grid-template-areas:
+      "search search search add reset"
+      "filter start end select select" !important;
+    gap: 10px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    align-items: center !important;
+    justify-content: stretch !important;
+    overflow: visible !important;
+  }
+
+  .deadlines-panel .accounting-actions > * {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 46px !important;
+    min-height: 46px !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .deadlines-panel .accounting-actions #accountingSearch {
+    grid-area: search !important;
+    max-width: none !important;
+    padding-inline: 18px !important;
+  }
+
+  .deadlines-panel .accounting-actions #accountingFilter {
+    grid-area: filter !important;
+  }
+
+  .deadlines-panel .accounting-actions #accountingStartDate {
+    grid-area: start !important;
+  }
+
+  .deadlines-panel .accounting-actions #accountingEndDate {
+    grid-area: end !important;
+  }
+
+  .deadlines-panel .accounting-actions #accountingStartDate,
+  .deadlines-panel .accounting-actions #accountingEndDate {
+    text-align: center !important;
+    padding-inline: 14px 12px !important;
+  }
+
+  .deadlines-panel .accounting-actions #addAccountingMonthsButton {
+    grid-area: add !important;
+    width: 48px !important;
+    min-width: 48px !important;
+    padding: 0 !important;
+  }
+
+  .deadlines-panel .accounting-actions #resetAccountingFiltersButton {
+    grid-area: reset !important;
+    width: 48px !important;
+    min-width: 48px !important;
+    padding: 0 !important;
+  }
+
+  .deadlines-panel .accounting-actions #selectAccountingButton {
+    grid-area: select !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .deadlines-panel .accounting-actions #editAccountingButton,
+  .deadlines-panel .accounting-actions #deleteAccountingButton,
+  .deadlines-panel .accounting-actions #deleteAccountingButton[hidden] {
+    display: none !important;
+  }
+}
