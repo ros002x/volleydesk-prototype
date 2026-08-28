@@ -5359,8 +5359,8 @@ body.modal-open {
 .prima-nota-actions select,
 .prima-nota-date-field,
 .prima-nota-actions .prima-nota-tool {
-  height: 42px;
-  min-height: 42px;
+  height: 44px;
+  min-height: 44px;
   border: 0;
   border-radius: 16px;
   background: #f8faff;
@@ -5371,11 +5371,52 @@ body.modal-open {
   box-sizing: border-box;
 }
 
+.deadlines-panel .accounting-title {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: stretch;
+  gap: 14px;
+}
+
+.deadlines-panel .accounting-actions {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  grid-template-areas:
+    "search search search search filter filter add reset"
+    "start start end end delete select edit edit";
+  gap: 10px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  align-items: center;
+  overflow: visible;
+}
+
+.deadlines-panel .accounting-actions > * {
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  margin: 0;
+  padding: 0 14px;
+  white-space: nowrap;
+}
+
+.deadlines-panel .accounting-actions #accountingSearch { grid-area: search; }
+.deadlines-panel .accounting-actions #accountingFilter { grid-area: filter; }
+.deadlines-panel .accounting-actions #accountingStartDate { grid-area: start; }
+.deadlines-panel .accounting-actions #accountingEndDate { grid-area: end; }
+.deadlines-panel .accounting-actions #addAccountingMonthsButton { grid-area: add; }
+.deadlines-panel .accounting-actions #resetAccountingFiltersButton { grid-area: reset; }
+.deadlines-panel .accounting-actions #deleteAccountingButton { grid-area: delete; }
+.deadlines-panel .accounting-actions #selectAccountingButton { grid-area: select; }
+.deadlines-panel .accounting-actions #editAccountingButton { grid-area: edit; }
+
 .deadlines-panel .accounting-actions #addAccountingMonthsButton,
 .certificates-toolbar .certificate-actions #openCertificateUploadButton,
 .prima-nota-actions .prima-nota-tool.primary {
   display: inline-grid;
   place-items: center;
+  padding: 0;
   background: #2867ff;
   color: #fff;
   box-shadow: 0 10px 22px rgba(40,103,255,.16);
@@ -5384,14 +5425,15 @@ body.modal-open {
 .deadlines-panel .accounting-actions #resetAccountingFiltersButton {
   display: inline-grid;
   place-items: center;
+  padding: 0;
   background: #d83255;
   color: #fff;
   box-shadow: 0 10px 22px rgba(216,50,85,.16);
 }
 
 .deadlines-panel .accounting-actions #deleteAccountingButton {
-  background: rgba(216,50,85,.09);
   color: #d83255;
+  background: rgba(216,50,85,.09);
   box-shadow: inset 0 0 0 1px rgba(216,50,85,.12);
 }
 
@@ -5429,83 +5471,20 @@ body.modal-open {
   white-space: nowrap;
 }
 
-@media (min-width: 1367px) {
-  .deadlines-panel .accounting-title {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 14px;
-    align-items: stretch;
-  }
-
-  .deadlines-panel .accounting-actions {
-    display: grid;
-    grid-template-columns: minmax(360px, 1fr) 126px 166px 166px 48px 48px auto 126px 118px;
-    gap: 10px;
-    width: min(100%, 1260px);
-    justify-content: start;
-  }
-
-  .deadlines-panel .accounting-actions > * {
-    width: 100%;
-    min-width: 0;
-    margin: 0;
-  }
-}
-
 @media (min-width: 700px) and (max-width: 1366px) {
-  .deadlines-panel .accounting-title {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 14px;
-    align-items: stretch;
-    margin: -2px -2px 12px;
-    padding: 2px 2px 12px;
-  }
-
   .deadlines-panel .accounting-actions {
-    display: grid;
-    grid-template-columns: minmax(260px, 1fr) 126px 154px 154px 48px 48px;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
     grid-template-areas:
-      "search search filter start end add"
-      "reset delete select select edit edit";
-    gap: 10px;
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    align-items: center;
-    overflow: visible;
+      "search search search search filter filter add reset"
+      "start start end end delete select edit edit";
+    gap: 9px;
   }
 
   .deadlines-panel .accounting-actions > * {
-    width: 100%;
-    min-width: 0;
-    height: 46px;
-    min-height: 46px;
-    margin: 0;
-  }
-
-  .deadlines-panel .accounting-actions #accountingSearch { grid-area: search; }
-  .deadlines-panel .accounting-actions #accountingFilter { grid-area: filter; }
-  .deadlines-panel .accounting-actions #accountingStartDate { grid-area: start; }
-  .deadlines-panel .accounting-actions #accountingEndDate { grid-area: end; }
-  .deadlines-panel .accounting-actions #addAccountingMonthsButton { grid-area: add; padding: 0; }
-  .deadlines-panel .accounting-actions #resetAccountingFiltersButton { grid-area: reset; justify-self: start; width: 48px; padding: 0; }
-  .deadlines-panel .accounting-actions #deleteAccountingButton { grid-area: delete; }
-  .deadlines-panel .accounting-actions #selectAccountingButton { grid-area: select; }
-  .deadlines-panel .accounting-actions #editAccountingButton { grid-area: edit; }
-
-  .deadlines-panel .accounting-actions #deleteAccountingButton[hidden] {
-    display: none !important;
-  }
-
-  .deadlines-panel .deadline-legend {
-    position: sticky;
-    top: 122px;
-    z-index: 5;
-    padding: 6px 0 8px;
-    background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.88));
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    height: 44px;
+    min-height: 44px;
+    padding: 0 10px;
+    font-size: 15px;
   }
 }
 
@@ -5535,7 +5514,7 @@ body.modal-open {
       "search search search add"
       "start start end end"
       "filter filter reset delete"
-      "select select edit edit";
+      "edit edit edit edit";
     gap: 8px;
     width: 100%;
   }
@@ -5549,48 +5528,19 @@ body.modal-open {
     margin: 0;
     padding: 0 10px;
     line-height: 44px;
+    font-size: 16px;
   }
 
-  .deadlines-panel .accounting-actions #accountingSearch {
-    grid-area: search;
-    padding-inline: 14px;
-  }
-
+  .deadlines-panel .accounting-actions #accountingSearch { grid-area: search; padding-inline: 14px; }
   .deadlines-panel .accounting-actions #accountingStartDate { grid-area: start; }
   .deadlines-panel .accounting-actions #accountingEndDate { grid-area: end; }
   .deadlines-panel .accounting-actions #accountingFilter { grid-area: filter; }
-
-  .deadlines-panel .accounting-actions #addAccountingMonthsButton {
-    grid-area: add;
-    padding: 0;
-    font-size: 1.22rem;
-    line-height: 1;
-  }
-
-  .deadlines-panel .accounting-actions #resetAccountingFiltersButton {
-    grid-area: reset;
-    padding: 0;
-    font-size: 1.08rem;
-    line-height: 1;
-  }
-
-  .deadlines-panel .accounting-actions #deleteAccountingButton {
-    grid-area: delete;
-    padding: 0;
-    font-size: 0;
-  }
-
-  .deadlines-panel .accounting-actions #deleteAccountingButton::before {
-    content: "Elimina";
-    font-size: .72rem;
-    line-height: 1;
-  }
-
-  .deadlines-panel .accounting-actions #deleteAccountingButton[hidden] {
-    display: none !important;
-  }
-
-  .deadlines-panel .accounting-actions #selectAccountingButton { grid-area: select; }
+  .deadlines-panel .accounting-actions #addAccountingMonthsButton { grid-area: add; padding: 0; font-size: 1.22rem; line-height: 1; }
+  .deadlines-panel .accounting-actions #resetAccountingFiltersButton { grid-area: reset; padding: 0; font-size: 1.08rem; line-height: 1; }
+  .deadlines-panel .accounting-actions #deleteAccountingButton { grid-area: delete; padding: 0; font-size: 0; }
+  .deadlines-panel .accounting-actions #deleteAccountingButton::before { content: "Elimina"; font-size: .72rem; line-height: 1; }
+  .deadlines-panel .accounting-actions #deleteAccountingButton[hidden] { display: none !important; }
+  .deadlines-panel .accounting-actions #selectAccountingButton { display: none; }
   .deadlines-panel .accounting-actions #editAccountingButton { grid-area: edit; }
 
   .deadlines-panel .deadline-legend {
