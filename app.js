@@ -665,25 +665,15 @@ function setSidebarCollapsed(collapsed, persist = true) {
 }
 function showView(viewId) {
   const targetView = viewId || "overview";
-  const isHomeView = targetView === "overview";
+  const viewExists = [...views].some((view) => view.id === targetView);
+  const activeView = viewExists ? targetView : "overview";
+  const isDataView = activeView !== "overview";
 
-  views.forEach((view) => view.classList.toggle("active", view.id === targetView));
-  document.body.dataset.viewActive = targetView;
-  document.body.classList.toggle("data-view-open", !isHomeView);
-  navItems.forEach((item) => item.classList.toggle("active", item.dataset.view === targetView));
-  bottomNavItems.forEach((item) => item.classList.toggle("active", item.dataset.view === targetView));
-
-  if (isHomeView) {
-    document.documentElement.classList.remove("modal-open");
-    document.body.classList.remove("modal-open");
-    document.body.style.top = "";
-    document.body.style.position = "";
-    document.body.style.left = "";
-    document.body.style.right = "";
-    document.body.style.width = "";
-    document.body.style.overflow = "";
-    document.querySelector(".workspace")?.scrollTo(0, 0);
-  }
+  views.forEach((view) => view.classList.toggle("active", view.id === activeView));
+  document.body.dataset.viewActive = activeView;
+  document.body.classList.toggle("data-view-open", isDataView);
+  navItems.forEach((item) => item.classList.toggle("active", item.dataset.view === activeView));
+  bottomNavItems.forEach((item) => item.classList.toggle("active", item.dataset.view === activeView));
 }
 
 function badgeClass(value) {
