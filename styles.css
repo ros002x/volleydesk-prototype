@@ -3977,20 +3977,7 @@ body.modal-open {
 }
 /* Mobile scadenziario: athlete accordion only */
 @media (max-width: 699px) {
-  .deadlines-panel .accounting-actions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-  }
-  .deadlines-panel .accounting-actions input[type="search"] {
-    grid-column: 1 / -1;
-  }
-  .deadlines-panel .accounting-actions input[type="date"],
-  .deadlines-panel .accounting-actions .soft-button,
-  .deadlines-panel .accounting-actions .danger-button {
-    display: none;
-  }
-  .deadlines-panel .deadline-legend {
+.deadlines-panel .deadline-legend {
     margin-bottom: 10px;
   }
   .deadlines-panel .accounting-mobile-list {
@@ -5146,9 +5133,11 @@ body.modal-open {
   .certificate-row.cert-expanded {
     grid-template-rows: auto auto auto auto;
     align-items: start;
-    min-height: 0;
-    padding: 12px 12px 12px 0;
-    gap: 7px 10px;
+    min-height: 156px;
+    height: auto;
+    padding: 12px 12px 14px 0;
+    gap: 8px 10px;
+    overflow: visible;
   }
 
   .certificate-row.cert-expanded::after {
@@ -5328,42 +5317,36 @@ body.modal-open {
   color: #263858 !important;
 }
 
-/* Unified toolbar language: Atleti style for core areas */
+/* Core toolbar system: one layout per device class */
 .certificates-toolbar.directory-toolbar,
 .deadlines-panel .accounting-title,
 .prima-nota-toolbar {
-  position: sticky !important;
-  top: 0 !important;
-  z-index: 6 !important;
-  display: flex !important;
-  align-items: flex-start !important;
-  justify-content: space-between !important;
-  gap: 14px !important;
-  margin: -2px -2px 12px !important;
-  padding: 2px 2px 14px !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: rgba(255,255,255,.94) !important;
-  box-shadow: none !important;
-  backdrop-filter: blur(16px) !important;
-  -webkit-backdrop-filter: blur(16px) !important;
+  position: sticky;
+  top: 0;
+  z-index: 6;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin: -2px -2px 12px;
+  padding: 2px 2px 14px;
+  border: 0;
+  border-radius: 0;
+  background: rgba(255,255,255,.94);
+  box-shadow: none;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
 .certificates-toolbar .certificate-actions,
 .deadlines-panel .accounting-actions,
 .prima-nota-actions {
-  display: flex !important;
-  flex-wrap: wrap !important;
-  align-items: center !important;
-  justify-content: flex-end !important;
-  gap: 8px !important;
-  width: auto !important;
-}
-
-.prima-nota-search {
-  flex: 1 1 320px !important;
-  min-width: 220px !important;
-  max-width: 420px !important;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  width: auto;
 }
 
 .certificates-toolbar .certificate-actions input,
@@ -5376,116 +5359,285 @@ body.modal-open {
 .prima-nota-actions select,
 .prima-nota-date-field,
 .prima-nota-actions .prima-nota-tool {
-  height: 42px !important;
-  min-height: 42px !important;
-  border: 0 !important;
-  border-radius: 16px !important;
-  background: #f8faff !important;
-  box-shadow: inset 0 0 0 1px rgba(20,46,91,.08) !important;
-  color: #263858 !important;
-  font-size: 16px !important;
-  font-weight: 850 !important;
+  height: 42px;
+  min-height: 42px;
+  border: 0;
+  border-radius: 16px;
+  background: #f8faff;
+  box-shadow: inset 0 0 0 1px rgba(20,46,91,.08);
+  color: #263858;
+  font-size: 16px;
+  font-weight: 850;
+  box-sizing: border-box;
 }
 
-.certificates-toolbar .certificate-actions input,
-.deadlines-panel .accounting-actions input,
-.prima-nota-search input {
-  min-width: 220px !important;
+.deadlines-panel .accounting-actions #addAccountingMonthsButton,
+.certificates-toolbar .certificate-actions #openCertificateUploadButton,
+.prima-nota-actions .prima-nota-tool.primary {
+  display: inline-grid;
+  place-items: center;
+  background: #2867ff;
+  color: #fff;
+  box-shadow: 0 10px 22px rgba(40,103,255,.16);
 }
 
-.prima-nota-search input {
-  height: 100% !important;
-  min-height: 0 !important;
-  box-shadow: none !important;
-  background: transparent !important;
+.deadlines-panel .accounting-actions #resetAccountingFiltersButton {
+  display: inline-grid;
+  place-items: center;
+  background: #d83255;
+  color: #fff;
+  box-shadow: 0 10px 22px rgba(216,50,85,.16);
 }
 
+.deadlines-panel .accounting-actions #deleteAccountingButton {
+  background: rgba(216,50,85,.09);
+  color: #d83255;
+  box-shadow: inset 0 0 0 1px rgba(216,50,85,.12);
+}
+
+.deadlines-panel .accounting-actions #deleteAccountingButton[hidden] {
+  display: none !important;
+}
+
+.deadlines-panel .accounting-actions input[type="date"] {
+  cursor: pointer;
+  text-align: center;
+}
+
+.deadlines-panel .accounting-actions input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.prima-nota-search {
+  flex: 1 1 320px;
+  min-width: 220px;
+  max-width: 420px;
+}
+
+.prima-nota-search input,
 .prima-nota-date-field input {
-  width: 100% !important;
-  height: 100% !important;
-  min-height: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-}
-
-.certificates-toolbar .certificate-actions .soft-button,
-.deadlines-panel .accounting-actions .soft-button,
-.prima-nota-actions .prima-nota-tool.primary {
-  display: inline-grid !important;
-  place-items: center !important;
-  background: rgba(40,103,255,.08) !important;
-  color: #2867ff !important;
-  box-shadow: none !important;
-  text-decoration: none !important;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .prima-nota-actions .prima-nota-tool.primary {
-  padding-inline: 16px !important;
+  padding-inline: 16px;
+  white-space: nowrap;
 }
 
-.deadlines-panel .accounting-actions .danger-button {
-  background: rgba(216,50,85,.09) !important;
-  color: #d83255 !important;
-  box-shadow: none !important;
+@media (min-width: 1367px) {
+  .deadlines-panel .accounting-title {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    align-items: stretch;
+  }
+
+  .deadlines-panel .accounting-actions {
+    display: grid;
+    grid-template-columns: minmax(360px, 1fr) 126px 166px 166px 48px 48px auto 126px 118px;
+    gap: 10px;
+    width: min(100%, 1260px);
+    justify-content: start;
+  }
+
+  .deadlines-panel .accounting-actions > * {
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+  }
+}
+
+@media (min-width: 700px) and (max-width: 1366px) {
+  .deadlines-panel .accounting-title {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    align-items: stretch;
+    margin: -2px -2px 12px;
+    padding: 2px 2px 12px;
+  }
+
+  .deadlines-panel .accounting-actions {
+    display: grid;
+    grid-template-columns: minmax(260px, 1fr) 126px 154px 154px 48px 48px;
+    grid-template-areas:
+      "search search filter start end add"
+      "reset delete select select edit edit";
+    gap: 10px;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    align-items: center;
+    overflow: visible;
+  }
+
+  .deadlines-panel .accounting-actions > * {
+    width: 100%;
+    min-width: 0;
+    height: 46px;
+    min-height: 46px;
+    margin: 0;
+  }
+
+  .deadlines-panel .accounting-actions #accountingSearch { grid-area: search; }
+  .deadlines-panel .accounting-actions #accountingFilter { grid-area: filter; }
+  .deadlines-panel .accounting-actions #accountingStartDate { grid-area: start; }
+  .deadlines-panel .accounting-actions #accountingEndDate { grid-area: end; }
+  .deadlines-panel .accounting-actions #addAccountingMonthsButton { grid-area: add; padding: 0; }
+  .deadlines-panel .accounting-actions #resetAccountingFiltersButton { grid-area: reset; justify-self: start; width: 48px; padding: 0; }
+  .deadlines-panel .accounting-actions #deleteAccountingButton { grid-area: delete; }
+  .deadlines-panel .accounting-actions #selectAccountingButton { grid-area: select; }
+  .deadlines-panel .accounting-actions #editAccountingButton { grid-area: edit; }
+
+  .deadlines-panel .accounting-actions #deleteAccountingButton[hidden] {
+    display: none !important;
+  }
+
+  .deadlines-panel .deadline-legend {
+    position: sticky;
+    top: 122px;
+    z-index: 5;
+    padding: 6px 0 8px;
+    background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.88));
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
 }
 
 @media (max-width: 699px) {
   .certificates-toolbar.directory-toolbar,
   .deadlines-panel .accounting-title,
   .prima-nota-toolbar {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    gap: 8px !important;
-    margin: -2px -2px 10px !important;
-    padding: 2px 2px 10px !important;
-    background: rgba(255,255,255,.94) !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin: -2px -2px 10px;
+    padding: 2px 2px 10px;
+    background: rgba(255,255,255,.94);
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
   }
 
-  .certificates-toolbar.directory-toolbar > div:first-child,
   .deadlines-panel .accounting-title > div:first-child {
-    display: block !important;
+    display: block;
   }
 
-  .certificates-toolbar .panel-actions.certificate-actions,
-  .deadlines-panel .accounting-actions,
-  .prima-nota-actions {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 8px !important;
-    width: 100% !important;
+  .deadlines-panel .accounting-actions {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-areas:
+      "search search search add"
+      "start start end end"
+      "filter filter reset delete"
+      "select select edit edit";
+    gap: 8px;
+    width: 100%;
   }
 
-  .certificates-toolbar .certificate-actions input,
-  .deadlines-panel .accounting-actions #accountingSearch,
-  .prima-nota-search {
-    grid-column: 1 / -1 !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: none !important;
+  .deadlines-panel .accounting-actions > * {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    height: 44px;
+    min-height: 44px;
+    margin: 0;
+    padding: 0 10px;
+    line-height: 44px;
   }
 
-  .certificates-toolbar .certificate-actions select,
-  .certificates-toolbar .certificate-actions .soft-button,
-  .deadlines-panel .accounting-actions #accountingFilter,
-  .prima-nota-actions select,
-  .prima-nota-date-field,
-  .prima-nota-actions .prima-nota-tool.primary {
-    width: 100% !important;
-    min-width: 0 !important;
+  .deadlines-panel .accounting-actions #accountingSearch {
+    grid-area: search;
+    padding-inline: 14px;
   }
 
-  .deadlines-panel .accounting-actions #editAccountingButton,
+  .deadlines-panel .accounting-actions #accountingStartDate { grid-area: start; }
+  .deadlines-panel .accounting-actions #accountingEndDate { grid-area: end; }
+  .deadlines-panel .accounting-actions #accountingFilter { grid-area: filter; }
+
+  .deadlines-panel .accounting-actions #addAccountingMonthsButton {
+    grid-area: add;
+    padding: 0;
+    font-size: 1.22rem;
+    line-height: 1;
+  }
+
+  .deadlines-panel .accounting-actions #resetAccountingFiltersButton {
+    grid-area: reset;
+    padding: 0;
+    font-size: 1.08rem;
+    line-height: 1;
+  }
+
   .deadlines-panel .accounting-actions #deleteAccountingButton {
+    grid-area: delete;
+    padding: 0;
+    font-size: 0;
+  }
+
+  .deadlines-panel .accounting-actions #deleteAccountingButton::before {
+    content: "Elimina";
+    font-size: .72rem;
+    line-height: 1;
+  }
+
+  .deadlines-panel .accounting-actions #deleteAccountingButton[hidden] {
     display: none !important;
   }
 
+  .deadlines-panel .accounting-actions #selectAccountingButton { grid-area: select; }
+  .deadlines-panel .accounting-actions #editAccountingButton { grid-area: edit; }
+
+  .deadlines-panel .deadline-legend {
+    position: sticky;
+    top: 218px;
+    z-index: 5;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+    margin: 0 0 9px;
+    padding: 5px 0 7px;
+    background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.90));
+  }
+
+  .deadlines-panel .deadline-legend span {
+    justify-content: center;
+    min-width: 0;
+    padding: 7px 5px;
+    border-radius: 999px;
+    background: rgba(248,250,255,.86);
+    font-size: .58rem;
+    font-weight: 900;
+    white-space: nowrap;
+  }
+
+  .certificates-toolbar .panel-actions.certificate-actions,
+  .prima-nota-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 46px;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .prima-nota-search {
+    grid-column: 1 / -1;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+  }
+
+  .prima-nota-actions #primaNotaType { grid-column: 1; }
+  .prima-nota-actions .prima-nota-date-field { grid-column: 2; }
+  .prima-nota-actions #addPrimaNotaButton { grid-column: 1 / -1; }
+
   .prima-nota-actions .prima-nota-tool.primary {
-    grid-column: auto !important;
-    font-size: 0 !important;
-    padding: 0 !important;
+    font-size: 0;
+    padding: 0;
   }
 
   .prima-nota-actions .prima-nota-tool.primary::before {
@@ -5493,472 +5645,6 @@ body.modal-open {
     font-size: 1.24rem;
     line-height: 1;
     font-weight: 950;
-  }
-
-  .certificates-toolbar .certificate-actions #openCertificateUploadButton {
-    font-size: 0 !important;
-    background: #2867ff !important;
-    color: #fff !important;
-    box-shadow: 0 10px 22px rgba(40,103,255,.16) !important;
-  }
-
-  .certificates-toolbar .certificate-actions #openCertificateUploadButton::before {
-    content: "+";
-    font-size: 1.24rem;
-    line-height: 1;
-    font-weight: 950;
-  }
-}
-
-/* Toolbar layout: Scadenziario and Prima nota */
-@media (min-width: 1180px) {
-  .deadlines-panel .accounting-title {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    gap: 14px !important;
-    align-items: stretch !important;
-    margin: -2px -2px 12px !important;
-    padding: 2px 2px 12px !important;
-  }
-
-  .deadlines-panel .accounting-title > div:first-child {
-    display: block !important;
-    min-width: 0 !important;
-  }
-
-  .deadlines-panel .accounting-title h2 {
-    margin: 0 !important;
-    font-size: clamp(1.9rem, 2.2vw, 2.32rem) !important;
-    line-height: 1.05 !important;
-    white-space: normal !important;
-  }
-
-  .deadlines-panel .accounting-actions {
-    display: flex !important;
-    flex-wrap: nowrap !important;
-    align-items: center !important;
-    justify-content: flex-start !important;
-    gap: 10px !important;
-    width: 100% !important;
-    min-width: 0 !important;
-  }
-
-  .deadlines-panel .accounting-actions > * {
-    position: static !important;
-    flex: 0 0 auto !important;
-    grid-row: auto !important;
-    grid-column: auto !important;
-    margin: 0 !important;
-    transform: none !important;
-    box-sizing: border-box !important;
-  }
-
-  .deadlines-panel .accounting-actions #accountingSearch {
-    width: 480px !important;
-    min-width: 420px !important;
-    max-width: 480px !important;
-    padding-inline: 16px !important;
-  }
-
-  .deadlines-panel .accounting-actions #addAccountingMonthsButton {
-    width: 46px !important;
-    min-width: 46px !important;
-    padding: 0 !important;
-    display: inline-grid !important;
-    place-items: center !important;
-    background: #2867ff !important;
-    color: #fff !important;
-    box-shadow: 0 10px 22px rgba(40,103,255,.16) !important;
-    font-size: 1.22rem !important;
-    line-height: 1 !important;
-    font-weight: 950 !important;
-  }
-
-  .deadlines-panel .accounting-actions #accountingFilter {
-    width: 112px !important;
-    min-width: 112px !important;
-  }
-
-  .deadlines-panel .accounting-actions #accountingStartDate,
-  .deadlines-panel .accounting-actions #accountingEndDate {
-    width: 166px !important;
-    min-width: 166px !important;
-    padding-inline: 14px 12px !important;
-    display: block !important;
-    cursor: pointer !important;
-  }
-
-  .deadlines-panel .accounting-actions input[type="date"]::-webkit-calendar-picker-indicator {
-    opacity: 1 !important;
-    cursor: pointer !important;
-  }
-
-  .deadlines-panel .accounting-actions #resetAccountingFiltersButton {
-    width: 46px !important;
-    min-width: 46px !important;
-    display: inline-grid !important;
-    place-items: center !important;
-    padding: 0 !important;
-    background: #d83255 !important;
-    color: #fff !important;
-    box-shadow: 0 10px 22px rgba(216,50,85,.16) !important;
-    font-size: 1.08rem !important;
-    line-height: 1 !important;
-  }
-
-  .deadlines-panel .accounting-actions #selectAccountingButton {
-    width: 126px !important;
-    min-width: 126px !important;
-  }
-
-  .deadlines-panel .accounting-actions #editAccountingButton,
-  .deadlines-panel .accounting-actions #deleteAccountingButton {
-    width: 112px !important;
-    min-width: 112px !important;
-  }
-
-  .deadlines-panel .accounting-actions #editAccountingButton:disabled,
-  .deadlines-panel .accounting-actions #deleteAccountingButton[hidden] {
-    display: none !important;
-  }
-
-  .deadlines-panel .deadline-legend {
-    position: sticky !important;
-    top: 122px !important;
-    z-index: 5 !important;
-    padding: 6px 0 8px !important;
-    background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.88)) !important;
-    backdrop-filter: blur(14px) !important;
-    -webkit-backdrop-filter: blur(14px) !important;
-  }
-
-  .prima-nota-toolbar {
-    display: grid !important;
-    grid-template-columns: minmax(260px, 1fr) auto !important;
-    align-items: center !important;
-    gap: 10px !important;
-    margin: -2px -2px 12px !important;
-    padding: 2px 2px 12px !important;
-  }
-
-  .prima-nota-search {
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: none !important;
-    flex: none !important;
-  }
-
-  .prima-nota-actions {
-    display: grid !important;
-    grid-template-columns: 112px 154px auto !important;
-    align-items: center !important;
-    gap: 8px !important;
-    width: auto !important;
-    justify-content: end !important;
-  }
-
-  .prima-nota-actions select,
-  .prima-nota-date-field,
-  .prima-nota-actions .prima-nota-tool.primary {
-    width: 100% !important;
-    min-width: 0 !important;
-    margin: 0 !important;
-  }
-
-  .prima-nota-actions .prima-nota-tool.primary {
-    white-space: nowrap !important;
-  }
-}
-
-@media (min-width: 700px) and (max-width: 1179px) {
-  .deadlines-panel .accounting-title,
-  .prima-nota-toolbar {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    gap: 8px !important;
-    align-items: stretch !important;
-    margin: -2px -2px 10px !important;
-    padding: 2px 2px 10px !important;
-  }
-
-  .deadlines-panel .accounting-title > div:first-child {
-    display: block !important;
-  }
-
-  .deadlines-panel .accounting-actions,
-  .prima-nota-actions {
-    display: grid !important;
-    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-    gap: 8px !important;
-    width: 100% !important;
-  }
-
-  .deadlines-panel .accounting-actions #accountingSearch,
-  .deadlines-panel .accounting-actions #addAccountingMonthsButton,
-  .deadlines-panel .accounting-actions #accountingStartDate,
-  .deadlines-panel .accounting-actions #accountingEndDate,
-  .deadlines-panel .accounting-actions #resetAccountingFiltersButton,
-  .deadlines-panel .accounting-actions #accountingFilter,
-  .deadlines-panel .accounting-actions #selectAccountingButton,
-  .prima-nota-search {
-    position: static !important;
-    margin: 0 !important;
-    transform: none !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: none !important;
-    height: 44px !important;
-    min-height: 44px !important;
-    box-sizing: border-box !important;
-  }
-
-  .deadlines-panel .accounting-actions #accountingSearch,
-  .prima-nota-search {
-    grid-column: 1 / 4 !important;
-    grid-row: 1 !important;
-    padding-inline: 14px !important;
-  }
-
-  .deadlines-panel .accounting-actions #addAccountingMonthsButton {
-    grid-column: 4 !important;
-    grid-row: 1 !important;
-    display: inline-grid !important;
-    place-items: center !important;
-    padding: 0 !important;
-  }
-
-  .deadlines-panel .accounting-actions #accountingStartDate {
-    grid-column: 1 / 3 !important;
-    grid-row: 2 !important;
-  }
-
-  .deadlines-panel .accounting-actions #accountingEndDate {
-    grid-column: 3 / -1 !important;
-    grid-row: 2 !important;
-  }
-
-  .deadlines-panel .accounting-actions #accountingStartDate,
-  .deadlines-panel .accounting-actions #accountingEndDate {
-    padding: 0 34px 0 16px !important;
-    text-align: center !important;
-    line-height: 44px !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: clip !important;
-  }
-
-  .deadlines-panel .accounting-actions input[type="date"]::-webkit-datetime-edit,
-  .deadlines-panel .accounting-actions input[type="date"]::-webkit-datetime-edit-fields-wrapper {
-    text-align: center !important;
-  }
-
-  .deadlines-panel .accounting-actions input[type="date"]::-webkit-calendar-picker-indicator {
-    margin-left: 6px !important;
-    cursor: pointer !important;
-  }
-
-  .deadlines-panel .accounting-actions #accountingFilter {
-    grid-column: 1 / 3 !important;
-    grid-row: 3 !important;
-  }
-
-  .deadlines-panel .accounting-actions #resetAccountingFiltersButton {
-    grid-column: 3 !important;
-    grid-row: 3 !important;
-    display: inline-grid !important;
-    place-items: center !important;
-    padding: 0 !important;
-  }
-
-  .deadlines-panel .accounting-actions #selectAccountingButton {
-    grid-column: 4 !important;
-    grid-row: 3 !important;
-  }
-
-  .deadlines-panel .accounting-actions #editAccountingButton,
-  .deadlines-panel .accounting-actions #deleteAccountingButton,
-  .deadlines-panel .accounting-actions #deleteAccountingButton[hidden] {
-    display: none !important;
-  }
-
-  .deadlines-panel .deadline-legend {
-    position: sticky !important;
-    top: 198px !important;
-    z-index: 5 !important;
-    padding: 6px 0 8px !important;
-    background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.88)) !important;
-    backdrop-filter: blur(14px) !important;
-    -webkit-backdrop-filter: blur(14px) !important;
-  }
-}
-
-/* Prima nota mobile toolbar final layout */
-@media (max-width: 699px) {
-  .prima-nota-toolbar {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    gap: 8px !important;
-  }
-
-  .prima-nota-search {
-    grid-column: 1 / -1 !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: none !important;
-  }
-
-  .prima-nota-actions {
-    display: grid !important;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
-    gap: 8px !important;
-    width: 100% !important;
-  }
-
-  .prima-nota-actions #primaNotaType {
-    grid-column: 1 !important;
-  }
-
-  .prima-nota-actions .prima-nota-date-field {
-    grid-column: 2 !important;
-  }
-
-  .prima-nota-actions #addPrimaNotaButton {
-    grid-column: 1 / -1 !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    height: 44px !important;
-    min-height: 44px !important;
-  }
-
-  .deadlines-panel .accounting-title {
-    position: sticky !important;
-    top: 0 !important;
-    z-index: 6 !important;
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    gap: 8px !important;
-    margin: -2px -2px 10px !important;
-    padding: 2px 2px 10px !important;
-    background: rgba(255,255,255,.94) !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    backdrop-filter: blur(16px) !important;
-    -webkit-backdrop-filter: blur(16px) !important;
-  }
-
-  .deadlines-panel .accounting-title > div:first-child {
-    display: block !important;
-  }
-
-  .deadlines-panel .accounting-actions {
-    display: grid !important;
-    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-    gap: 8px !important;
-    width: 100% !important;
-  }
-
-  .deadlines-panel .accounting-actions #accountingSearch,
-  .deadlines-panel .accounting-actions #addAccountingMonthsButton,
-  .deadlines-panel .accounting-actions #accountingStartDate,
-  .deadlines-panel .accounting-actions #accountingEndDate,
-  .deadlines-panel .accounting-actions #resetAccountingFiltersButton,
-  .deadlines-panel .accounting-actions #accountingFilter {
-    display: block !important;
-    position: static !important;
-    margin: 0 !important;
-    transform: none !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: none !important;
-    height: 44px !important;
-    min-height: 44px !important;
-    padding: 0 10px !important;
-    border: 0 !important;
-    border-radius: 16px !important;
-    background: #f8faff !important;
-    box-shadow: inset 0 0 0 1px rgba(20,46,91,.08) !important;
-    color: #263858 !important;
-    font-size: 16px !important;
-    font-weight: 850 !important;
-    line-height: 44px !important;
-  }
-
-  .deadlines-panel .accounting-actions #accountingSearch {
-    grid-column: 1 / 4 !important;
-    grid-row: 1 !important;
-    padding-inline: 14px !important;
-  }
-
-  .deadlines-panel .accounting-actions #addAccountingMonthsButton {
-    grid-column: 4 !important;
-    grid-row: 1 !important;
-    display: inline-grid !important;
-    place-items: center !important;
-    padding: 0 !important;
-    background: #2867ff !important;
-    color: #fff !important;
-    box-shadow: 0 10px 22px rgba(40,103,255,.16) !important;
-    font-size: 1.22rem !important;
-    line-height: 1 !important;
-  }
-
-  .deadlines-panel .accounting-actions #accountingStartDate {
-    grid-column: 1 / 3 !important;
-    grid-row: 2 !important;
-  }
-
-  .deadlines-panel .accounting-actions #accountingEndDate {
-    grid-column: 3 / -1 !important;
-    grid-row: 2 !important;
-  }
-
-  .deadlines-panel .accounting-actions #accountingFilter {
-    grid-column: 1 / 3 !important;
-    grid-row: 3 !important;
-  }
-
-  .deadlines-panel .accounting-actions #resetAccountingFiltersButton {
-    grid-column: 3 / -1 !important;
-    grid-row: 3 !important;
-    display: inline-grid !important;
-    place-items: center !important;
-    padding: 0 !important;
-    background: #d83255 !important;
-    color: #fff !important;
-    box-shadow: 0 10px 22px rgba(216,50,85,.16) !important;
-    font-size: 1.12rem !important;
-    line-height: 1 !important;
-  }
-
-  .deadlines-panel .accounting-actions #selectAccountingButton,
-  .deadlines-panel .accounting-actions #editAccountingButton,
-  .deadlines-panel .accounting-actions #deleteAccountingButton,
-  .deadlines-panel .accounting-actions #deleteAccountingButton[hidden] {
-    display: none !important;
-  }
-
-  .deadlines-panel .deadline-legend {
-    position: sticky !important;
-    top: 174px !important;
-    z-index: 5 !important;
-    display: grid !important;
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    gap: 6px !important;
-    margin: 0 0 9px !important;
-    padding: 5px 0 7px !important;
-    background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.90)) !important;
-  }
-
-  .deadlines-panel .deadline-legend span {
-    justify-content: center !important;
-    min-width: 0 !important;
-    padding: 7px 5px !important;
-    border-radius: 999px !important;
-    background: rgba(248,250,255,.86) !important;
-    font-size: .58rem !important;
-    font-weight: 900 !important;
-    white-space: nowrap !important;
   }
 }
 @media (max-width: 699px) {
@@ -6500,91 +6186,5 @@ body.data-view-open .workspace {
 @media (min-width: 700px) and (max-width: 1179px) {
   body.data-view-open .workspace {
     height: calc(100dvh - 58px - 92px - max(12px, env(safe-area-inset-top)));
-  }
-}
-
-/* Definitive iPad/narrow desktop deadlines toolbar */
-@media (min-width: 1180px) and (max-width: 1366px) {
-  .deadlines-panel .accounting-title {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    gap: 14px !important;
-    align-items: stretch !important;
-    margin: -2px -2px 12px !important;
-    padding: 2px 2px 12px !important;
-  }
-
-  .deadlines-panel .accounting-actions {
-    display: grid !important;
-    grid-template-columns: minmax(320px, 1fr) 154px 154px 48px 122px !important;
-    grid-template-areas:
-      "search search search add reset"
-      "filter start end select select" !important;
-    gap: 10px !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-    align-items: center !important;
-    justify-content: stretch !important;
-    overflow: visible !important;
-  }
-
-  .deadlines-panel .accounting-actions > * {
-    width: 100% !important;
-    min-width: 0 !important;
-    height: 46px !important;
-    min-height: 46px !important;
-    margin: 0 !important;
-    box-sizing: border-box !important;
-  }
-
-  .deadlines-panel .accounting-actions #accountingSearch {
-    grid-area: search !important;
-    max-width: none !important;
-    padding-inline: 18px !important;
-  }
-
-  .deadlines-panel .accounting-actions #accountingFilter {
-    grid-area: filter !important;
-  }
-
-  .deadlines-panel .accounting-actions #accountingStartDate {
-    grid-area: start !important;
-  }
-
-  .deadlines-panel .accounting-actions #accountingEndDate {
-    grid-area: end !important;
-  }
-
-  .deadlines-panel .accounting-actions #accountingStartDate,
-  .deadlines-panel .accounting-actions #accountingEndDate {
-    text-align: center !important;
-    padding-inline: 14px 12px !important;
-  }
-
-  .deadlines-panel .accounting-actions #addAccountingMonthsButton {
-    grid-area: add !important;
-    width: 48px !important;
-    min-width: 48px !important;
-    padding: 0 !important;
-  }
-
-  .deadlines-panel .accounting-actions #resetAccountingFiltersButton {
-    grid-area: reset !important;
-    width: 48px !important;
-    min-width: 48px !important;
-    padding: 0 !important;
-  }
-
-  .deadlines-panel .accounting-actions #selectAccountingButton {
-    grid-area: select !important;
-    width: 100% !important;
-    min-width: 0 !important;
-  }
-
-  .deadlines-panel .accounting-actions #editAccountingButton,
-  .deadlines-panel .accounting-actions #deleteAccountingButton,
-  .deadlines-panel .accounting-actions #deleteAccountingButton[hidden] {
-    display: none !important;
   }
 }
