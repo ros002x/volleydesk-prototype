@@ -1602,6 +1602,13 @@ addAccountingMonthsButton?.addEventListener("click", () => {
 deleteAccountingButton?.addEventListener("click", () => {
   const targets = selectedAccountingRows.size ? selectedAccountingRows : new Set([activeAccountingIndex]);
   const indexes = [...targets].filter((index) => index !== null && index !== undefined).sort((a, b) => b - a);
+  if (!indexes.length) return;
+
+  const names = indexes.map((index) => athleteName(athletes[index])).filter(Boolean);
+  const subject = names.length === 1 ? names[0] : `${names.length} atleti selezionati`;
+  const confirmed = window.confirm(`Sei sicuro di voler eliminare ${subject}?\nQuesta azione rimuove anche quote, documenti e dati collegati.`);
+  if (!confirmed) return;
+
   indexes.forEach((index) => {
     const removedName = athleteName(athletes[index]);
     athletes.splice(index, 1);
