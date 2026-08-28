@@ -508,6 +508,7 @@ let selectionMode = false;
 const selectedAthletes = new Set();
 let accountingSelectionMode = false;
 const selectedAccountingRows = new Set();
+const hiddenAccountingRows = new Set();
 let activeAccountingIndex = null;
 let activeAccountingMonth = "sep";
 let paymentBulkMode = false;
@@ -814,6 +815,7 @@ function currentAccountingList() {
 
   return athletes
     .map((athlete, index) => ({ athlete, index }))
+    .filter(({ athlete }) => !hiddenAccountingRows.has(athleteName(athlete)))
     .filter(({ athlete }) => athleteName(athlete).toLowerCase().includes(query))
     .filter(({ athlete }) => {
       if (filter === "all") return true;
@@ -835,7 +837,7 @@ function requestDeleteConfirmation(subject) {
   if (!confirmDeleteModal) return Promise.resolve(false);
   if (confirmDeleteTitle) confirmDeleteTitle.textContent = "Eliminare definitivamente?";
   if (confirmDeleteMessage) confirmDeleteMessage.textContent = `Sei sicuro di voler eliminare ${subject}?`;
-  if (confirmDeleteWarning) confirmDeleteWarning.textContent = "Questa azione rimuove anche quote, documenti e dati collegati.";
+  if (confirmDeleteWarning) confirmDeleteWarning.textContent = "Questa azione rimuove solo la riga dallo scadenziario. Anagrafica, certificati e documenti restano invariati.";
   confirmDeleteModal.returnValue = "";
 
   return new Promise((resolve) => {
@@ -1616,32 +1618,20 @@ addAccountingMonthsButton?.addEventListener("click", () => {
 });
 
 deleteAccountingButton?.addEventListener("click", async () => {
-  const targets = selectedAccountingRows.size ? selectedAccountingRows : new Set([activeAccountingIndex]);
-  const indexes = [...targets].filter((index) => index !== null && index !== undefined).sort((a, b) => b - a);
+  const targets = selectedAccountingRows.size ? [...selectedAccountingRows] : [activeAccountingIndex];
+  const indexes = targets.filter((index) => Number.isInteger(index) && athletes[index]);
   if (!indexes.length) return;
 
-  const names = indexes.map((index) => athleteName(athletes[index])).filter(Boolean);
-  const subject = names.length === 1 ? names[0] : `${names.length} atleti selezionati`;
+  const names = indexes.map((index) => athleteName(athletes[index]));
+  const subject = names.length === 1 ? `la riga di ${names[0]}` : `${names.length} righe selezionate`;
   const confirmed = await requestDeleteConfirmation(subject);
   if (!confirmed) return;
 
-  indexes.forEach((index) => {
-    const removedName = athleteName(athletes[index]);
-    athletes.splice(index, 1);
-
-    for (let i = payments.length - 1; i >= 0; i -= 1) {
-      if (payments[i].athlete === removedName) payments.splice(i, 1);
-    }
-
-    for (let i = documents.length - 1; i >= 0; i -= 1) {
-      if (documents[i].owner === removedName) documents.splice(i, 1);
-    }
-  });
-
+  names.forEach((name) => hiddenAccountingRows.add(name));
   selectedAccountingRows.clear();
   accountingSelectionMode = false;
   activeAccountingIndex = null;
-  renderAll();
+  renderAccounting();
 });
 
 athleteTable.addEventListener("click", (event) => {
@@ -1824,6 +1814,7 @@ paymentForm.addEventListener("submit", (event) => {
   if (!targets.length) return;
 
   targets.forEach((index) => {
+    hiddenAccountingRows.delete(athleteName(athletes[index]));
     monthKeys.forEach((monthKey) => {
       athletes[index].accounting[monthKey] = { expected, paid, days };
     });
