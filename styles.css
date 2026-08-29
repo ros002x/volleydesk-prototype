@@ -5804,87 +5804,240 @@ body.modal-open {
   word-break: normal;
 }
 
+.document-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.document-actions .primary-action {
+  min-height: 42px;
+  padding: 0 18px;
+  border: 0;
+  color: #fff;
+}
+
 .document-preview-trigger {
   color: inherit;
   text-align: left;
 }
 
 .document-preview-card {
-  max-width: 760px;
+  width: min(880px, calc(100vw - 28px));
+  max-width: 880px;
+  max-height: min(92dvh, 920px);
+}
+
+.document-preview-body {
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
 }
 
 .registration-preview {
   display: grid;
   gap: 18px;
-  padding: 22px;
+  padding: 26px;
   border: 1px solid rgba(20,46,91,.09);
   border-radius: 22px;
   background: #fff;
-}
-
-.registration-preview header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
-  padding-bottom: 14px;
-  border-bottom: 1px solid rgba(20,46,91,.10);
-}
-
-.registration-preview header strong {
   color: #061936;
+}
+
+.registration-letterhead {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: start;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(20,46,91,.12);
+}
+
+.registration-letterhead div {
+  display: grid;
+  gap: 5px;
+}
+
+.registration-letterhead strong {
   font-size: 1.2rem;
   font-weight: 950;
 }
 
-.registration-preview header span {
+.registration-letterhead span,
+.registration-letterhead em {
   color: #5f6f8d;
+  font-size: .82rem;
+  font-style: normal;
   font-weight: 850;
+}
+
+.registration-heading {
+  display: grid;
+  gap: 6px;
+}
+
+.registration-heading span,
+.registration-section h4 {
+  color: #2867ff;
+  font-size: .74rem;
+  font-weight: 950;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.registration-heading h3 {
+  margin: 0;
+  font-size: 1.35rem;
+  line-height: 1.1;
+}
+
+.registration-heading p,
+.registration-checks p {
+  margin: 0;
+  color: #5f6f8d;
+  font-size: .88rem;
+  font-weight: 750;
+  line-height: 1.45;
+}
+
+.registration-section {
+  display: grid;
+  gap: 12px;
+}
+
+.registration-section h4 {
+  margin: 0;
 }
 
 .registration-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px 14px;
+  gap: 13px 16px;
 }
 
-.registration-grid label {
+.registration-grid label,
+.registration-signatures label {
   display: grid;
-  gap: 8px;
+  gap: 7px;
   color: #5f6f8d;
-  font-size: .78rem;
-  font-weight: 900;
+  font-size: .72rem;
+  font-weight: 950;
   text-transform: uppercase;
 }
 
 .registration-grid label span,
-.registration-consent i {
+.registration-signatures label span {
   display: block;
-  min-height: 34px;
-  border-bottom: 1px solid rgba(20,46,91,.24);
+  min-height: 30px;
+  border-bottom: 1px solid rgba(20,46,91,.26);
 }
 
-.registration-consent {
+.registration-checks {
+  padding: 16px;
+  border-radius: 18px;
+  background: #f8faff;
+  box-shadow: inset 0 0 0 1px rgba(20,46,91,.055);
+}
+
+.registration-checks div {
   display: grid;
-  gap: 14px;
-  color: #5f6f8d;
-  font-size: .9rem;
-  font-weight: 700;
-  line-height: 1.5;
+  grid-template-columns: 18px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  color: #263858;
+  font-size: .82rem;
+  font-weight: 800;
+  line-height: 1.35;
 }
 
-.registration-consent div {
+.registration-checks div span {
+  width: 14px;
+  height: 14px;
+  margin-top: 1px;
+  border: 1px solid rgba(20,46,91,.35);
+  border-radius: 4px;
+  background: #fff;
+}
+
+.registration-signatures {
   display: grid;
-  grid-template-columns: 80px minmax(0, 1fr);
-  align-items: end;
-  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  padding-top: 4px;
 }
 
-.registration-consent span {
+.uploaded-document-preview {
+  margin: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #f8faff;
+  box-shadow: inset 0 0 0 1px rgba(20,46,91,.07);
+}
+
+.uploaded-document-preview img {
+  display: block;
+  width: 100%;
+  max-height: 70dvh;
+  object-fit: contain;
+  background: #fff;
+}
+
+.uploaded-document-frame {
+  width: 100%;
+  min-height: min(72dvh, 720px);
+  border: 0;
+  border-radius: 20px;
+  background: #f8faff;
+  box-shadow: inset 0 0 0 1px rgba(20,46,91,.07);
+}
+
+.uploaded-document-text {
+  max-height: 70dvh;
+  margin: 0;
+  padding: 18px;
+  overflow: auto;
+  border-radius: 20px;
+  background: #f8faff;
   color: #061936;
-  font-weight: 900;
+  font: 800 .88rem/1.55 Inter, system-ui, sans-serif;
+  white-space: pre-wrap;
 }
 
+.uploaded-document-empty {
+  display: grid;
+  gap: 10px;
+  place-items: start;
+  padding: 26px;
+  border-radius: 22px;
+  background: #f8faff;
+  box-shadow: inset 0 0 0 1px rgba(20,46,91,.07);
+}
+
+.uploaded-document-empty strong {
+  color: #2867ff;
+  font-size: .78rem;
+  font-weight: 950;
+}
+
+.uploaded-document-empty h3 {
+  margin: 0;
+  color: #061936;
+  font-size: 1.25rem;
+}
+
+.uploaded-document-empty p {
+  margin: 0 0 8px;
+  color: #5f6f8d;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+@media (min-width: 1180px) {
+  .document-preview-card .document-share-action {
+    display: none;
+  }
+}
 @media (max-width: 699px) {
   .patch-note {
     grid-template-columns: minmax(0, 1fr) 30px !important;
@@ -5921,26 +6074,58 @@ body.modal-open {
     font-size: .7rem !important;
     line-height: 1.2 !important;
   }
+
+}
+
+@media (max-width: 699px) {
+  .documents-title {
+    gap: 10px;
+  }
+
+  .document-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto;
+  }
+
+  .document-actions .count-pill {
+    justify-self: start;
+  }
+
+  .document-actions .primary-action {
+    min-height: 42px;
+    padding: 0 14px;
+    font-size: .86rem;
+  }
+
   .document-preview-card {
     max-width: min(94vw, 430px) !important;
   }
 
+  .document-preview-body {
+    max-height: calc(82dvh - 126px);
+  }
+
   .registration-preview {
+    gap: 14px;
     padding: 16px !important;
     border-radius: 18px !important;
   }
 
-  .registration-preview header {
-    display: grid !important;
+  .registration-letterhead,
+  .registration-grid,
+  .registration-signatures {
     grid-template-columns: 1fr !important;
   }
 
-  .registration-grid,
-  .registration-consent div {
-    grid-template-columns: 1fr !important;
+  .registration-heading h3 {
+    font-size: 1.08rem;
+  }
+
+  .registration-checks {
+    padding: 13px;
   }
 }
-
 @media print {
   body * {
     visibility: hidden !important;

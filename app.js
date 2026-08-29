@@ -333,15 +333,63 @@ const athletes = [
   }
 ];
 
+const DOCUMENT_STORAGE_KEY = "ns-volley-documents";
+
 const documents = [
   {
     id: "registration-form",
-    title: "Modulo iscrizione",
-    type: "PDF",
+    title: "Modulo iscrizione atleta",
+    type: "Modulo",
     owner: "NS Volley",
-    description: "Fac simile vuoto da compilare, stampare o condividere."
+    description: "Domanda di iscrizione, anagrafica atleta, autorizzazioni, privacy e certificazione sanitaria."
   }
 ];
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function documentTypeLabel(file) {
+  const name = file?.name || "";
+  const extension = name.includes(".") ? name.split(".").pop().toUpperCase() : "FILE";
+  if (file?.type === "application/pdf") return "PDF";
+  if (file?.type?.startsWith("image/")) return "IMG";
+  if (file?.type?.startsWith("text/")) return "TXT";
+  return extension || "FILE";
+}
+
+function humanFileSize(bytes = 0) {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1).replace(".", ",")} MB`;
+}
+
+function loadStoredDocuments() {
+  try {
+    const stored = JSON.parse(localStorage.getItem(DOCUMENT_STORAGE_KEY) || "[]");
+    stored
+      .filter((item) => item?.id && item?.dataUrl)
+      .forEach((item) => documents.push(item));
+  } catch (error) {
+    localStorage.removeItem(DOCUMENT_STORAGE_KEY);
+  }
+}
+
+function persistImportedDocuments() {
+  const imported = documents.filter((item) => item.source === "upload");
+  try {
+    localStorage.setItem(DOCUMENT_STORAGE_KEY, JSON.stringify(imported));
+  } catch (error) {
+    showNotificationToast("Archivio pieno", "Il file resta visibile ora, ma il browser non ha spazio per salvarlo in modo permanente.");
+  }
+}
+
+loadStoredDocuments();
 
 const payments = [
   { athlete: "Sara Conti", amount: 320, state: "Pagato" },
@@ -440,7 +488,11 @@ const certExpiringTotal = document.querySelector("#certExpiringTotal");
 const certMissingTotal = document.querySelector("#certMissingTotal");
 const accountingBoard = document.querySelector("#accountingBoard");
 const documentList = document.querySelector("#documentList");
+const importDocumentButton = document.querySelector("#importDocumentButton");
+const documentImportInput = document.querySelector("#documentImportInput");
 const documentPreviewModal = document.querySelector("#documentPreviewModal");
+const documentPreviewTitle = document.querySelector("#documentPreviewTitle");
+const documentPreviewBody = document.querySelector("#documentPreviewBody");
 const deadlineList = document.querySelector("#deadlineList");
 const deadlineTotal = document.querySelector("#deadlineTotal");
 const calendarCta = document.querySelector("#calendarCta");
@@ -514,6 +566,7 @@ let activeAccountingMonth = "sep";
 let paymentBulkMode = false;
 let paymentChooseAthleteMode = false;
 let pendingCertificateFiles = [];
+let activeDocumentId = "registration-form";
 
 const seasonMonths = [
   { key: "sep", label: "Set" },
@@ -1047,13 +1100,138 @@ function renderPrimaNota() {
   `;
 }
 function renderDocuments() {
-  documentList.innerHTML = documents.map((document) => `
-    <button class="doc-row document-preview-trigger" type="button" data-document-id="${document.id}">
-      <strong>${document.title}</strong>
-      <span class="muted">${document.description}</span>
-      <span class="badge">${document.type}</span>
+  if (!documentList) return;
+  documentList.innerHTML = documents.map((item) => `
+    <button class="doc-row document-preview-trigger" type="button" data-document-id="${escapeHtml(item.id)}">
+      <strong>${escapeHtml(item.title)}</strong>
+      <span class="muted">${escapeHtml(item.description)}</span>
+      <span class="badge">${escapeHtml(item.type)}</span>
     </button>
   `).join("");
+}
+
+function registrationFormPreview() {
+  return `
+    <section class="registration-preview" aria-label="Fac simile modulo iscrizione">
+      <header class="registration-letterhead">
+        <div>
+          <strong>NS Volley</strong>
+          <span>Associazione sportiva dilettantistica</span>
+        </div>
+        <div>
+          <em>Stagione sportiva</em>
+          <strong>2026 / 2027</strong>
+        </div>
+      </header>
+      <div class="registration-heading">
+        <span>Domanda di iscrizione atleta</span>
+        <h3>Tesseramento e partecipazione attivita sportiva</h3>
+        <p>Modulo fac simile da compilare in stampatello e consegnare alla segreteria con documento d'identita, codice fiscale e certificato medico sportivo in corso di validita.</p>
+      </div>
+      <section class="registration-section">
+        <h4>Dati atleta</h4>
+        <div class="registration-grid">
+          <label>Nome <span></span></label>
+          <label>Cognome <span></span></label>
+          <label>Data di nascita <span></span></label>
+          <label>Luogo di nascita <span></span></label>
+          <label>Codice fiscale <span></span></label>
+          <label>Nazionalita <span></span></label>
+          <label>Indirizzo residenza <span></span></label>
+          <label>Comune e CAP <span></span></label>
+          <label>Email atleta <span></span></label>
+          <label>Cellulare atleta <span></span></label>
+          <label>Categoria richiesta <span></span></label>
+          <label>Ruolo / note tecniche <span></span></label>
+        </div>
+      </section>
+      <section class="registration-section">
+        <h4>Genitori o tutori</h4>
+        <div class="registration-grid">
+          <label>Genitore / tutore 1 <span></span></label>
+          <label>Telefono <span></span></label>
+          <label>Email <span></span></label>
+          <label>Codice fiscale <span></span></label>
+          <label>Genitore / tutore 2 <span></span></label>
+          <label>Telefono <span></span></label>
+          <label>Email <span></span></label>
+          <label>Codice fiscale <span></span></label>
+        </div>
+      </section>
+      <section class="registration-section registration-checks">
+        <h4>Dichiarazioni</h4>
+        <p>Il richiedente dichiara di conoscere e accettare regolamento societario, calendario allenamenti, procedure di pagamento quote e disposizioni sanitarie previste per l'attivita sportiva.</p>
+        <div><span></span>Certificato medico sportivo consegnato o da consegnare prima dell'inizio attivita.</div>
+        <div><span></span>Consenso al trattamento dei dati personali secondo GDPR e informativa societaria.</div>
+        <div><span></span>Autorizzazione all'utilizzo di immagini e video per comunicazioni sportive della societa.</div>
+      </section>
+      <div class="registration-signatures">
+        <label>Data <span></span></label>
+        <label>Firma atleta <span></span></label>
+        <label>Firma genitore / tutore 1 <span></span></label>
+        <label>Firma genitore / tutore 2 <span></span></label>
+      </div>
+    </section>
+  `;
+}
+
+function unsupportedDocumentPreview(item) {
+  return `
+    <section class="uploaded-document-empty">
+      <strong>${escapeHtml(item.type)}</strong>
+      <h3>${escapeHtml(item.title)}</h3>
+      <p>Anteprima non disponibile per questo formato nel browser. Puoi aprire o scaricare il file originale.</p>
+      <a class="primary-action inline" href="${item.dataUrl}" download="${escapeHtml(item.fileName || item.title)}" target="_blank" rel="noopener">Apri file</a>
+    </section>
+  `;
+}
+
+function documentPreviewHtml(item) {
+  if (item.id === "registration-form") return registrationFormPreview();
+  if (item.mime?.startsWith("image/")) {
+    return `<figure class="uploaded-document-preview"><img src="${item.dataUrl}" alt="${escapeHtml(item.title)}"></figure>`;
+  }
+  if (item.mime === "application/pdf") {
+    return `<iframe class="uploaded-document-frame" src="${item.dataUrl}" title="${escapeHtml(item.title)}"></iframe>`;
+  }
+  if (item.mime?.startsWith("text/")) {
+    const payload = item.dataUrl.includes(",") ? item.dataUrl.split(",")[1] : "";
+    const bytes = Uint8Array.from(atob(payload), (char) => char.charCodeAt(0));
+    const text = new TextDecoder("utf-8").decode(bytes);
+    return `<pre class="uploaded-document-text">${escapeHtml(text)}</pre>`;
+  }
+  return unsupportedDocumentPreview(item);
+}
+
+function openDocumentPreview(documentId) {
+  const item = documents.find((documentItem) => documentItem.id === documentId) || documents[0];
+  if (!item || !documentPreviewModal || !documentPreviewBody || !documentPreviewTitle) return;
+  activeDocumentId = item.id;
+  documentPreviewTitle.textContent = item.title;
+  documentPreviewBody.innerHTML = documentPreviewHtml(item);
+  openLockedDialog(documentPreviewModal);
+}
+
+function readImportedFile(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => {
+      resolve({
+        id: `uploaded-${Date.now()}-${Math.random().toString(16).slice(2)}`,
+        title: file.name.replace(/\.[^.]+$/, ""),
+        fileName: file.name,
+        type: documentTypeLabel(file),
+        owner: "Archivio documenti",
+        description: `Caricato oggi - ${humanFileSize(file.size)}`,
+        source: "upload",
+        mime: file.type || "application/octet-stream",
+        size: file.size,
+        dataUrl: reader.result
+      });
+    });
+    reader.addEventListener("error", reject);
+    reader.readAsDataURL(file);
+  });
 }
 
 function updateSummary() {
@@ -1329,17 +1507,37 @@ patchNoteButtons.forEach((button) => {
   button.addEventListener("click", () => openPatchNoteModal(button.dataset.patchNote));
 });
 closePatchNoteButton?.addEventListener("click", () => patchNoteModal?.close());
+importDocumentButton?.addEventListener("click", () => documentImportInput?.click());
+documentImportInput?.addEventListener("change", async () => {
+  const files = [...documentImportInput.files || []];
+  if (!files.length) return;
+
+  try {
+    const imported = await Promise.all(files.map(readImportedFile));
+    documents.push(...imported);
+    persistImportedDocuments();
+    renderDocuments();
+    updateSummary();
+    showNotificationToast("Documenti importati", `${imported.length} file aggiunti all'archivio documenti.`);
+  } catch (error) {
+    showNotificationToast("Import non riuscito", "Uno dei file selezionati non puo essere letto dal browser.");
+  } finally {
+    documentImportInput.value = "";
+  }
+});
+
 documentList?.addEventListener("click", (event) => {
   const trigger = event.target.closest(".document-preview-trigger");
   if (!trigger) return;
-  openLockedDialog(documentPreviewModal);
+  openDocumentPreview(trigger.dataset.documentId);
 });
 document.querySelector("#closeDocumentPreviewButton")?.addEventListener("click", () => documentPreviewModal?.close());
 document.querySelector("#printRegistrationFormButton")?.addEventListener("click", () => window.print());
 document.querySelector("#shareRegistrationFormButton")?.addEventListener("click", async () => {
+  const currentDocument = documents.find((item) => item.id === activeDocumentId) || documents[0];
   const shareData = {
-    title: "Modulo iscrizione NS Volley",
-    text: "Fac simile modulo iscrizione NS Volley da compilare.",
+    title: currentDocument?.title || "Documento NS Volley",
+    text: currentDocument?.description || "Documento NS Volley.",
     url: window.location.href
   };
   try {

@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260828-1140">
+  <link rel="stylesheet" href="styles.css?v=20260829-0910">
 </head>
 <body data-view-active="overview">
   <main class="screen">
@@ -162,16 +162,19 @@
         </section>
 
         <section class="data-panel view" id="documents">
-          <div class="panel-title">
+          <div class="panel-title documents-title">
             <div>
               <span>Documenti societa</span>
               <h2>Documenti</h2>
             </div>
-            <strong class="count-pill" id="documentCount">0</strong>
+            <div class="panel-actions document-actions">
+              <strong class="count-pill" id="documentCount">0</strong>
+              <button class="primary-action inline" id="importDocumentButton" type="button">Importa file</button>
+              <input id="documentImportInput" type="file" accept=".pdf,.jpg,.jpeg,.png,.webp,.txt,.doc,.docx" multiple hidden>
+            </div>
           </div>
           <div class="data-list" id="documentList"></div>
         </section>
-
 
         <section class="data-panel view deadlines-panel" id="deadlines">
           <div class="panel-title accounting-title">
@@ -336,39 +339,15 @@
       <header class="modal-head">
         <div>
           <span class="micro">Documenti</span>
-          <h2>Modulo iscrizione</h2>
+          <h2 id="documentPreviewTitle">Modulo iscrizione</h2>
         </div>
         <button class="modal-close" id="closeDocumentPreviewButton" type="button" aria-label="Chiudi">x</button>
       </header>
 
-      <section class="registration-preview" aria-label="Fac simile modulo iscrizione">
-        <header>
-          <strong>NS Volley</strong>
-          <span>Modulo iscrizione atleta</span>
-        </header>
-        <div class="registration-grid">
-          <label>Nome atleta <span></span></label>
-          <label>Cognome atleta <span></span></label>
-          <label>Data di nascita <span></span></label>
-          <label>Luogo di nascita <span></span></label>
-          <label>Codice fiscale <span></span></label>
-          <label>Categoria <span></span></label>
-          <label>Email atleta <span></span></label>
-          <label>Cellulare atleta <span></span></label>
-          <label>Genitore 1 <span></span></label>
-          <label>Telefono genitore 1 <span></span></label>
-          <label>Genitore 2 <span></span></label>
-          <label>Telefono genitore 2 <span></span></label>
-        </div>
-        <div class="registration-consent">
-          <p>Il sottoscritto richiede l'iscrizione dell'atleta alla stagione sportiva indicata e dichiara di consegnare documenti, privacy e certificato medico sportivo ove richiesto.</p>
-          <div><span>Data</span><i></i></div>
-          <div><span>Firma</span><i></i></div>
-        </div>
-      </section>
+      <section class="document-preview-body" id="documentPreviewBody"></section>
 
       <footer class="modal-actions">
-        <button class="soft-button" id="shareRegistrationFormButton" type="button">Condividi</button>
+        <button class="soft-button document-share-action" id="shareRegistrationFormButton" type="button">Condividi</button>
         <button class="primary-action inline" id="printRegistrationFormButton" type="button">Stampa</button>
       </footer>
     </article>
@@ -578,6 +557,6 @@
       </footer>
     </form>
   </dialog>
-  <script src="app.js?v=20260828-1155"></script>
+  <script src="app.js?v=20260829-0910"></script>
 </body>
 </html>
