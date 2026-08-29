@@ -1175,6 +1175,104 @@ function registrationFormPreview() {
   `;
 }
 
+
+function registrationPrintStyles() {
+  return `
+    @page { size: A4 portrait; margin: 0; }
+    * { box-sizing: border-box; }
+    html, body {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0;
+      padding: 0;
+      background: #fff;
+      color: #061936;
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    body { display: block; }
+    .registration-preview {
+      width: 210mm;
+      height: 297mm;
+      display: grid;
+      grid-template-rows: auto auto auto auto 1fr auto;
+      gap: 4.8mm;
+      padding: 14mm 15mm;
+      overflow: hidden;
+      border: 0;
+      border-radius: 0;
+      background: #fff;
+      box-shadow: none;
+    }
+    .registration-letterhead {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8mm;
+      align-items: start;
+      padding-bottom: 5mm;
+      border-bottom: .35mm solid #dbe4f1;
+    }
+    .registration-letterhead div { display: grid; gap: 1.2mm; }
+    .registration-letterhead strong { font-size: 13pt; font-weight: 900; line-height: 1.05; }
+    .registration-letterhead span,
+    .registration-letterhead em { color: #52647f; font-size: 7.3pt; font-style: normal; font-weight: 800; }
+    .registration-heading { display: grid; gap: 1.4mm; }
+    .registration-heading span,
+    .registration-section h4 { margin: 0; color: #2867ff; font-size: 7pt; font-weight: 900; letter-spacing: .03em; text-transform: uppercase; }
+    .registration-heading h3 { margin: 0; font-size: 14pt; line-height: 1.08; }
+    .registration-heading p,
+    .registration-checks p { margin: 0; color: #52647f; font-size: 7.2pt; font-weight: 700; line-height: 1.28; }
+    .registration-section { display: grid; gap: 2.6mm; }
+    .registration-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3.2mm 6mm; }
+    .registration-grid label,
+    .registration-signatures label { display: grid; gap: 1.6mm; color: #52647f; font-size: 6.7pt; font-weight: 900; line-height: 1; text-transform: uppercase; }
+    .registration-grid label span,
+    .registration-signatures label span { display: block; height: 7.4mm; border-bottom: .3mm solid #b8c4d6; }
+    .registration-checks { display: grid; gap: 2.1mm; padding: 4mm; border-radius: 3mm; background: #f8faff; box-shadow: inset 0 0 0 .3mm #dfe7f5; }
+    .registration-checks div { display: grid; grid-template-columns: 4mm 1fr; gap: 2.5mm; align-items: start; color: #263858; font-size: 6.8pt; font-weight: 750; line-height: 1.25; }
+    .registration-checks div span { width: 3.5mm; height: 3.5mm; border: .3mm solid #8fa0bb; border-radius: .8mm; background: #fff; }
+    .registration-signatures { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4mm 7mm; align-self: end; }
+    @media print {
+      html, body { width: 210mm; height: 297mm; }
+      .registration-preview { page-break-after: avoid; }
+    }
+  `;
+}
+
+function printRegistrationDocument() {
+  const currentDocument = documents.find((item) => item.id === activeDocumentId) || documents[0];
+  if (currentDocument?.id !== "registration-form") {
+    window.print();
+    return;
+  }
+
+  const printWindow = window.open("", "_blank", "width=900,height=1100");
+  if (!printWindow) {
+    showNotificationToast("Stampa bloccata", "Consenti i popup per stampare il modulo in formato A4.");
+    return;
+  }
+
+  printWindow.document.open();
+  printWindow.document.write(`
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Modulo iscrizione atleta - NS Volley</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>${registrationPrintStyles()}</style>
+</head>
+<body>${registrationFormPreview()}</body>
+</html>
+  `);
+  printWindow.document.close();
+  printWindow.focus();
+  setTimeout(() => printWindow.print(), 180);
+}
 function unsupportedDocumentPreview(item) {
   return `
     <section class="uploaded-document-empty">
@@ -1208,6 +1306,7 @@ function openDocumentPreview(documentId) {
   if (!item || !documentPreviewModal || !documentPreviewBody || !documentPreviewTitle) return;
   activeDocumentId = item.id;
   documentPreviewTitle.textContent = item.title;
+  documentPreviewBody.classList.toggle("registration-document-body", item.id === "registration-form");
   documentPreviewBody.innerHTML = documentPreviewHtml(item);
   openLockedDialog(documentPreviewModal);
 }
@@ -1532,7 +1631,7 @@ documentList?.addEventListener("click", (event) => {
   openDocumentPreview(trigger.dataset.documentId);
 });
 document.querySelector("#closeDocumentPreviewButton")?.addEventListener("click", () => documentPreviewModal?.close());
-document.querySelector("#printRegistrationFormButton")?.addEventListener("click", () => window.print());
+document.querySelector("#printRegistrationFormButton")?.addEventListener("click", printRegistrationDocument);
 document.querySelector("#shareRegistrationFormButton")?.addEventListener("click", async () => {
   const currentDocument = documents.find((item) => item.id === activeDocumentId) || documents[0];
   const shareData = {
