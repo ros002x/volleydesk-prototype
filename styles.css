@@ -6356,3 +6356,216 @@ body.data-view-open .workspace {
   background: #d83255;
   color: #fff;
 }
+
+/* Documents refinement */
+.documents-heading {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.documents-heading .count-pill {
+  min-width: 30px;
+  height: 30px;
+  padding: 0 10px;
+  color: #2867ff;
+  background: rgba(40,103,255,.08);
+  font-size: .82rem;
+}
+
+#documents .doc-row {
+  grid-template-columns: minmax(220px, 1fr) minmax(180px, .58fr) auto;
+  min-height: 64px;
+  padding: 14px 18px;
+}
+
+#documents .doc-row .muted {
+  justify-self: end;
+  max-width: 360px;
+  overflow: hidden;
+  color: #71809b;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.document-preview-body.registration-document-body {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: 0;
+}
+
+.document-preview-body.registration-document-body .registration-preview {
+  width: min(100%, calc((92dvh - 154px) * 210 / 297));
+  max-width: 720px;
+  max-height: calc(92dvh - 154px);
+  aspect-ratio: 210 / 297;
+  gap: 10px;
+  padding: 18px 20px;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: inset 0 0 0 1px rgba(20,46,91,.10), 0 16px 42px rgba(24,58,119,.08);
+}
+
+.registration-document-body .registration-letterhead {
+  gap: 12px;
+  padding-bottom: 10px;
+}
+
+.registration-document-body .registration-letterhead strong {
+  font-size: .98rem;
+}
+
+.registration-document-body .registration-letterhead span,
+.registration-document-body .registration-letterhead em {
+  font-size: .62rem;
+}
+
+.registration-document-body .registration-heading {
+  gap: 3px;
+}
+
+.registration-document-body .registration-heading span,
+.registration-document-body .registration-section h4 {
+  font-size: .58rem;
+}
+
+.registration-document-body .registration-heading h3 {
+  font-size: .98rem;
+}
+
+.registration-document-body .registration-heading p,
+.registration-document-body .registration-checks p {
+  font-size: .61rem;
+  line-height: 1.25;
+}
+
+.registration-document-body .registration-section {
+  gap: 7px;
+}
+
+.registration-document-body .registration-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px 12px;
+}
+
+.registration-document-body .registration-grid label,
+.registration-document-body .registration-signatures label {
+  gap: 4px;
+  font-size: .52rem;
+}
+
+.registration-document-body .registration-grid label span,
+.registration-document-body .registration-signatures label span {
+  min-height: 18px;
+}
+
+.registration-document-body .registration-checks {
+  gap: 7px;
+  padding: 10px;
+  border-radius: 12px;
+}
+
+.registration-document-body .registration-checks div {
+  grid-template-columns: 13px minmax(0, 1fr);
+  gap: 7px;
+  font-size: .58rem;
+  line-height: 1.2;
+}
+
+.registration-document-body .registration-checks div span {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+.registration-document-body .registration-signatures {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 12px;
+  padding-top: 0;
+}
+
+@media (max-width: 699px) {
+  .documents-heading {
+    gap: 8px;
+  }
+
+  .documents-heading .count-pill {
+    min-width: 28px;
+    height: 28px;
+    font-size: .78rem;
+  }
+
+  #documents .doc-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    min-height: 66px;
+    padding: 13px 14px;
+    gap: 5px 10px;
+  }
+
+  #documents .doc-row .muted {
+    grid-column: 1 / -1;
+    justify-self: start;
+    max-width: 100%;
+    font-size: .78rem;
+  }
+
+  .document-preview-body.registration-document-body .registration-preview {
+    width: min(100%, calc((82dvh - 126px) * 210 / 297));
+    max-height: calc(82dvh - 126px);
+    padding: 12px;
+  }
+}
+/* Document modal final layout */
+.document-preview-modal[open] {
+  width: min(860px, calc(100vw - 28px)) !important;
+  max-width: calc(100vw - 28px) !important;
+  max-height: calc(100dvh - 28px) !important;
+  overflow: hidden !important;
+}
+
+.document-preview-modal[open] .document-preview-card {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  max-width: none !important;
+  max-height: calc(100dvh - 28px) !important;
+  overflow: hidden !important;
+}
+
+.document-preview-modal[open] .document-preview-body {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+}
+
+.document-preview-modal[open] .document-preview-body.registration-document-body {
+  overflow: hidden !important;
+}
+
+@media (min-width: 700px) and (max-width: 1179px) {
+  .document-preview-modal[open] {
+    width: min(720px, calc(100vw - 24px)) !important;
+  }
+
+  .document-preview-body.registration-document-body .registration-preview {
+    width: min(100%, calc((100dvh - 150px) * 210 / 297)) !important;
+    max-height: calc(100dvh - 150px) !important;
+  }
+}
+
+@media (max-width: 699px) {
+  .document-preview-modal[open] {
+    width: calc(100vw - 12px) !important;
+    max-width: calc(100vw - 12px) !important;
+    max-height: calc(100dvh - 12px) !important;
+  }
+
+  .document-preview-modal[open] .document-preview-card {
+    max-height: calc(100dvh - 12px) !important;
+  }
+
+  .document-preview-body.registration-document-body .registration-preview {
+    width: min(100%, calc((100dvh - 140px) * 210 / 297)) !important;
+    max-height: calc(100dvh - 140px) !important;
+  }
+}

@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260829-0910">
+  <link rel="stylesheet" href="styles.css?v=20260829-0930">
 </head>
 <body data-view-active="overview">
   <main class="screen">
@@ -165,10 +165,9 @@
           <div class="panel-title documents-title">
             <div>
               <span>Documenti societa</span>
-              <h2>Documenti</h2>
+              <h2 class="documents-heading">Documenti <strong class="count-pill" id="documentCount">0</strong></h2>
             </div>
             <div class="panel-actions document-actions">
-              <strong class="count-pill" id="documentCount">0</strong>
               <button class="primary-action inline" id="importDocumentButton" type="button">Importa file</button>
               <input id="documentImportInput" type="file" accept=".pdf,.jpg,.jpeg,.png,.webp,.txt,.doc,.docx" multiple hidden>
             </div>
@@ -557,6 +556,6 @@
       </footer>
     </form>
   </dialog>
-  <script src="app.js?v=20260829-0910"></script>
+  <script src="app.js?v=20260829-0930"></script>
 </body>
 </html>

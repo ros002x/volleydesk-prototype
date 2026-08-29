@@ -341,7 +341,7 @@ const documents = [
     title: "Modulo iscrizione atleta",
     type: "Modulo",
     owner: "NS Volley",
-    description: "Domanda di iscrizione, anagrafica atleta, autorizzazioni, privacy e certificazione sanitaria."
+    description: "Modulo completo da compilare."
   }
 ];
 
