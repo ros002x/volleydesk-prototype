@@ -6485,6 +6485,37 @@ body.data-view-open .workspace {
   padding-top: 0;
 }
 
+
+#documents .doc-row {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(180px, .58fr) auto auto;
+  align-items: center;
+  gap: 12px;
+}
+
+#documents .document-preview-trigger {
+  display: contents;
+  color: inherit;
+  text-align: left;
+}
+
+#documents .document-delete-button {
+  min-height: 34px;
+  border: 0;
+  border-radius: 999px;
+  padding: 0 12px;
+  color: #d83255;
+  background: rgba(216, 50, 85, .09);
+  font-size: .76rem;
+  font-weight: 950;
+  cursor: pointer;
+}
+
+#documents .document-delete-button:hover {
+  color: #fff;
+  background: #d83255;
+}
+
 @media (max-width: 699px) {
   .documents-heading {
     gap: 8px;
@@ -6508,6 +6539,19 @@ body.data-view-open .workspace {
     justify-self: start;
     max-width: 100%;
     font-size: .78rem;
+  }
+
+  #documents .doc-row .badge {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  #documents .document-delete-button {
+    grid-column: 2;
+    grid-row: 2;
+    min-height: 30px;
+    padding: 0 10px;
+    font-size: .68rem;
   }
 
   .document-preview-body.registration-document-body .registration-preview {

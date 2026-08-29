@@ -886,11 +886,11 @@ function updateAccountingControls() {
   deleteAccountingButton.textContent = `Elimina ${activeCount}`;
   editAccountingButton.disabled = activeAccountingIndex === null && selectedAccountingRows.size !== 1;
 }
-function requestDeleteConfirmation(subject) {
+function requestDeleteConfirmation(subject, warning = "Questa azione rimuove solo la riga dallo scadenziario. Anagrafica, certificati e documenti restano invariati.") {
   if (!confirmDeleteModal) return Promise.resolve(false);
   if (confirmDeleteTitle) confirmDeleteTitle.textContent = "Eliminare definitivamente?";
   if (confirmDeleteMessage) confirmDeleteMessage.textContent = `Sei sicuro di voler eliminare ${subject}?`;
-  if (confirmDeleteWarning) confirmDeleteWarning.textContent = "Questa azione rimuove solo la riga dallo scadenziario. Anagrafica, certificati e documenti restano invariati.";
+  if (confirmDeleteWarning) confirmDeleteWarning.textContent = warning;
   confirmDeleteModal.returnValue = "";
 
   return new Promise((resolve) => {
@@ -1102,12 +1102,30 @@ function renderPrimaNota() {
 function renderDocuments() {
   if (!documentList) return;
   documentList.innerHTML = documents.map((item) => `
-    <button class="doc-row document-preview-trigger" type="button" data-document-id="${escapeHtml(item.id)}">
-      <strong>${escapeHtml(item.title)}</strong>
-      <span class="muted">${escapeHtml(item.description)}</span>
-      <span class="badge">${escapeHtml(item.type)}</span>
-    </button>
+    <article class="doc-row" data-document-id="${escapeHtml(item.id)}">
+      <button class="document-preview-trigger" type="button" data-document-id="${escapeHtml(item.id)}">
+        <strong>${escapeHtml(item.title)}</strong>
+        <span class="muted">${escapeHtml(item.description)}</span>
+        <span class="badge">${escapeHtml(item.type)}</span>
+      </button>
+      ${item.source === "upload" ? `<button class="document-delete-button" type="button" data-document-id="${escapeHtml(item.id)}" aria-label="Elimina ${escapeHtml(item.title)}">Elimina</button>` : ""}
+    </article>
   `).join("");
+}
+
+async function deleteImportedDocument(documentId) {
+  const index = documents.findIndex((item) => item.id === documentId && item.source === "upload");
+  if (index < 0) return;
+  const item = documents[index];
+  const confirmed = await requestDeleteConfirmation(`il documento ${item.title}`, "Il file importato verra rimosso solo da questo dispositivo. Il modulo iscrizione resta disponibile.");
+  if (!confirmed) return;
+
+  documents.splice(index, 1);
+  persistImportedDocuments();
+  renderDocuments();
+  updateSummary();
+  if (activeDocumentId === documentId && documentPreviewModal?.open) documentPreviewModal.close();
+  showNotificationToast("Documento eliminato", "Il file importato e stato rimosso dall archivio locale.");
 }
 
 function registrationFormPreview() {
@@ -1808,6 +1826,14 @@ documentImportInput?.addEventListener("change", async () => {
 });
 
 documentList?.addEventListener("click", (event) => {
+  const deleteButton = event.target.closest(".document-delete-button");
+  if (deleteButton) {
+    event.preventDefault();
+    event.stopPropagation();
+    deleteImportedDocument(deleteButton.dataset.documentId);
+    return;
+  }
+
   const trigger = event.target.closest(".document-preview-trigger");
   if (!trigger) return;
   openDocumentPreview(trigger.dataset.documentId);
