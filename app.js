@@ -1266,7 +1266,7 @@ function createRegistrationPdfFile() {
   const gap = 28;
   const left = margin;
   const right = margin + colW + gap;
-  let y = height - 244;
+  let y = height - 236;
   const athleteRows = [
     ["NOME", "COGNOME"],
     ["DATA DI NASCITA", "LUOGO DI NASCITA"],
@@ -1278,31 +1278,34 @@ function createRegistrationPdfFile() {
   athleteRows.forEach(([a, b]) => {
     field(a, left, y, colW);
     field(b, right, y, colW);
-    y -= 50;
+    y -= 42;
   });
 
-  text("GENITORI O TUTORI", margin, y + 18, 8, "F2", blue);
+  text("GENITORI O TUTORI", margin, y + 16, 8, "F2", blue);
   const parentRows = [
     ["GENITORE / TUTORE 1", "TELEFONO"],
     ["EMAIL", "CODICE FISCALE"],
     ["GENITORE / TUTORE 2", "TELEFONO"],
     ["EMAIL", "CODICE FISCALE"]
   ];
-  y -= 20;
+  y -= 14;
   parentRows.forEach(([a, b]) => {
     field(a, left, y, colW);
     field(b, right, y, colW);
-    y -= 43;
+    y -= 34;
   });
 
-  rect(margin, y - 84, width - margin * 2, 84, true);
-  text("DICHIARAZIONI", margin + 12, y - 18, 8, "F2", blue);
-  text("Il richiedente dichiara di conoscere e accettare regolamento societario, calendario allenamenti,", margin + 12, y - 34, 7.2, "F2", muted);
-  text("procedure di pagamento quote e disposizioni sanitarie previste per l'attivita sportiva.", margin + 12, y - 47, 7.2, "F2", muted);
-  checkbox("Certificato medico sportivo consegnato o da consegnare prima dell'inizio attivita.", margin + 12, y - 66);
-  checkbox("Consenso privacy GDPR e autorizzazione comunicazioni societarie.", margin + 12, y - 80);
+  const declarationTop = y - 4;
+  const declarationHeight = 74;
+  const declarationBottom = declarationTop - declarationHeight;
+  rect(margin, declarationBottom, width - margin * 2, declarationHeight, true);
+  text("DICHIARAZIONI", margin + 12, declarationTop - 16, 8, "F2", blue);
+  text("Il richiedente dichiara di conoscere e accettare regolamento societario, calendario allenamenti,", margin + 12, declarationTop - 31, 7.2, "F2", muted);
+  text("procedure di pagamento quote e disposizioni sanitarie previste per l'attivita sportiva.", margin + 12, declarationTop - 43, 7.2, "F2", muted);
+  checkbox("Certificato medico sportivo consegnato o da consegnare prima dell'inizio attivita.", margin + 12, declarationTop - 58);
+  checkbox("Consenso privacy GDPR e autorizzazione comunicazioni societarie.", margin + 12, declarationTop - 70);
 
-  const signY = 62;
+  const signY = 38;
   field("DATA", margin, signY, 110);
   field("FIRMA ATLETA", margin + 135, signY, 165);
   field("FIRMA GENITORE / TUTORE", margin + 325, signY, 185);

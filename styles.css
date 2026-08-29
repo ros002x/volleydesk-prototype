@@ -6569,3 +6569,12 @@ body.data-view-open .workspace {
     max-height: calc(100dvh - 140px) !important;
   }
 }
+@media (max-width: 1179px) {
+  #printRegistrationFormButton {
+    display: none !important;
+  }
+
+  .document-preview-card .modal-actions {
+    justify-content: flex-end !important;
+  }
+}
