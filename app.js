@@ -1211,9 +1211,129 @@ function downloadFile(file) {
   window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
+function pdfEscape(value) {
+  return String(value ?? "")
+    .replace(/\\/g, "\\\\")
+    .replace(/\(/g, "\\(")
+    .replace(/\)/g, "\\)")
+    .replace(/[\u2018\u2019]/g, "'")
+    .replace(/[\u201C\u201D]/g, '"')
+    .replace(/[^\x20-\x7E]/g, "");
+}
+
+function createRegistrationPdfFile() {
+  const width = 595.28;
+  const height = 841.89;
+  const margin = 42;
+  const blue = "0.157 0.404 1 rg";
+  const ink = "0.024 0.098 0.212 rg";
+  const muted = "0.322 0.392 0.498 rg";
+  const border = "0.72 0.77 0.84 RG";
+  const light = "0.972 0.980 1 rg";
+  const commands = [];
+
+  const text = (value, x, y, size = 9, font = "F1", color = ink) => {
+    commands.push(`BT ${color} /${font} ${size} Tf ${x.toFixed(2)} ${y.toFixed(2)} Td (${pdfEscape(value)}) Tj ET`);
+  };
+  const line = (x1, y1, x2, y2) => {
+    commands.push(`${border} 0.7 w ${x1.toFixed(2)} ${y1.toFixed(2)} m ${x2.toFixed(2)} ${y2.toFixed(2)} l S`);
+  };
+  const rect = (x, y, w, h, fill = false) => {
+    commands.push(`${fill ? light : ""} ${border} 0.7 w ${x.toFixed(2)} ${y.toFixed(2)} ${w.toFixed(2)} ${h.toFixed(2)} re ${fill ? "B" : "S"}`);
+  };
+  const field = (label, x, y, w) => {
+    text(label, x, y + 13, 7, "F2", muted);
+    line(x, y, x + w, y);
+  };
+  const checkbox = (copy, x, y) => {
+    rect(x, y - 1, 10, 10);
+    text(copy, x + 16, y, 7.2, "F1", ink);
+  };
+
+  text("NS Volley", margin, height - 58, 15, "F2", ink);
+  text("Associazione sportiva dilettantistica", margin, height - 74, 8, "F2", muted);
+  text("Stagione sportiva", width - margin - 92, height - 58, 8, "F2", muted);
+  text("2026 / 2027", width - margin - 92, height - 76, 15, "F2", ink);
+  line(margin, height - 92, width - margin, height - 92);
+
+  text("DOMANDA DI ISCRIZIONE ATLETA", margin, height - 119, 8, "F2", blue);
+  text("Tesseramento e partecipazione attivita sportiva", margin, height - 141, 17, "F2", ink);
+  text("Modulo da compilare in stampatello e consegnare alla segreteria con documento d'identita,", margin, height - 160, 8, "F2", muted);
+  text("codice fiscale e certificato medico sportivo in corso di validita.", margin, height - 173, 8, "F2", muted);
+
+  text("DATI ATLETA", margin, height - 205, 8, "F2", blue);
+  const colW = 225;
+  const gap = 28;
+  const left = margin;
+  const right = margin + colW + gap;
+  let y = height - 244;
+  const athleteRows = [
+    ["NOME", "COGNOME"],
+    ["DATA DI NASCITA", "LUOGO DI NASCITA"],
+    ["CODICE FISCALE", "NAZIONALITA"],
+    ["INDIRIZZO RESIDENZA", "COMUNE E CAP"],
+    ["EMAIL ATLETA", "CELLULARE ATLETA"],
+    ["CATEGORIA RICHIESTA", "RUOLO / NOTE TECNICHE"]
+  ];
+  athleteRows.forEach(([a, b]) => {
+    field(a, left, y, colW);
+    field(b, right, y, colW);
+    y -= 50;
+  });
+
+  text("GENITORI O TUTORI", margin, y + 18, 8, "F2", blue);
+  const parentRows = [
+    ["GENITORE / TUTORE 1", "TELEFONO"],
+    ["EMAIL", "CODICE FISCALE"],
+    ["GENITORE / TUTORE 2", "TELEFONO"],
+    ["EMAIL", "CODICE FISCALE"]
+  ];
+  y -= 20;
+  parentRows.forEach(([a, b]) => {
+    field(a, left, y, colW);
+    field(b, right, y, colW);
+    y -= 43;
+  });
+
+  rect(margin, y - 84, width - margin * 2, 84, true);
+  text("DICHIARAZIONI", margin + 12, y - 18, 8, "F2", blue);
+  text("Il richiedente dichiara di conoscere e accettare regolamento societario, calendario allenamenti,", margin + 12, y - 34, 7.2, "F2", muted);
+  text("procedure di pagamento quote e disposizioni sanitarie previste per l'attivita sportiva.", margin + 12, y - 47, 7.2, "F2", muted);
+  checkbox("Certificato medico sportivo consegnato o da consegnare prima dell'inizio attivita.", margin + 12, y - 66);
+  checkbox("Consenso privacy GDPR e autorizzazione comunicazioni societarie.", margin + 12, y - 80);
+
+  const signY = 62;
+  field("DATA", margin, signY, 110);
+  field("FIRMA ATLETA", margin + 135, signY, 165);
+  field("FIRMA GENITORE / TUTORE", margin + 325, signY, 185);
+
+  const stream = commands.join("\n");
+  const objects = [
+    "<< /Type /Catalog /Pages 2 0 R >>",
+    "<< /Type /Pages /Kids [3 0 R] /Count 1 >>",
+    `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${width} ${height}] /Resources << /Font << /F1 4 0 R /F2 5 0 R >> >> /Contents 6 0 R >>`,
+    "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>",
+    "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>",
+    `<< /Length ${stream.length} >>\nstream\n${stream}\nendstream`
+  ];
+  let pdf = "%PDF-1.4\n";
+  const offsets = [0];
+  objects.forEach((object, index) => {
+    offsets.push(pdf.length);
+    pdf += `${index + 1} 0 obj\n${object}\nendobj\n`;
+  });
+  const xref = pdf.length;
+  pdf += `xref\n0 ${objects.length + 1}\n0000000000 65535 f \n`;
+  offsets.slice(1).forEach((offset) => {
+    pdf += `${String(offset).padStart(10, "0")} 00000 n \n`;
+  });
+  pdf += `trailer\n<< /Size ${objects.length + 1} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`;
+
+  return new File([pdf], "modulo-iscrizione-ns-volley.pdf", { type: "application/pdf" });
+}
 function currentDocumentFile(item) {
   if (item?.id === "registration-form") {
-    return new File([buildRegistrationDocumentFileHtml()], "modulo-iscrizione-ns-volley.html", { type: "text/html" });
+    return createRegistrationPdfFile();
   }
   if (item?.dataUrl) {
     return dataUrlToFile(item.dataUrl, item.fileName || `${item.title || "documento"}.${String(item.type || "file").toLowerCase()}`, item.mime || "application/octet-stream");
@@ -1241,11 +1361,11 @@ async function shareCurrentDocument() {
       return;
     }
     downloadFile(file);
-    showNotificationToast("File preparato", "Il documento e stato scaricato: puoi inviarlo da File o WhatsApp.");
+    showNotificationToast("File preparato", "Il PDF e stato scaricato: puoi inviarlo da File o WhatsApp.");
   } catch (error) {
     if (error?.name !== "AbortError") {
       downloadFile(file);
-      showNotificationToast("Condivisione non disponibile", "Il documento e stato scaricato come file locale.");
+      showNotificationToast("Condivisione non disponibile", "Il PDF e stato scaricato come file locale.");
     }
   }
 }
