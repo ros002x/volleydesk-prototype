@@ -1,3 +1,30 @@
+const APP_VERSION = "20260829-1200";
+const APP_VERSION_KEY = "nsVolleyAppVersion";
+
+function enforceFreshAppVersion() {
+  try {
+    const savedVersion = localStorage.getItem(APP_VERSION_KEY);
+    const url = new URL(window.location.href);
+    const alreadyReloaded = url.searchParams.get("appVersion") === APP_VERSION;
+
+    if (savedVersion && savedVersion !== APP_VERSION && !alreadyReloaded) {
+      localStorage.setItem(APP_VERSION_KEY, APP_VERSION);
+      url.searchParams.set("appVersion", APP_VERSION);
+      window.location.replace(url.toString());
+      return;
+    }
+
+    localStorage.setItem(APP_VERSION_KEY, APP_VERSION);
+  } catch (error) {
+    window.__nsVolleyVersionCheckFailed = true;
+  }
+}
+
+enforceFreshAppVersion();
+
+window.addEventListener("pageshow", (event) => {
+  if (event.persisted) window.location.reload();
+});
 let lockedScrollY = 0;
 
 function lockDocumentScroll() {
