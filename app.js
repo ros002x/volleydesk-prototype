@@ -1176,6 +1176,79 @@ function registrationFormPreview() {
 }
 
 
+function buildRegistrationDocumentFileHtml() {
+  return `<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Modulo iscrizione atleta - NS Volley</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>${registrationPrintStyles()}</style>
+</head>
+<body>${registrationFormPreview()}</body>
+</html>`;
+}
+
+function dataUrlToFile(dataUrl, fileName, mimeType = "application/octet-stream") {
+  const [meta, payload = ""] = String(dataUrl || "").split(",");
+  const isBase64 = meta.includes(";base64");
+  const binary = isBase64 ? atob(payload) : decodeURIComponent(payload);
+  const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
+  return new File([bytes], fileName, { type: mimeType });
+}
+
+function downloadFile(file) {
+  const url = URL.createObjectURL(file);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = file.name;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function currentDocumentFile(item) {
+  if (item?.id === "registration-form") {
+    return new File([buildRegistrationDocumentFileHtml()], "modulo-iscrizione-ns-volley.html", { type: "text/html" });
+  }
+  if (item?.dataUrl) {
+    return dataUrlToFile(item.dataUrl, item.fileName || `${item.title || "documento"}.${String(item.type || "file").toLowerCase()}`, item.mime || "application/octet-stream");
+  }
+  return null;
+}
+
+async function shareCurrentDocument() {
+  const currentDocument = documents.find((item) => item.id === activeDocumentId) || documents[0];
+  const file = currentDocumentFile(currentDocument);
+  if (!file) {
+    showNotificationToast("File non disponibile", "Questo documento non puo essere preparato per la condivisione.");
+    return;
+  }
+
+  const shareData = {
+    title: currentDocument?.title || "Documento NS Volley",
+    text: currentDocument?.description || "Documento NS Volley.",
+    files: [file]
+  };
+
+  try {
+    if (navigator.canShare?.({ files: [file] }) && navigator.share) {
+      await navigator.share(shareData);
+      return;
+    }
+    downloadFile(file);
+    showNotificationToast("File preparato", "Il documento e stato scaricato: puoi inviarlo da File o WhatsApp.");
+  } catch (error) {
+    if (error?.name !== "AbortError") {
+      downloadFile(file);
+      showNotificationToast("Condivisione non disponibile", "Il documento e stato scaricato come file locale.");
+    }
+  }
+}
 function registrationPrintStyles() {
   return `
     @page { size: A4 portrait; margin: 0; }
@@ -1254,21 +1327,7 @@ function printRegistrationDocument() {
   }
 
   printWindow.document.open();
-  printWindow.document.write(`
-<!doctype html>
-<html lang="it">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Modulo iscrizione atleta - NS Volley</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <style>${registrationPrintStyles()}</style>
-</head>
-<body>${registrationFormPreview()}</body>
-</html>
-  `);
+  printWindow.document.write(buildRegistrationDocumentFileHtml());
   printWindow.document.close();
   printWindow.focus();
   setTimeout(() => printWindow.print(), 180);
@@ -1632,28 +1691,8 @@ documentList?.addEventListener("click", (event) => {
 });
 document.querySelector("#closeDocumentPreviewButton")?.addEventListener("click", () => documentPreviewModal?.close());
 document.querySelector("#printRegistrationFormButton")?.addEventListener("click", printRegistrationDocument);
-document.querySelector("#shareRegistrationFormButton")?.addEventListener("click", async () => {
-  const currentDocument = documents.find((item) => item.id === activeDocumentId) || documents[0];
-  const shareData = {
-    title: currentDocument?.title || "Documento NS Volley",
-    text: currentDocument?.description || "Documento NS Volley.",
-    url: window.location.href
-  };
-  try {
-    if (navigator.share) {
-      await navigator.share(shareData);
-      return;
-    }
-    if (navigator.clipboard) {
-      await navigator.clipboard.writeText(shareData.url);
-      showNotificationToast("Link copiato", "Il link al modulo iscrizione e stato copiato negli appunti.");
-    }
-  } catch (error) {
-    if (error?.name !== "AbortError") {
-      showNotificationToast("Condivisione non disponibile", "Usa il comando stampa o riprova dal browser del dispositivo.");
-    }
-  }
-});
+document.querySelector("#shareRegistrationFormButton")?.addEventListener("click", shareCurrentDocument);
+
 notificationToggle?.addEventListener("click", () => showNotificationToast(undefined, undefined, true));
 calendarCta?.addEventListener("click", () => {
   if (isMobileCalendarDevice()) {
