@@ -6040,7 +6040,7 @@ body.modal-open {
   line-height: 1.4;
 }
 
-@media (min-width: 1180px) {
+@media (min-width: 1367px) {
   .document-preview-card .document-share-action {
     display: none;
   }
@@ -6637,9 +6637,13 @@ body.data-view-open .workspace {
     max-height: calc(100dvh - 140px) !important;
   }
 }
-@media (max-width: 1179px) {
+@media (max-width: 1366px) {
   #printRegistrationFormButton {
     display: none !important;
+  }
+
+  .document-preview-card .document-share-action {
+    display: inline-flex !important;
   }
 
   .document-preview-card .modal-actions {
