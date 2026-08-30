@@ -9,10 +9,12 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <title>NS Volley</title>
+  <link rel="apple-touch-icon" href="assets/ns-volley-app-icon.png?v=20260830-1015">
+  <link rel="icon" type="image/png" href="assets/ns-volley-app-icon.png?v=20260830-1015">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260830-1000">
+  <link rel="stylesheet" href="styles.css?v=20260830-1015">
 </head>
 <body data-view-active="overview">
   <main class="screen">
@@ -155,7 +157,7 @@
                 <option value="expiring">In scadenza</option>
                 <option value="expired">Mancanti</option>
               </select>
-              <button class="soft-button" id="openCertificateUploadButton" type="button">+ Certificato</button>
+              <button class="soft-button" id="openCertificateUploadButton" type="button">+</button>
             </div>
           </div>
           <div class="certificate-summary" aria-label="Riepilogo certificati">
@@ -246,7 +248,7 @@
                   <option value="out">Uscite</option>
                 </select>
                 <div class="prima-nota-date-field" data-placeholder="Data"><input type="date" id="primaNotaDate" aria-label="Filtra data"></div>
-                <button class="prima-nota-tool primary" id="addPrimaNotaButton" type="button">Movimento</button>
+                <button class="prima-nota-tool primary" id="addPrimaNotaButton" type="button">+</button>
               </div>
             </div>
             <div class="prima-nota-kpis" aria-label="Totali prima nota">
@@ -561,6 +563,6 @@
       </footer>
     </form>
   </dialog>
-  <script src="app.js?v=20260830-1000"></script>
+  <script src="app.js?v=20260830-1015"></script>
 </body>
 </html>
