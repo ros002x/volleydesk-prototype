@@ -1,4 +1,7 @@
-const APP_VERSION = "20260829-1200";
+// ========================================
+// CONFIGURATION / VERSIONING
+// ========================================
+const APP_VERSION = "20260830-1000";
 const APP_VERSION_KEY = "nsVolleyAppVersion";
 
 function enforceFreshAppVersion() {
@@ -25,6 +28,10 @@ enforceFreshAppVersion();
 window.addEventListener("pageshow", (event) => {
   if (event.persisted) window.location.reload();
 });
+
+// ========================================
+// MODAL SCROLL LOCK
+// ========================================
 let lockedScrollY = 0;
 
 function lockDocumentScroll() {
@@ -49,6 +56,9 @@ function openLockedDialog(dialog) {
   lockDocumentScroll();
   dialog.showModal();
 }
+// ========================================
+// DEVICE LAYOUT
+// ========================================
 function setDeviceLayoutClass() {
   const width = window.innerWidth || document.documentElement.clientWidth;
   const isTabletRange = width >= 700 && width <= 1366;
@@ -57,6 +67,9 @@ function setDeviceLayoutClass() {
 }
 setDeviceLayoutClass();
 window.addEventListener("resize", setDeviceLayoutClass);
+// ========================================
+// DEMO DATA
+// ========================================
 const athletes = [
   {
     firstName: "Sara",
@@ -360,6 +373,9 @@ const athletes = [
   }
 ];
 
+// ========================================
+// LOCAL STORAGE / DOCUMENTS
+// ========================================
 const DOCUMENT_STORAGE_KEY = "ns-volley-documents";
 
 const documents = [
@@ -492,6 +508,9 @@ const matchData = {
   awayTeam: "VOLLEY MATERA",
 };
 
+// ========================================
+// DOM REFERENCES
+// ========================================
 const productShell = document.querySelector(".product-shell");
 const sideNav = document.querySelector(".side-nav");
 const sidebarToggle = document.querySelector("#sidebarToggle");
@@ -583,6 +602,9 @@ const selectAthletesButton = document.querySelector("#selectAthletesButton");
 const deleteSelectedButton = document.querySelector("#deleteSelectedButton");
 let activeAthleteIndex = null;
 let activeAthleteDraft = null;
+// ========================================
+// SHARED UI STATE
+// ========================================
 let selectionMode = false;
 const selectedAthletes = new Set();
 let accountingSelectionMode = false;
@@ -595,6 +617,9 @@ let paymentChooseAthleteMode = false;
 let pendingCertificateFiles = [];
 let activeDocumentId = "registration-form";
 
+// ========================================
+// SCADENZIARIO CONFIGURATION
+// ========================================
 const seasonMonths = [
   { key: "sep", label: "Set" },
   { key: "oct", label: "Ott" },
@@ -661,6 +686,9 @@ function fillMatchForm() {
   matchForm.elements.awayTeam.value = matchData.awayTeam;
 }
 
+// ========================================
+// HOME / MATCH
+// ========================================
 function openMatchModal() {
   fillMatchForm();
   openLockedDialog(matchModal);
@@ -761,6 +789,9 @@ function showView(viewId) {
   bottomNavItems.forEach((item) => item.classList.toggle("active", item.dataset.view === activeView));
 }
 
+// ========================================
+// RENDER HELPERS
+// ========================================
 function badgeClass(value) {
   return value === "Valido" || value === "Pagato" ? "badge" : "badge warning";
 }
@@ -811,6 +842,9 @@ function updateSelectionControls() {
   deleteSelectedButton.textContent = `Elimina ${count}`;
 }
 
+// ========================================
+// ATHLETES / CERTIFICATES / LIST RENDERING
+// ========================================
 function renderCurrentAthletes() {
   renderAthletes(currentAthleteList());
 }
@@ -1064,6 +1098,9 @@ function formatEuro(value) {
   return `Euro ${Number(value || 0).toLocaleString("it-IT", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
 
+// ========================================
+// PRIMA NOTA / DOCUMENTS RENDERING
+// ========================================
 function formatDateIt(value) {
   if (!value) return "-";
   const [year, month, day] = value.split("-");
@@ -1710,6 +1747,9 @@ if (productShell && sidebarToggle) {
   window.addEventListener("load", queueSidebarTogglePositionUpdates);
 }
 
+// ========================================
+// EVENT BINDINGS
+// ========================================
 navItems.forEach((item) => {
   item.addEventListener("click", () => showView(item.dataset.view));
 });
@@ -2370,6 +2410,9 @@ document.querySelector("#exportButton")?.addEventListener("click", () => {
   navigator.clipboard?.writeText(payload);
 });
 
+// ========================================
+// BOOTSTRAP
+// ========================================
 function renderAll() {
   ensureAccounting();
   fillPaymentMonthOptions();
