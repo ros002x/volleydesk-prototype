@@ -1,7 +1,7 @@
 // ========================================
 // CONFIGURATION / VERSIONING
 // ========================================
-const APP_VERSION = "20260830-1045";
+const APP_VERSION = "20260830-1055";
 const APP_VERSION_KEY = "nsVolleyAppVersion";
 
 function enforceFreshAppVersion() {
@@ -1517,26 +1517,6 @@ function registrationPrintStyles() {
     }
   `;
 }
-
-function printRegistrationDocument() {
-  const currentDocument = documents.find((item) => item.id === activeDocumentId) || documents[0];
-  if (currentDocument?.id !== "registration-form") {
-    window.print();
-    return;
-  }
-
-  const printWindow = window.open("", "_blank", "width=900,height=1100");
-  if (!printWindow) {
-    showNotificationToast("Stampa bloccata", "Consenti i popup per stampare il modulo in formato A4.");
-    return;
-  }
-
-  printWindow.document.open();
-  printWindow.document.write(buildRegistrationDocumentFileHtml());
-  printWindow.document.close();
-  printWindow.focus();
-  setTimeout(() => printWindow.print(), 180);
-}
 function unsupportedDocumentPreview(item) {
   return `
     <section class="uploaded-document-empty">
@@ -1906,7 +1886,6 @@ documentList?.addEventListener("click", (event) => {
   openDocumentPreview(trigger.dataset.documentId);
 });
 document.querySelector("#closeDocumentPreviewButton")?.addEventListener("click", () => documentPreviewModal?.close());
-document.querySelector("#printRegistrationFormButton")?.addEventListener("click", printRegistrationDocument);
 document.querySelector("#shareRegistrationFormButton")?.addEventListener("click", shareCurrentDocument);
 
 notificationToggle?.addEventListener("click", () => showNotificationToast(undefined, undefined, true));
