@@ -5616,6 +5616,13 @@ body.modal-open {
     transform: scale(.94) !important;
   }
 }
+#openCertificateUploadButton {
+  width: 54px;
+  min-width: 54px;
+  padding-inline: 0 !important;
+  font-size: 1.18rem;
+  line-height: 1;
+}
 /* Create actions: every add/new button is blue with white content */
 #addAthleteButton,
 #openCertificateUploadButton,
