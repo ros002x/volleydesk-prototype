@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260830-1055">
+  <link rel="stylesheet" href="styles.css?v=20260902-0900">
 </head>
 <body data-view-active="overview">
   <main class="screen">
@@ -33,6 +33,7 @@
         <div class="side-meta">
           <span>Stagione</span>
           <strong>2026 / 2027</strong>
+          <button class="rights-link nav-item" type="button" data-view="credits">Diritti</button>
         </div>
       </aside>
       <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Nascondi sidebar" aria-expanded="true">
@@ -53,6 +54,7 @@
               <button class="nav-item-proxy" type="button" data-target="standings">Classifiche</button>
               <button class="nav-item-proxy" type="button" data-target="documents">Documenti</button>
               <button class="nav-item-proxy" type="button" data-target="accounting">Prima nota</button>
+              <button class="nav-item-proxy" type="button" data-target="credits">Diritti</button>
             </div>
           </details>
         </header>
@@ -310,6 +312,42 @@
             </button>
           </div>
         </section>
+        <section class="data-panel view credits-panel" id="credits">
+          <div class="panel-title">
+            <div>
+              <span>Diritti</span>
+              <h2>Credits progetto</h2>
+            </div>
+          </div>
+          <div class="credits-shell">
+            <section class="credits-hero" aria-label="Powered by RoS">
+              <span>Powered by</span>
+              <img src="assets/ros-signature.png" alt="RoS">
+            </section>
+            <section class="credits-copy">
+              <article>
+                <span>Sviluppo</span>
+                <h3>Applicazione gestionale NS Volley</h3>
+                <p>Realizzazione dell'interfaccia front-end, delle viste operative e dei flussi principali per roster atleti, certificati, documenti, scadenziario quote, prima nota e comunicazioni interne.</p>
+              </article>
+              <article>
+                <span>Design</span>
+                <h3>Sistema visivo premium</h3>
+                <p>Direzione UI mobile-first con layout separati per smartphone, iPad e desktop, palette chiara, componenti compatti, navigazione adattiva e ottimizzazione dei touch target.</p>
+              </article>
+              <article>
+                <span>Organizzazione dati</span>
+                <h3>Struttura pronta per database</h3>
+                <p>Definizione dei modelli dati demo per atleti, certificati, mensilita, movimenti contabili, documenti e patch notes, predisposti per essere collegati a persistenza reale e backend.</p>
+              </article>
+              <article>
+                <span>Product setup</span>
+                <h3>Preparazione al lancio</h3>
+                <p>Configurazione della web app installabile, gestione versione per aggiornamenti, pubblicazione GitHub Pages e base tecnica pronta per integrazione DB, autenticazione e notifiche reali.</p>
+              </article>
+            </section>
+          </div>
+        </section>
       </section>
 
       <nav class="bottom-nav" aria-label="Navigazione mobile">
@@ -562,6 +600,6 @@
       </footer>
     </form>
   </dialog>
-  <script src="app.js?v=20260830-1055"></script>
+  <script src="app.js?v=20260902-0900"></script>
 </body>
 </html>
