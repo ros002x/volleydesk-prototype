@@ -1,7 +1,7 @@
 // ========================================
 // CONFIGURATION / VERSIONING
 // ========================================
-const APP_VERSION = "20260902-0935";
+const APP_VERSION = "20260902-0945";
 const APP_VERSION_KEY = "nsVolleyAppVersion";
 
 function enforceFreshAppVersion() {
