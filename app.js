@@ -1,7 +1,7 @@
 // ========================================
 // CONFIGURATION / VERSIONING
 // ========================================
-const APP_VERSION = "20260902-0925";
+const APP_VERSION = "20260902-0935";
 const APP_VERSION_KEY = "nsVolleyAppVersion";
 
 function enforceFreshAppVersion() {
@@ -25,6 +25,26 @@ function enforceFreshAppVersion() {
 
 enforceFreshAppVersion();
 
+async function forceAppRefresh() {
+  try {
+    if (window.caches?.keys) {
+      const cacheNames = await window.caches.keys();
+      await Promise.all(cacheNames.map((cacheName) => window.caches.delete(cacheName)));
+    }
+  } catch (error) {
+    window.__nsVolleyRefreshCacheFailed = true;
+  }
+
+  try {
+    localStorage.setItem(APP_VERSION_KEY, APP_VERSION);
+  } catch (error) {
+    window.__nsVolleyRefreshVersionFailed = true;
+  }
+
+  const url = new URL(window.location.href);
+  url.searchParams.set("refresh", `${APP_VERSION}-${Date.now()}`);
+  window.location.replace(url.toString());
+}
 window.addEventListener("pageshow", (event) => {
   if (event.persisted) window.location.reload();
 });
@@ -59,6 +79,7 @@ function openLockedDialog(dialog) {
 // ========================================
 // DEVICE LAYOUT
 // ========================================
+
 function setDeviceLayoutClass() {
   const width = window.innerWidth || document.documentElement.clientWidth;
   const isTabletRange = width >= 700 && width <= 1366;
@@ -515,6 +536,7 @@ const productShell = document.querySelector(".product-shell");
 const sideNav = document.querySelector(".side-nav");
 const sidebarToggle = document.querySelector("#sidebarToggle");
 const sidebarMenu = document.querySelector(".pill-nav");
+const appRefreshButton = document.querySelector("#appRefreshButton");
 const views = document.querySelectorAll(".view");
 const navItems = document.querySelectorAll(".nav-item");
 const bottomNavItems = document.querySelectorAll(".bottom-nav-item, .bottom-nav-home");
@@ -1888,6 +1910,7 @@ documentList?.addEventListener("click", (event) => {
 document.querySelector("#closeDocumentPreviewButton")?.addEventListener("click", () => documentPreviewModal?.close());
 document.querySelector("#shareRegistrationFormButton")?.addEventListener("click", shareCurrentDocument);
 
+appRefreshButton?.addEventListener("click", forceAppRefresh);
 notificationToggle?.addEventListener("click", () => showNotificationToast(undefined, undefined, true));
 calendarCta?.addEventListener("click", () => {
   if (isMobileCalendarDevice()) {
