@@ -6662,24 +6662,27 @@ body.data-view-open .workspace {
 }
 
 /* Credits / rights */
-.side-meta .rights-link {
-  margin-top: 14px;
-  width: 100%;
-  min-height: 36px;
+.rights-link {
+  margin: 10px 14px 0;
+  width: auto;
+  min-height: 28px;
   padding: 0;
+  border: 0;
+  border-radius: 0;
   color: var(--muted);
   background: transparent;
   text-align: left;
-  font-size: .84rem;
+  font-size: .78rem;
   font-weight: 900;
+  opacity: .86;
 }
 
-.side-meta .rights-link:hover,
-.side-meta .rights-link.active {
+.rights-link:hover,
+.rights-link.active {
   color: var(--accent);
   background: transparent;
+  opacity: 1;
 }
-
 .credits-panel.active {
   display: flex !important;
   flex-direction: column;
